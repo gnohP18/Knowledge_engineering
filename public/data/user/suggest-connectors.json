@@ -1,0 +1,132 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "first_name": "Phong",
+      "last_name": "Nguyen Hoang",
+      "avatar": "/images/avatar_2.jpg",
+      "connector_type": "COMPANY",
+      "connector_position": "Back End"
+    },
+    {
+      "id": "2",
+      "first_name": "Anh",
+      "last_name": "Nguyen Cong",
+      "connector_type": "COMPANY",
+      "avatar": "/images/avatar_3.jpeg",
+      "connector_position": "Back End"
+    },
+    {
+      "id": "3",
+      "first_name": "Quan",
+      "last_name": "Than Nguyen Minh",
+      "avatar": "/images/avatar_4.jpeg",
+      "connector_type": "COMPANY",
+      "connector_position": "Front End"
+    },
+    {
+      "id": "4",
+      "first_name": "Truong",
+      "last_name": "Pham Van Tien",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_5.jpeg",
+      "connector_position": "DevOps"
+    },
+    {
+      "id": "5",
+      "first_name": "Bach",
+      "last_name": "Le Trong",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_6.jpeg",
+      "connector_position": "Project Management"
+    },
+    {
+      "id": "6",
+      "first_name": "Vy",
+      "last_name": "Pham Luu Tuong",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_2.jpg",
+      "connector_position": "Data Analysis"
+    },
+    {
+      "id": "7",
+      "first_name": "Truong",
+      "last_name": "Vo Huu Nam",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_3.jpeg",
+      "connector_position": "Digital Marketing"
+    },
+    {
+      "id": "8",
+      "first_name": "Vinh",
+      "last_name": "Trinh Quang",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_4.jpeg",
+      "connector_position": "Cloud Computing"
+    },
+    {
+      "id": "9",
+      "first_name": "Vu",
+      "last_name": "Nguyen Hoang",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_5.jpeg",
+      "connector_position": "Python Programming"
+    },
+    {
+      "id": "10",
+      "first_name": "Duc",
+      "last_name": "Nguyen Dac",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_6.jpeg",
+      "connector_position": "Leadership"
+    },
+    {
+      "id": "11",
+      "first_name": "Hai",
+      "last_name": "Tran Van",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_2.jpg",
+      "connector_position": "Communication"
+    },
+    {
+      "id": "12",
+      "first_name": "Huy",
+      "last_name": "Pham Cong",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_3.jpeg",
+      "connector_position": "SQL"
+    },
+    {
+      "id": "13",
+      "first_name": "Vy",
+      "last_name": "Nguyen Thi Quynh",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_4.jpeg",
+      "connector_position": "JavaScript"
+    },
+    {
+      "id": "14",
+      "first_name": "Nghi",
+      "last_name": "Nguyen Tue",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_5.jpeg",
+      "connector_position": "Public Speaking"
+    },
+    {
+      "id": "15",
+      "first_name": "Khoi",
+      "last_name": "Nguyen Minh",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_6.jpeg",
+      "connector_position": "Adobe Photoshop"
+    },
+    {
+      "id": "16",
+      "first_name": "Luffy",
+      "last_name": "Monkey D.",
+      "connector_type": "USER",
+      "avatar": "/images/avatar_2.jpg",
+      "connector_position": "Machine Learning"
+    }
+  ]
+}

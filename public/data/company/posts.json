@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "💚 𝐄𝐥𝐞𝐯𝐚𝐭𝐢𝐧𝐠 𝐎𝐮𝐫 𝐂𝐫𝐚𝐟𝐭: 𝐀 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥 𝐈𝐧𝐭𝐞𝐫𝐧𝐚𝐥 𝐒𝐞𝐦𝐢𝐧𝐚𝐫 𝐚𝐭 𝐌𝐂 𝐒𝐨𝐥𝐮𝐭𝐢𝐨𝐧𝐬 ",
+      "description": "Last week, MC Solutions held an internal seminar with full participation from our development team. Under the guidance of Mr. Hieu Dang - Senior Python Developer, team members delved into advanced methodologies aimed at enhancing the software development process. The seminar provided us with a deeper understanding of the importance of designing systems in a scientific and methodical manner. New standards and effective approaches were introduced, offering a valuable perspective on optimizing workflows and improving the quality of the final product. In addition, real-world scenarios commonly encountered by the team were brought up for discussion, with specific solutions shared to equip everyone with the necessary skills to handle tasks more efficiently. We believe that with these new insights and skills, our development team will become even stronger and more prepared to face any challenges on our journey to creating top-tier technology solutions! ",
+      "media_file": "https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/457168456_122162808758118638_76516946937252557_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHzJXSYZaBR7ZQowRk8_3s1t2wmM4yCkoa3bCYzjIKShuU47erxSxmmbJFxg_nq4HZimvv5mw7RxE8bHPXgKby7&_nc_ohc=ZdO884nnxSkQ7kNvgHEXXCw&_nc_zt=23&_nc_ht=scontent.fdad3-1.fna&_nc_gid=AWzDXnEDYWycLXZN_MkXAfy&oh=00_AYCQ108XIXnrSiUCz27mq0-d86M1CvfBWuA-CEj47Kv-Eg&oe=670FFE18",
+      "status": 1,
+      "created_at": "2024-09-08 00:00:00"
+    },
+    {
+      "id": "2",
+      "title": "𝐖𝐞 𝐚𝐫𝐞 𝐓𝐫𝐢𝐥𝐢𝐧𝐠𝐮𝐚𝐥! ",
+      "description": "MC Solutions is proud to have a team that speaks not just ONE or TWO, but THREE languages fluently: Vietnamese, Japanese, and English. With our impressive capabilities, we confidently communicate with clients from all corners of the globe. Whether you're in Tokyo, New York, or anywhere in between, we're ready to collaborate and ensure your projects are delivered with the highest quality and efficiency. Need to contact? Reach out in your language — we’re ready to chat! Language barriers won’t be an issue between your business and MC Solutions! 🤝🌏",
+      "media_file": "",
+      "status": 0,
+      "created_at": "2024-08-27 00:00:00"
+    }
+  ],
+  "links": {
+    "first": "http://localhost:3000/api/v1/company/jobs?page=1",
+    "last": "http://localhost:3000/api/v1/company/jobs?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 10,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "http://localhost:3000/api/v1/company/jobs?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "path": "http://localhost:3000/api/v1/company/jobs",
+    "per_page": 10,
+    "to": 1,
+    "total": 2
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "knowledge_engineering_fe",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext.js,.vue,.ts --ignore-path .gitignore --fix src",
+    "format": "git diff --name-only --cached --relative | grep -E '\\.(js|ts|vue|json|css|scss|md)$' | xargs prettier --write"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/zod": "^4.13.2",
+    "@whoj/utils-core": "^2.0.0-beta.2",
+    "axios": "^1.6.8",
+    "chart.js": "^4.4.3",
+    "lodash-es": "^4.17.21",
+    "nuxt": "^3.11.2",
+    "pinia": "^2.1.7",
+    "primeicons": "^7.0.0",
+    "primevue": "^3.51.0",
+    "vee-validate": "^4.13.2",
+    "vue": "^3.4.21",
+    "vue-axios": "^3.5.2",
+    "vue-router": "^4.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "nuxt-primevue": "^0.3.1",
+    "postcss": "^8.4.38",
+    "prettier": "3.3.3",
+    "sass": "^1.75.0",
+    "tailwindcss": "^3.4.3"
+  }
+}
