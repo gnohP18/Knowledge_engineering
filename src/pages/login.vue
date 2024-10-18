@@ -1,37 +1,39 @@
 <script setup lang="ts">
-import { useForm } from "vee-validate";
-import Validate from "~/components/common/Validate.vue";
-import type { UserLoginEntity } from "~/entities/user/auth";
-import { loginSchema } from "~/schemas/user/auth.schema";
-import { AuthStore } from "~/stores/user/auth";
-
-useHead({ title: "Login" });
-
 definePageMeta({
   layout: "login",
 });
+import { useField, useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as zod from 'zod';
+import Validate from '~/components/common/Validate.vue';
+import { loginApi } from '~/api/user/auth';
+import { AuthStore } from '~/stores/user/auth';
+const router = useRouter()
+const authStore = AuthStore()
 
-const store = AuthStore();
+const validationSchema = toTypedSchema(
+  zod.object({
+    email: zod.string().min(1, { message: 'This is required' }).email({ message: 'Must be a valid email' }),
+    password: zod.string().min(1, { message: 'This is required' }).min(8, { message: 'Too short' }),
+  })
+);
 
-const { handleSubmit, errors, defineField } = useForm({
-  validationSchema: loginSchema,
+const { handleSubmit, errors } = useForm({
+  validationSchema,
 });
-
-const [email] = defineField("email");
-const [password] = defineField("password");
 
 const onSubmit = handleSubmit(async (values) => {
-  const userLogin: UserLoginEntity = {
-    email: values.email,
-    password: values.password,
-  };
-
-  await store.login(userLogin);
+  try {
+    await authStore.login(values)
+    router.push("/")
+    console.log("Login successfully:", response)
+  } catch (error) {
+    console.error(error)
+  }
 });
 
-const test = async () => {
-  await store.login({ email: "12323", password: "result.data.access_token" });
-};
+const email = ref('')
+const password = ref('')
 </script>
 
 <template>
@@ -39,23 +41,19 @@ const test = async () => {
     <div
       class="w-1/4 min-h-[200px] flex flex-col justify-center items-center gap-4"
     >
-      <label class="text-2xl text-white font-bold">LOGIN</label>
-      <form @submit.prevent="onSubmit" class="w-full">
+    <label class="text-2xl text-white font-bold">LOGIN</label>
+      <form @submit.prevent="onSubmit">
         <Validate label="Email" :error="errors.email" class="w-full">
-          <CommonKTAInput v-model="email" class="w-full" />
+          <CommonKTAInput v-model="email" name="email" class="w-full" />
         </Validate>
-        <Validate label="Password" :error="errors.password" class="w-full">
-          <CommonKTAInput v-model="password" class="w-full" />
+        <Validate label="Password" :error="errors.password" class="w-full mt-5">
+          <CommonKTAInput v-model="password" name="password" class="w-full" />
         </Validate>
         <div class="w-full flex items-center justify-center">
-          <Button
-            label="Login"
-            class="my-5 p-2 !w-1/3 primary-button"
-            type="submit"
-            @keydown.ctrl.enter="onSubmit"
-          />
+          <Button type="submit" label="Login" class="my-5 p-2 !w-1/3 primary-button" />
         </div>
-      </form>
+        </form>
+      <a href="/" class="text-white font-bold">Back to home</a>
     </div>
   </div>
 </template>

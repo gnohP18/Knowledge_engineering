@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useField } from 'vee-validate';
 const props = defineProps({
+  name: String,
+    type: {
+        type: String,
+        default: 'text', 
+    },
+  placeholder: String,
   label: {
     type: String,
     default: "",
@@ -25,6 +32,8 @@ const props = defineProps({
     default: false,
   },
 });
+
+const { value, errorMessage } = useField(() => props.name);
 </script>
 <template>
   <div :class="props.parentClass">
@@ -34,6 +43,7 @@ const props = defineProps({
     </label>
     <InputText
       v-bind="$attrs"
+      v-model="value"
       class="p-2 border"
       :class="`${props.inputClass} ${props.invalid ? 'p-invalid' : ''}`"
       input-class="w-full"
