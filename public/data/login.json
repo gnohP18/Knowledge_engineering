@@ -1,0 +1,14 @@
+{
+    "status": "success",
+    "data": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", 
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", 
+        "user": {
+            "id": "12345",
+            "name": "Donald Hoang",
+            "email": "user@example.com",
+            "roles": ["admin", "editor"]
+        }
+    }
+}
+  

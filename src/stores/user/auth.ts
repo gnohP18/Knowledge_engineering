@@ -1,7 +1,7 @@
-import { loginApi } from "~/api/user/auth";
+import { loginApi, signupApi } from "~/api/user/auth";
 import { USER_TOKEN } from "~/constants/authentication";
 import type { ErrorData } from "~/entities/api-error";
-import type { UserLoginEntity } from "~/entities/user/auth";
+import type { UserLoginEntity, UserSignupEntity } from "~/entities/user/auth";
 
 interface State {
   isLoading: Boolean;
@@ -51,6 +51,22 @@ export const AuthStore = defineStore("AuthStore", {
         });
 
       this.$state.isLoading = false;
+    },
+    async signup(userSignup: UserSignupEntity): Promise<any> {
+      this.$state.isLoading = true;
+
+      await signupApi(userSignup)
+        .then(() => {
+          navigateTo("/login", { external: true });
+
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
   },
 });
