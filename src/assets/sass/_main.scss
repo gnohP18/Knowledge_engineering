@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --primaryButtonBackgroundColor: $primaryButtonBackgroundColor;
+  --primaryTextHoverColor: $primaryTextHoverColor;
+}
+
+a {
+  &:hover {
+    color: $primaryLinkColor;
+  }
+}
+
+html {
+  height: 100vh;
+  background-color: $primaryBackgroundColor;
+}
+
+.primary-text {
+  color: $primaryTextColor;
+}
+
+.secondary-text {
+  color: $secondaryTextColor;
+
+  &:hover {
+    color: $primaryTextColor;
+  }
+}
+
+.custom-button {
+  background-color: $primaryTextHoverColor;
+  color: white;
+  border-width: 1px;
+  border-color: $primaryTextHoverColor;
+
+  &:hover {
+    background-color: white;
+    color: black;
+    border-width: 1px;
+    border-color: $primaryTextHoverColor;
+  }
+}
+
+.span-primary-hover {
+  &:hover {
+    color: $primaryLinkColor;
+  }
+}
+
+.layout-main {
+  padding: 20px 20px 20px 10px;
+}
+
+.common-rounded {
+  border-radius: $primaryRounded;
+}
+
+.primary-button {
+  width: 100%;
+  background-color: white;
+  border-width: 1px;
+  border-color: $primaryButtonBorderColor;
+  color: $primaryTextColor;
+
+  &:hover {
+    background-color: $primaryButtonBorderColor;
+    color: white;
+  }
+}
+
+.primary-card {
+  background-color: $primaryCardBackgroundColor;
+  border-radius: $primaryRounded;
+}
+
+.icon-movement {
+  &:hover {
+    color: $primaryLinkColor;
+  }
+}
+
+.x-bar {
+  width: 40%;
+}
+
+@media (min-width: 768px) {
+  .x-bar {
+    max-width: 60%;
+  }
+
+  .container-card {
+    max-width: 80%;
+  }
+}
+@media (min-width: 1024px) {
+  .x-bar {
+    min-width: 50%;
+  }
+
+  .container-card {
+    max-width: 80%;
+  }
+}
+@media (min-width: 1280px) {
+  .x-bar {
+    min-width: 45%;
+  }
+
+  .container-card {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .x-bar {
+    min-width: 50%;
+  }
+
+  .container-card {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 1536px) {
+  .x-bar {
+    min-width: 45%;
+  }
+
+  .container-card {
+    max-width: 80%;
+  }
+}

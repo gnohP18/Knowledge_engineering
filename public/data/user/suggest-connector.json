@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "avatar": "/images/avatar_2.jpg",
+      "connector_position": "Back End",
+      "connector_type": "Company",
+      "first_name": "Phong",
+      "id": "1",
+      "last_name": "Nguyen Hoang"
+    },
+    {
+      "avatar": "/images/avatar_3.jpeg",
+      "connector_position": "Back End",
+      "connector_type": "Company",
+      "first_name": "Anh",
+      "id": "2",
+      "last_name": "Nguyen Cong"
+    },
+    {
+      "avatar": "/images/avatar_4.jpeg",
+      "connector_position": "Front End",
+      "connector_type": "Company",
+      "first_name": "Quan",
+      "id": "3",
+      "last_name": "Than Nguyen Minh"
+    },
+    {
+      "avatar": "/images/avatar_5.jpeg",
+      "connector_position": "DevOps",
+      "connector_type": "User",
+      "first_name": "Truong",
+      "id": "4",
+      "last_name": "Pham Van Tien"
+    }
+  ]
+}

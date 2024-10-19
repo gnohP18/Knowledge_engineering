@@ -1,0 +1,20 @@
+{
+  "data": {
+    "id": "1",
+    "last_name": "phong",
+    "first_name": "nguyen hoang",
+    "date_of_birth": "2002/18/04",
+    "avatar": "/images/avatar_2.jpg",
+    "email": "nhphong1804@gmail.com",
+    "address": "Da Nang",
+    "detail_address": "Lien Chieu, Chon Tam 4, 76",
+    "is_married": false,
+    "gender": "male",
+    "self_introduce": "I'm currently student in Da Nang University of technology",
+    "life_goal": "Become a solution architecture",
+    "job_title": "Backend developer",
+    "hashtag": [1, 2, 3, 6, 8, 9],
+    "connect_company": [1, 2, 4, 9, 11, 3],
+    "connect_user": [1, 2, 4, 9, 11, 3]
+  }
+}
