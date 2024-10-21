@@ -1,7 +1,16 @@
-import { getIndexJobApi, getListPositionNameApi } from "~/api/company/job";
+import {
+  createJobApi,
+  getDetailJobApi,
+  getIndexJobApi,
+  getListJobAttributeApi,
+  getListPositionNameApi,
+  updateJobApi,
+} from "~/api/company/job";
 import type { ErrorData } from "~/entities/api-error";
 import type {
+  AttributeTypeEntity,
   BasicJobEntity,
+  JobEntity,
   PositionNameEntity,
 } from "~/entities/company/job";
 import type { MetaEntity } from "~/entities/meta";
@@ -13,6 +22,8 @@ interface State {
   errors: ErrorData;
   jobs: BasicJobEntity[];
   positionNames: PositionNameEntity[];
+  jobAttributes: AttributeTypeEntity[];
+  job: JobEntity
 }
 
 const defaultState: State = {
@@ -22,6 +33,8 @@ const defaultState: State = {
   jobs: [],
   positionNames: [],
   errors: {},
+  jobAttributes: [],
+  job: {}
 };
 
 export const JobStore = defineStore("JobStore", {
@@ -48,10 +61,44 @@ export const JobStore = defineStore("JobStore", {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      delayFunc(2000);
+      await getDetailJobApi(id)
+      .then((result) => {
+        this.$state.job = result;        
+      })
+      .catch((err) => {
+        this.$state.isSucceed = false;
+        this.$state.errors = handleApiErrors(err);
+      })
+      .finally(() => {
+        this.$state.isLoading = false;
+      });
 
-      this.$state.isSucceed = true;
-      this.$state.isLoading = false;
+      this.$state.isLoading = true;
+      await getListJobAttributeApi()
+        .then((result) => {
+          this.$state.jobAttributes = result;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+
+      this.$state.isLoading = true;
+      await getListPositionNameApi()
+      .then((result) => {
+        this.$state.isSucceed = true;
+        this.$state.positionNames = result;
+      })
+      .catch((err) => {
+        this.$state.isSucceed = false;
+        this.$state.errors = handleApiErrors(err);
+      })
+      .finally(() => {
+        this.$state.isLoading = false;
+      });
     },
 
     async getIndexCreate(): Promise<any> {
@@ -61,7 +108,23 @@ export const JobStore = defineStore("JobStore", {
       await getListPositionNameApi()
         .then((result) => {
           this.$state.isSucceed = true;
-          this.$state.positionNames = result;          
+          this.$state.positionNames = result;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await getListJobAttributeApi()
+        .then((result) => {
+          this.$state.isSucceed = true;
+          this.$state.jobAttributes = result;
         })
         .catch((err) => {
           this.$state.isSucceed = false;
@@ -73,5 +136,35 @@ export const JobStore = defineStore("JobStore", {
 
       this.$state.isLoading = false;
     },
+
+    async createJob(entity: JobEntity): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await createJobApi(entity).then(() => {
+        this.$state.isSucceed = true;
+      }) .catch((err) => {
+        this.$state.isSucceed = false;
+        this.$state.errors = handleApiErrors(err);
+      })
+      .finally(() => {
+        this.$state.isLoading = false;
+      });
+    },
+
+    async updateJob(id: string, entity: JobEntity): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await updateJobApi(id, entity).then(() => {
+        this.$state.isSucceed = true;
+      }) .catch((err) => {
+        this.$state.isSucceed = false;
+        this.$state.errors = handleApiErrors(err);
+      })
+      .finally(() => {
+        this.$state.isLoading = false;
+      });
+    }
   },
 });

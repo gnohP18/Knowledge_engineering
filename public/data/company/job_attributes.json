@@ -1,0 +1,153 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Certification Requirement",
+      "job_attributes": [
+        {
+          "id": 5,
+          "name": "Amazon Certification",
+          "parent_id": null,
+          "attribute_type_id": 1,
+          "job_attribute": [
+            {
+              "id": 16,
+              "name": "Amazon Web Services Cloud Practitioner",
+              "parent_id": 5,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            },
+            {
+              "id": 17,
+              "name": "AWS Certified Machine Learning - Specialty",
+              "parent_id": 5,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            },
+            {
+              "id": 18,
+              "name": "Amazon Web Services Developer - Associate",
+              "parent_id": 5,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            },
+            {
+              "id": 19,
+              "name": "Amazon Web Services DevOps Engineer - Professional",
+              "parent_id": 5,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "name": "Cisco Certification",
+          "parent_id": null,
+          "attribute_type_id": 1,
+          "job_attribute": [
+            {
+              "id": 21,
+              "name": "Cisco Certified Network Associate Cyber Ops (CCNA)",
+              "parent_id": 20,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            },
+            {
+              "id": 22,
+              "name": "Cisco Certified Network Professional Cloud",
+              "parent_id": 20,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            },
+            {
+              "id": 23,
+              "name": "Cisco Certified Internetwork Expert Service Provider Operations (CCIE)",
+              "parent_id": 20,
+              "attribute_type_id": 1,
+              "job_attribute": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Education Requirement",
+      "job_attributes": [
+        {
+          "id": 6,
+          "name": "HighSchool Diploma",
+          "parent_id": null,
+          "attribute_type_id": 2
+        },
+        {
+          "id": 7,
+          "name": "Bachelor Degree",
+          "parent_id": null,
+          "attribute_type_id": 2
+        },
+        {
+          "id": 8,
+          "name": "Doctor Degree",
+          "parent_id": null,
+          "attribute_type_id": 2
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Language Requirement",
+      "job_attributes": [
+        {
+          "id": 9,
+          "name": "English",
+          "parent_id": null,
+          "attribute_type_id": 3
+        },
+        {
+          "id": 10,
+          "name": "Japanese",
+          "parent_id": null,
+          "attribute_type_id": 3
+        },
+        {
+          "id": 11,
+          "name": "Chinese",
+          "parent_id": null,
+          "attribute_type_id": 3
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Experience Requirement",
+      "job_attributes": [
+        {
+          "id": 12,
+          "name": "1 year",
+          "parent_id": null,
+          "attribute_type_id": 4
+        },
+        {
+          "id": 13,
+          "name": "2 years",
+          "parent_id": null,
+          "attribute_type_id": 4
+        },
+        {
+          "id": 14,
+          "name": "3 years",
+          "parent_id": null,
+          "attribute_type_id": 4
+        },
+        {
+          "id": 15,
+          "name": "4 years",
+          "parent_id": null,
+          "attribute_type_id": 4
+        }
+      ]
+    }
+  ]
+}
