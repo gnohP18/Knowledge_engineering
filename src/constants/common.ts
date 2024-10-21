@@ -9,4 +9,5 @@ export const CONNECTOR_TYPE = {
   [CONNECTOR_TYPE_USER]: "User",
 };
 
-export const COMPANY_POSITION = {};
+export const MODE_FORM_CREATE = "CREATE";
+export const MODE_FORM_UPDATE = "UPDATE";

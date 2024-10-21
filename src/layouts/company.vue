@@ -47,9 +47,10 @@ const logout = () => {
 };
 </script>
 <template>
-  <div class="flex flex-col w-screen min-h-screen">
+  <div class="flex flex-col max-w-screen min-h-screen">
     <!-- Header -->
     <AppTopBar :company-auth="companyAuth" />
+    <Toast />
     <!-- Main Layout -->
     <div class="flex flex-1">
       <!-- Sidebar -->
