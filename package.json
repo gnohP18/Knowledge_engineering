@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext.js,.vue,.ts --ignore-path .gitignore --fix src",
     "format": "git diff --name-only --cached --relative | grep -E '\\.(js|ts|vue|json|css|scss|md)$' | xargs prettier --write",
-    "format:window": "git diff --name-only --cached --relative | findstr /R \"\\.js$ \\.ts$ \\.vue$ \\.json$ \\.css$ \\.scss$ \\.md$\" | xargs -I {} prettier --write \"$(cygpath -w '{}')\""
+    "format:window": "powershell -ExecutionPolicy Bypass -File .vscode/format.ps1"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",

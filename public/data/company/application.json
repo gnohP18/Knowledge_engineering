@@ -1,0 +1,28 @@
+{
+  "data": {
+    "id": "1",
+    "job_id": "2",
+    "job_name": "Backend developer",
+    "first_name": "Nguyen Hoang",
+    "last_name": "Phong",
+    "date_of_birth": "2002/04/18",
+    "avatar": "/images/avatar_2.jpg",
+    "email": "nhphong1804@gmail.com",
+    "phone": "0912345678",
+    "address": "Da Nang",
+    "detail_address": "Lien Chieu, Hoa Khanh Nam",
+    "is_married": false,
+    "gender": "Male",
+    "self_introduce": "",
+    "life_goal": "None",
+    "job_title": "Senior backend developer",
+    "interview_status": 4,
+    "interview_type": 1,
+    "note": "",
+    "interview_date_time_id": "1",
+    "interview_date_time": "2024/10/1 9:00",
+    "onboard_date": "",
+    "resume_name": "basic_cv",
+    "resume": "https://www.buds.com.ua/images/Lorem_ipsum.pdf"
+  }
+}
