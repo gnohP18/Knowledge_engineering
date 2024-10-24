@@ -21,7 +21,6 @@ export interface ApplicationEntity {
   interview_status?: number;
   interview_type?: number;
   note?: string;
-  interview_date_time_id?: string;
   interview_date_time?: string;
   onboard_date?: string;
   job?: BasicJobEntity;

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
-import { COMPANY_LAST_WORKSPACE } from "~/constants/authentication";
 import { JOB_STATUS } from "~/constants/job";
 
 import * as Pagination from "~/constants/pagination";
@@ -14,6 +13,8 @@ const router = useRouter();
 
 const store = JobStore();
 const pageTitle = "List of jobs";
+const isLoading = computed(() => store.isLoading);
+const isSucceed = computed(() => store.isSucceed);
 const jobs = computed(() => store.jobs);
 const meta = computed(() => store.meta);
 const keyword = ref("");
@@ -134,44 +135,39 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
 </script>
 
 <template>
-  <div class="layout-main">
-    <div class="grid grid-cols-4">
-      <div class="grid grid-cols-6 col-span-4 gap-4 items-center">
-        <div class="col-start-1 col-end-3 ...">
-          <!-- <PageTitle :title="pageTitle" /> -->
-        </div>
-      </div>
-      <div class="col-span-4 text-sm">
-        <KTADataTable
-          v-model:selection="selectedRows"
-          :is-empty="isEmpty(jobs)"
-          data-key="id"
-          :value="jobs"
-          :meta="meta"
-          :query-params="queryParams"
-          :loading="store.isLoading"
-          class="cursor-pointer"
-          :lazy="true"
-          has-paginator
-          @sort="onSort"
-          @row-click="onRowClick"
-        >
-          <Column field="id" header="ID" />
-          <Column field="title" header="Title" />
-          <Column field="position_name" header="Position name" />
-          <Column field="vacancy" header="Vacancy" />
-          <Column field="status" header="Status">
-            <template #body="{ data }">
-              <div class="flex justify-start w-full">
-                {{ JOB_STATUS[data.status] }}
-              </div>
-            </template>
-          </Column>
-          <Column field="close_date" header="Close at" />
-        </KTADataTable>
-      </div>
-    </div>
-  </div>
+  <LayoutsCompanyManageCompanyLayout
+    :is-loading="isLoading"
+    :is-succeed="isSucceed"
+    :screen-name="pageTitle"
+  >
+    <KTADataTable
+      v-model:selection="selectedRows"
+      :is-empty="isEmpty(jobs)"
+      data-key="id"
+      :value="jobs"
+      :meta="meta"
+      :query-params="queryParams"
+      :loading="store.isLoading"
+      class="cursor-pointer"
+      :lazy="true"
+      has-paginator
+      @sort="onSort"
+      @row-click="onRowClick"
+    >
+      <Column field="id" header="ID" />
+      <Column field="title" header="Title" />
+      <Column field="position_name" header="Position name" />
+      <Column field="number_of_position" header="Number of position" />
+      <Column field="status" header="Status">
+        <template #body="{ data }">
+          <div class="flex justify-start w-full">
+            {{ JOB_STATUS[data.status] }}
+          </div>
+        </template>
+      </Column>
+      <Column field="close_date" header="Close at" />
+    </KTADataTable>
+  </LayoutsCompanyManageCompanyLayout>
 </template>
 
 <style lang="scss" scoped>

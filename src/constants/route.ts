@@ -18,6 +18,7 @@ export const COMPANY_JOB_CREATE = '/company/jobs/create';
 export const COMPANY_POST = '/company/posts';
 export const COMPANY_POST_CREATE = '/company/posts/create';
 export const COMPANY_INTERVIEW = '/company/interviews';
+export const APPLICATION_INTERVIEW = '/applications';
 export const COMPANY_INTERVIEW_SET_DATE = '/company/interviews/set-date';
 export const COMPANY_INTERVIEW_UPDATE_STATUS = '/company/interviews/update-status';
 
