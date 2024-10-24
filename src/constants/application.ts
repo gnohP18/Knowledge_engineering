@@ -1,3 +1,5 @@
+import type { OptionSelect } from "~/entities/common";
+
 export const SUBMITTED = 0;
 export const WATCHED = 1;
 export const INTERVIEW_DATE_SET = 2;
@@ -31,3 +33,19 @@ export const INTERVIEW_TYPE = {
   [INTERVIEW_ONLINE]: "Interview Online",
   [INTERVIEW_OFFLINE]: "Interview Offline",
 };
+
+export const INTERVIEW_STATUS_OPTIONS: OptionSelect[] = [
+  { id: WATCHED, name: INTERVIEW_STATUS_NAME[WATCHED] },
+  { id: INTERVIEW_DATE_SET, name: INTERVIEW_STATUS_NAME[INTERVIEW_DATE_SET] },
+  {
+    id: INTERVIEW_IN_PROGRESS,
+    name: INTERVIEW_STATUS_NAME[INTERVIEW_IN_PROGRESS],
+  },
+  { id: HIRED, name: INTERVIEW_STATUS_NAME[HIRED] },
+  { id: REJECTED, name: INTERVIEW_STATUS_NAME[REJECTED] },
+  { id: OFFER_DECISION, name: INTERVIEW_STATUS_NAME[OFFER_DECISION] },
+  { id: ACCEPT_OFFER, name: INTERVIEW_STATUS_NAME[ACCEPT_OFFER] },
+  { id: REJECT_OFFER, name: INTERVIEW_STATUS_NAME[REJECT_OFFER] },
+  { id: ONBOARD_DATE_SET, name: INTERVIEW_STATUS_NAME[ONBOARD_DATE_SET] },
+  { id: COMPLETED, name: INTERVIEW_STATUS_NAME[COMPLETED] },
+];

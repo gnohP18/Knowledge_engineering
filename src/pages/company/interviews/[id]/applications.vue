@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
-import { COMPANY_LAST_WORKSPACE } from "~/constants/authentication";
-import { APPLICATION_INTERVIEW, COMPANY_INTERVIEW } from "~/constants/route";
-import { InterviewStore } from "~/stores/company/interview";
+import { INTERVIEW_STATUS_NAME, INTERVIEW_TYPE } from "~/constants/application";
 import * as Pagination from "~/constants/pagination";
-import type { BasicInterviewEntity } from "~/entities/company/interview";
-import { JOB_STATUS } from "~/constants/job";
+import { COMPANY_INTERVIEW, APPLICATION_INTERVIEW } from "~/constants/route";
 
-const pageTitle = "List interview";
+import type { BasicApplicationEntity } from "~/entities/company/application";
+import { InterviewStore } from "~/stores/company/interview";
+
+const pageTitle = "Applications";
 useHead({ title: pageTitle });
 definePageMeta({ layout: "company" });
 
@@ -18,12 +18,13 @@ const router = useRouter();
 const store = InterviewStore();
 const isLoading = computed(() => store.isLoading);
 const isSucceed = computed(() => store.isSucceed);
-const interviews = computed(() => store.interviews);
+const applications = computed(() => store.applications);
 const meta = computed(() => store.meta);
 const keyword = ref("");
 const statusAll = -1;
 const statusFilter = ref(statusAll);
-const selectedRows = ref<BasicInterviewEntity[]>([]);
+const selectedRows = ref<BasicApplicationEntity[]>([]);
+
 interface QueryParamsEntity {
   page?: string;
   limit?: string;
@@ -51,10 +52,12 @@ const setQueryParams = () => {
   }
 };
 
+const jobId = Number(route.params.id);
 onMounted(async () => {
   setQueryParams();
-  await store.getList(queryParams);
-  console.log(interviews.value);
+
+  await store.getListApplication(jobId, queryParams);
+  // console.log(interviews.value);
 });
 
 const onRowClick = (event: { originalEvent: any; data: { id: number } }) => {
@@ -65,7 +68,7 @@ const onRowClick = (event: { originalEvent: any; data: { id: number } }) => {
     event.originalEvent.stopPropagation();
   } else {
     router.push({
-      path: `${COMPANY_INTERVIEW}/${event.data.id}${APPLICATION_INTERVIEW}`,
+      path: `${COMPANY_INTERVIEW}/${jobId}${APPLICATION_INTERVIEW}/${event.data.id}`,
     });
   }
 };
@@ -93,9 +96,9 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
   <LayoutsCompanyManageCompanyLayout :screen-name="pageTitle">
     <KTADataTable
       v-model:selection="selectedRows"
-      :is-empty="isEmpty(interviews)"
+      :is-empty="isEmpty(applications)"
       data-key="id"
-      :value="interviews"
+      :value="applications"
       :meta="meta"
       :query-params="queryParams"
       :loading="isLoading"
@@ -106,19 +109,35 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
       @row-click="onRowClick"
     >
       <Column field="id" header="ID" />
-      <Column field="name" header="Name" />
-      <Column field="position_name" header="Position name" />
-      <Column field="number_of_position" header="Number of position" />
-      <Column field="vacancy" header="Vacancy" />
-      <Column field="number_of_application" header="Number of application" />
-      <Column field="status" header="Status">
+      <Column header="Full name">
         <template #body="{ data }">
           <div class="flex justify-start w-full">
-            {{ JOB_STATUS[data.status] }}
+            {{ `${data.first_name} ${data.last_name}` }}
           </div>
         </template>
       </Column>
-      <Column field="updated_at" header="Updated at" />
+      <Column field="position_name" header="Position name" />
+      <Column field="interview_type" header="Status">
+        <template #body="{ data }">
+          <div class="flex justify-start w-full">
+            {{
+              INTERVIEW_TYPE[data.interview_type as keyof typeof INTERVIEW_TYPE]
+            }}
+          </div>
+        </template>
+      </Column>
+      <Column field="status" header="Status">
+        <template #body="{ data }">
+          <div class="flex justify-start w-full">
+            {{
+              INTERVIEW_STATUS_NAME[
+                data.status as keyof typeof INTERVIEW_STATUS_NAME
+              ]
+            }}
+          </div>
+        </template>
+      </Column>
+      <Column field="interview_date_time" header="Interview date time at" />
     </KTADataTable>
   </LayoutsCompanyManageCompanyLayout>
 </template>

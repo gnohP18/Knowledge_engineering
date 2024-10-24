@@ -2,7 +2,7 @@ export interface BasicJobEntity {
   id?: string;
   title?: string;
   position_name?: string;
-  vacancy?: string;
+  number_of_position?: number;
   status?: number;
   close_day?: string;
   created_at?: string;

@@ -11,3 +11,5 @@ export const CONNECTOR_TYPE = {
 
 export const MODE_FORM_CREATE = "CREATE";
 export const MODE_FORM_UPDATE = "UPDATE";
+export const MODE_USER_VIEW = "USER";
+export const MODE_COMPANY_VIEW = "COMPANY";
