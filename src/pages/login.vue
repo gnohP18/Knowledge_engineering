@@ -8,18 +8,12 @@ import * as zod from 'zod';
 import Validate from '~/components/common/Validate.vue';
 import { loginApi } from '~/api/user/auth';
 import { AuthStore } from '~/stores/user/auth';
+import { loginSchema } from '~/schemas/user/auth.schema';
 const router = useRouter()
 const authStore = AuthStore()
 
-const validationSchema = toTypedSchema(
-  zod.object({
-    email: zod.string().min(1, { message: 'This is required' }).email({ message: 'Must be a valid email' }),
-    password: zod.string().min(1, { message: 'This is required' }).min(8, { message: 'Too short' }),
-  })
-);
-
 const { handleSubmit, errors } = useForm({
-  validationSchema,
+  validationSchema :loginSchema,
 });
 
 const onSubmit = handleSubmit(async (values) => {

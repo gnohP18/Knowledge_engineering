@@ -3,45 +3,35 @@ definePageMeta({
   layout: "login",
 });
 import { useForm } from 'vee-validate';
-import * as zod from 'zod';
 import Validate from '~/components/common/Validate.vue';
-import { signupApi} from '~/api/user/auth';
 import { ref, onMounted } from 'vue';
-import { validationSchema } from '~/api/user/auth.schema';
 import { AuthStore } from '~/stores/user/auth';
 import { useRouter } from 'vue-router';
+import { signUpSchema } from '~/schemas/user/auth.schema';
+import { JobStore } from "~/stores/company/job";
+const jobStore = JobStore();
 const router = useRouter()
 const authStore = AuthStore()
 
 const { handleSubmit, errors } = useForm({
-  validationSchema,
+  validationSchema:  signUpSchema,
 });
 
-const jobTitles = ref<{ value: string, text: string }[]>([]); 
-const selectedJobTitle = ref<string | null>(null);
-const fetchJobTitles = async () => {
-  try {
-    const response = await fetch('/api/user/auth.schema.ts'); 
-    const data = await response.json();
-    jobTitles.value = data; 
-  } catch (error) {
-    console.error('Failed to fetch job titles:', error);
-    jobTitles.value = ['Software Engineer', 'Product Manager', 'Designer', 'Data Scientist'];
-  }
-};
+const jobTitles = computed(() => jobStore.jobs?.map(( job) => ({
+    id: job.id,
+    title: job.title
+  })
+))
 
-onMounted(() => {
-  fetchJobTitles();
+
+onMounted(async () => {
+  await jobStore.getList()
 });
 
 const onSubmit = handleSubmit(async (values) => {
-  try {
-    await authStore.signup(values);  
-    router.push("/login");
-    console.log("Sign up successfully:", response);
-  } catch (error) {
-    console.error(error);
-  }
+  await authStore.signup(values);  
+  router.push("/login");
+  console.log("Sign up successfully");
 });
 </script>
 
@@ -64,11 +54,10 @@ const onSubmit = handleSubmit(async (values) => {
     
         <Validate label="Job Title" :error="errors.job_title" class="w-full">
           <CommonKTADropdown
-            type="select"
             :options="jobTitles"
+            optionLabel="title"
             class="w-full"
             name="job_title"
-            v-model="selectedJobTitle"
           />
         </Validate>
     
@@ -81,11 +70,11 @@ const onSubmit = handleSubmit(async (values) => {
         </Validate>
     
         <Validate label="Password" :error="errors.password" class="w-full">
-          <CommonKTAInput name="password" type="password" class="w-full" placeholder="Password" />
+          <CommonKTAPassword name="password" type="password" class="w-full" placeholder="Password" />
         </Validate>
     
         <Validate label="Confirm Password" :error="errors.confirmPassword" class="w-full">
-          <CommonKTAInput name="confirmPassword" type="password" class="w-full" placeholder="Confirm Password" />
+          <CommonKTAPassword name="confirmPassword" type="password" class="w-full" placeholder="Confirm Password" />
         </Validate>
     
         <div class="col-span-2 flex items-center justify-center">

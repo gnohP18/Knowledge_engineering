@@ -2,10 +2,6 @@
 import { useField } from 'vee-validate';
 const props = defineProps({
   name: String,
-    type: {
-        type: String,
-        default: 'text', 
-    },
   placeholder: String,
   label: {
     type: String,

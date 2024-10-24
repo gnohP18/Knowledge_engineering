@@ -59,7 +59,6 @@ export const AuthStore = defineStore("AuthStore", {
         .then(() => {
           navigateTo("/login", { external: true });
 
-          this.$state.isSucceed = true;
         })
         .catch((err) => {
           this.$state.errors = handleApiErrors(err);

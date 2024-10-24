@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { useField } from 'vee-validate';
 const props = defineProps({
+  name: String,
+    type: {
+        type: String,
+        default: 'text', 
+    },
   id: {
     type: String,
     default: "",
@@ -33,7 +39,7 @@ const props = defineProps({
     default: "",
   },
 });
-const dataModel = defineModel("data", { type: String, default: "" });
+const { value, errorMessage } = useField(() => props.name);
 </script>
 
 <template>
@@ -41,7 +47,8 @@ const dataModel = defineModel("data", { type: String, default: "" });
     <label class="block mb-2 text-sm">{{ props.label }}</label>
     <Password
       :id="props.id"
-      v-model="dataModel"
+      v-bind="$attrs"
+      v-model="value"
       :type="props.type"
       :class="`${props.inputClass} ${props.invalid ? 'p-invalid' : ''}`"
       input-class="w-full p-2"
