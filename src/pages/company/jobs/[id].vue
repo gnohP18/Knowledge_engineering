@@ -5,7 +5,10 @@ import { JobStore } from "~/stores/company/job";
 
 useHead({ title: "List job" });
 
-definePageMeta({ layout: "company" });
+definePageMeta({
+  layout: "company",
+  middleware: "auth-company",
+});
 
 const route = useRoute();
 

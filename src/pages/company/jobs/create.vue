@@ -7,7 +7,10 @@ import { MODE_FORM_CREATE } from "~/constants/common";
 
 useHead({ title: "List job" });
 
-definePageMeta({ layout: "company" });
+definePageMeta({
+  layout: "company",
+  middleware: "auth-company",
+});
 
 const router = useRouter();
 

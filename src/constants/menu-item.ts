@@ -1,5 +1,11 @@
 import type { MenuItem } from "primevue/menuitem";
 import { 
+  ADMIN_ADMIN,
+  ADMIN_ADMIN_CREATE,
+  ADMIN_COMPANY,
+  ADMIN_COMPANY_CREATE,
+  ADMIN_USER,
+  ADMIN_USER_CREATE,
   COMPANY_INTERVIEW, 
   COMPANY_INTERVIEW_SET_DATE, 
   COMPANY_INTERVIEW_UPDATE_STATUS, 
@@ -106,3 +112,52 @@ export const MENU_COMPANY: MenuItem[] = [
     ],
   },
 ];
+
+
+export const MENU_ADMIN = [
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    icon: "pi pi-home",
+    route: "/admin",
+  },
+  {
+    key: "users",
+    label: "Users",
+    icon: "pi pi-users",
+    route: ADMIN_USER,
+    items: [
+      {
+        label: "Create",
+        icon: "pi pi-plus",
+        route: ADMIN_USER_CREATE,
+      }
+    ],
+  },
+  {
+    key: "companies",
+    label: "Company",
+    icon: "pi pi-building",
+    route: ADMIN_COMPANY,
+    items: [
+      {
+        label: "Create",
+        icon: "pi pi-plus",
+        route: ADMIN_COMPANY_CREATE,
+      }
+    ],
+  },
+  {
+    key: "admins",
+    label: "Admin",
+    icon: "pi pi-id-card",
+    route: ADMIN_ADMIN,
+    items: [
+      {
+        label: "Create",
+        icon: "pi pi-plus",
+        route: ADMIN_ADMIN_CREATE,
+      }
+    ],
+  },
+]

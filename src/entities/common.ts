@@ -4,7 +4,7 @@ export interface MenuItemEntity {
 }
 
 export interface OptionSelect {
-  id?: string,
+  id?: number,
   name?: string
 }
 export interface PartialSelectedNode {

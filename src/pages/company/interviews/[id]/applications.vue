@@ -10,7 +10,10 @@ import { InterviewStore } from "~/stores/company/interview";
 
 const pageTitle = "Applications";
 useHead({ title: pageTitle });
-definePageMeta({ layout: "company" });
+definePageMeta({
+  layout: "company",
+  middleware: "auth-company",
+});
 
 const route = useRoute();
 const router = useRouter();

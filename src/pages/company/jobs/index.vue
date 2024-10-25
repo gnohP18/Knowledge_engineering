@@ -26,6 +26,7 @@ const selectedRows = ref<BasicJobEntity[]>([]);
 useHead({ title: pageTitle });
 definePageMeta({
   layout: "company",
+  middleware: "auth-company",
 });
 
 interface QueryParamsEntity {
