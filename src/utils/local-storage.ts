@@ -38,7 +38,7 @@ export const getLastWorkspace = (type: string) => {
  * @param lastWorkspace Last workspace user
  */
 export const setLastWorkspace = (type: string, lastWorkspace: string) => {
-  localStorage.setItem(USER_LAST_WORKSPACE, lastWorkspace);
+  localStorage.setItem(type, lastWorkspace);
 };
 
 /**
@@ -47,6 +47,6 @@ export const setLastWorkspace = (type: string, lastWorkspace: string) => {
  * @param type type of authenticator
  * @returns true if have token, else false
  */
-export const checkAuth = (type: string): Boolean => {
+export const checkAuth = (type: string): Boolean => {  
   return !!getToken(type);
 };

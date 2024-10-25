@@ -4,7 +4,10 @@ import CImageUploadV1 from "~/components/common/CImageUploadV1.vue";
 
 useHead({ title: "List job" });
 
-definePageMeta({ layout: "company" });
+definePageMeta({
+  layout: "company",
+  middleware: "auth-company",
+});
 
 const route = useRoute();
 

@@ -1,38 +1,39 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
-import { COMPANY_LAST_WORKSPACE } from "~/constants/authentication";
-import { APPLICATION_INTERVIEW, COMPANY_INTERVIEW } from "~/constants/route";
-import { InterviewStore } from "~/stores/company/interview";
+import { COMMON_STATUS } from "~/constants/common";
 import * as Pagination from "~/constants/pagination";
-import type { BasicInterviewEntity } from "~/entities/company/interview";
-import { JOB_STATUS } from "~/constants/job";
-
-const pageTitle = "List interview";
-useHead({ title: pageTitle });
-definePageMeta({
-  layout: "company",
-  middleware: "auth-company",
-});
+import { COMPANY_JOB } from "~/constants/route";
+import type { BasicUserEntity } from "~/entities/admin/user";
+import { UserStore } from "~/stores/admin/user";
 
 const route = useRoute();
 const router = useRouter();
 
-const store = InterviewStore();
+const store = UserStore();
+const pageTitle = "List of user";
 const isLoading = computed(() => store.isLoading);
 const isSucceed = computed(() => store.isSucceed);
-const interviews = computed(() => store.interviews);
+const users = computed(() => store.users);
 const meta = computed(() => store.meta);
 const keyword = ref("");
 const statusAll = -1;
 const statusFilter = ref(statusAll);
-const selectedRows = ref<BasicInterviewEntity[]>([]);
+
+const selectedRows = ref<BasicUserEntity[]>([]);
+
+useHead({ title: pageTitle });
+definePageMeta({
+  layout: "admin",
+});
+
 interface QueryParamsEntity {
   page?: string;
   limit?: string;
   status?: string;
   keyword?: string;
 }
+
 let queryParams = reactive<QueryParamsEntity>({
   page: "1",
   limit: String(Pagination.PAGE_LIMIT_DEFAULT),
@@ -54,11 +55,45 @@ const setQueryParams = () => {
   }
 };
 
+watch(
+  () => route.query,
+  () => {
+    setQueryParams();
+    store.getList(queryParams);
+  },
+);
+
+onBeforeMount(() => {
+  store.resetState();
+});
+
 onMounted(async () => {
   setQueryParams();
   await store.getList(queryParams);
-  console.log(interviews.value);
 });
+
+const searchKeyword = (event: any) => {
+  setTimeout(() => {
+    if (!store.$state.isLoading) {
+      queryParams.page = "1";
+      Object.assign(queryParams, { keyword });
+      store.getList(queryParams);
+    }
+  }, 300);
+};
+
+const handleResetInput = () => {
+  keyword.value = "";
+};
+
+const filterStatus = async () => {
+  queryParams.page = "1";
+  statusFilter.value !== statusAll
+    ? Object.assign(queryParams, { status: statusFilter.value })
+    : delete queryParams.status;
+
+  await store.getList(queryParams);
+};
 
 const onRowClick = (event: { originalEvent: any; data: { id: number } }) => {
   if (
@@ -67,9 +102,7 @@ const onRowClick = (event: { originalEvent: any; data: { id: number } }) => {
   ) {
     event.originalEvent.stopPropagation();
   } else {
-    router.push({
-      path: `${COMPANY_INTERVIEW}/${event.data.id}${APPLICATION_INTERVIEW}`,
-    });
+    router.push({ path: `${COMPANY_JOB}/${event.data.id}` });
   }
 };
 
@@ -92,16 +125,21 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
   }
 };
 </script>
+
 <template>
-  <LayoutsCompanyManageCompanyLayout :screen-name="pageTitle">
+  <LayoutsCompanyManageCompanyLayout
+    :is-loading="isLoading"
+    :is-succeed="isSucceed"
+    :screen-name="pageTitle"
+  >
     <KTADataTable
       v-model:selection="selectedRows"
-      :is-empty="isEmpty(interviews)"
+      :is-empty="isEmpty(users)"
       data-key="id"
-      :value="interviews"
+      :value="users"
       :meta="meta"
       :query-params="queryParams"
-      :loading="isLoading"
+      :loading="store.isLoading"
       class="cursor-pointer"
       :lazy="true"
       has-paginator
@@ -109,19 +147,23 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
       @row-click="onRowClick"
     >
       <Column field="id" header="ID" />
-      <Column field="name" header="Name" />
-      <Column field="position_name" header="Position name" />
-      <Column field="number_of_position" header="Number of position" />
-      <Column field="vacancy" header="Vacancy" />
-      <Column field="number_of_application" header="Number of application" />
+      <Column field="first_name" header="Title" />
       <Column field="status" header="Status">
         <template #body="{ data }">
           <div class="flex justify-start w-full">
-            {{ JOB_STATUS[data.status] }}
+            {{ COMMON_STATUS[data.status] }}
           </div>
         </template>
       </Column>
-      <Column field="updated_at" header="Updated at" />
     </KTADataTable>
   </LayoutsCompanyManageCompanyLayout>
 </template>
+
+<style lang="scss" scoped>
+:deep(.p-datatable .p-datatable-thead > tr > th) {
+  white-space: nowrap;
+}
+:deep(.p-datatable .p-datatable-tbody > tr > td) {
+  padding: 1rem !important;
+}
+</style>

@@ -1,3 +1,4 @@
+import { USER_TOKEN } from "~/constants/authentication";
 import * as StatusCode from "~/constants/status-code";
 
 const config = useRuntimeConfig();
@@ -8,13 +9,14 @@ class ApiClient {
   private static inst: ApiClient;
 
   private client: any;
-
+  private typeToken: string;
   constructor(enforcer: any) {
     if (enforcer !== singletonEnforcer) {
       throw new Error("Cannot initialize client single instance");
     }
 
     this.client = $fetch.create(this.makeClient());
+    this.typeToken = USER_TOKEN
   }
 
   static get instance(): ApiClient {
@@ -58,14 +60,14 @@ class ApiClient {
   }
 
   getHeaders(): Object {
-    // const token = getToken();
+    const token = getToken(this.typeToken);
     let headers = {
-      Accept: "application/json",
+      Accept: "application/json"
     };
 
-    // if (token) {
-    //   headers = Object.assign(headers, { Authorization: `Bearer ${token}` });
-    // }
+    if (token) {
+      headers = Object.assign(headers, { Authorization: `Bearer ${token}` });
+    }
 
     // if (config.public.API_TYPE === "tenant") {
     //   headers = Object.assign(headers, {
@@ -76,38 +78,45 @@ class ApiClient {
     return headers;
   }
 
-  get(url: string, params: Object = {}): Promise<any> {
-    console.log(123);
+  get(url: string, params: Object = {}, type: string = USER_TOKEN): Promise<any> {
+    this.typeToken = type;
 
-    return null;
-    // return this.client(url, {
-    //   method: "GET",
-    //   query: params,
-    // });
+    return this.client(url, {
+      method: "GET",
+      query: params,
+    });
   }
 
-  post(url: string, data: Object = {}): Promise<any> {
+  post(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+    this.typeToken = type;
+
     return this.client(url, {
       method: "POST",
       body: data,
     });
   }
 
-  put(url: string, data: Object = {}): Promise<any> {
+  put(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+    this.typeToken = type;
+
     return this.client(url, {
       method: "PUT",
       body: data,
     });
   }
 
-  patch(url: string, data: Object = {}): Promise<any> {
+  patch(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+    this.typeToken = type;
+
     return this.client(url, {
       method: "PATCH",
       body: data,
     });
   }
 
-  delete(url: string, data: Object = {}): Promise<any> {
+  delete(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+    this.typeToken = type;
+    
     return this.client(url, {
       method: "DELETE",
       body: data,
