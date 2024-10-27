@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { PostEntity } from "~/entities/user/post";
+import type { BasicPostEntity } from "~/entities/user/post";
 
 const props = defineProps({
   posts: {
-    type: Array<PostEntity>,
+    type: Array<BasicPostEntity>,
     default: [],
   },
 });

@@ -28,6 +28,18 @@ export const delayFunc = (countTime: number) => {
 };
 
 /**
+ * Sleep
+ *
+ * @param ms
+ * @returns
+ */
+export const sleep = (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+};
+
+/**
  * Mapping JobAttribute to TreeNode
  *
  * @param {jobAttributes} AttributeTypeEntity Attribute need mapping
@@ -84,57 +96,60 @@ export const mappingJobAttribute = (data: JobAttributeEntity[]): TreeNode[] => {
 
 /**
  * Mapping job attribute id to PartialSelectedNode[] with key
- * 
+ *
  * @param {dataNode} TreeNode[] from mapping Attribute job
  * @param {data} number[] id job attribute
  * @returns {result} PartialSelectedNode[]
  */
-export const mappingResultData = (treeNodes: TreeNode[], ids: number[]): {
-  data: PartialSelectedNode[], 
-  countChild: number, 
-  parentPartialChecked: boolean
+export const mappingResultData = (
+  treeNodes: TreeNode[],
+  ids: number[],
+): {
+  data: PartialSelectedNode[];
+  countChild: number;
+  parentPartialChecked: boolean;
 } => {
   let result: PartialSelectedNode[] = [];
   let parentPartialChecked = false;
   let countChild = 0;
   // Check if treeNodes & ids are available
   if (treeNodes && treeNodes.length > 0 && ids && ids.length > 0) {
-    // iterate treeNode    
+    // iterate treeNode
     treeNodes.forEach((node) => {
       if (node.children && node.children?.length > 0) {
         //
         const childArr = mappingResultData(node.children, ids);
         let countExist = 0;
 
-        // iterate PartialSelectedNode 
-        childArr.data.forEach((_,key) => {
+        // iterate PartialSelectedNode
+        childArr.data.forEach((_, key) => {
           if (_ && key) {
             result[key] = _;
             countExist++;
           }
-        })
-        
+        });
+
         // Check if any PartialSelectedNode in array
         if (countExist > 0) {
           result[Number(node.key)] = {
             checked: childArr.countChild === node.children?.length,
-            partialChecked: childArr.parentPartialChecked
-          };  
-          
+            partialChecked: childArr.parentPartialChecked,
+          };
+
           parentPartialChecked = true;
         }
       } else {
         if (ids.includes(Number(node.key), 0)) {
           result[Number(node.key)] = {
             checked: true,
-            partialChecked: false
-          };    
+            partialChecked: false,
+          };
           countChild++;
           parentPartialChecked = true;
         }
       }
-    })
+    });
   }
 
-  return { data:result, countChild , parentPartialChecked};
-}
+  return { data: result, countChild, parentPartialChecked };
+};

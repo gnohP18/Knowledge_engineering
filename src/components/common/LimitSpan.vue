@@ -34,7 +34,7 @@ const props = defineProps({
       v-tooltip="props.text"
       :class="`${props.parentClass} ${props.isPrimaryText ? 'primary-text' : ''}`"
     >
-      {{ substringWithLimitCharacters(props.text, props.limit).textSub }}...
+      {{ substringWithLimitCharacters(props.text, props.limit, true).textSub }}
     </span>
   </div>
 </template>

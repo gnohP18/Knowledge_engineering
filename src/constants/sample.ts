@@ -167,7 +167,7 @@ export const COMPANY_SAMPLE: CompanyEntity[] = [
 
 export const JOB_SAMPLE: BasicJobEntity[] = [
   {
-    id: "1",
+    id: 1,
     title: "Job ngon tháng 10/2024",
     description: "Base on Tokyo",
     salary_from: 1000,
@@ -181,7 +181,7 @@ export const JOB_SAMPLE: BasicJobEntity[] = [
     company: COMPANY_SAMPLE[0],
   },
   {
-    id: "2",
+    id: 2,
     title: "Job ngon tháng 10/2024",
     description: "Base on Tokyo",
     salary_from: 1000,
@@ -195,7 +195,7 @@ export const JOB_SAMPLE: BasicJobEntity[] = [
     company: COMPANY_SAMPLE[1],
   },
   {
-    id: "3",
+    id: 3,
     title: "Job ngon tháng 10/2024",
     description: "Base on Tokyo",
     salary_from: 1000,
@@ -209,7 +209,7 @@ export const JOB_SAMPLE: BasicJobEntity[] = [
     company: COMPANY_SAMPLE[2],
   },
   {
-    id: "4",
+    id: 4,
     title: "Job ngon tháng 10/2024",
     description: "Base on Tokyo",
     salary_from: 1000,

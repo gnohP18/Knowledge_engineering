@@ -1,26 +1,27 @@
 import type { BasicCompanyEntity } from "./company";
 
 export interface JobEntity {
-  id?: string;
+  id?: number;
   title?: string;
   description?: string;
   salary_from?: number;
   salary_upto?: number;
   number_of_position?: number;
   position_name?: string;
-  type_of_employee?: string;
+  type_of_employee?: number;
   working_time?: string;
   expected_onboard_date?: string;
   close_date?: string;
-  company_id?: string;
   address?: string;
-  hashtag?: string[];
-  interview_type?: string;
-  media_file_id?: string;
+  interview_type?: number;
+  is_applied?: boolean;
+  number_of_applicants?: number;
+  job_attribute?: string[];
+  company: BasicCompanyEntity;
 }
 
 export interface BasicJobEntity {
-  id?: string;
+  id?: number;
   title?: string;
   description?: string;
   salary_from?: number;
@@ -32,4 +33,15 @@ export interface BasicJobEntity {
   hashtag?: number[];
   interview_type?: string;
   company?: BasicCompanyEntity;
+}
+
+export interface AttachmentJob {
+  id?: number,
+  title?: string,
+  salary_from?: number,
+  salary_upto?: number,
+  vacancy?: number,
+  position_name?: number,
+  type_of_employee?: number,
+  address?: string
 }
