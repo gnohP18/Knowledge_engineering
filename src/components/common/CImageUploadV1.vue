@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import KTALoadingAction from "../common/KTALoading.vue";
 interface Props {
   label?: string;
   required?: boolean;
@@ -9,7 +10,11 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits(["handleSelectFile", "handleRemoveFile"]);
+const emit = defineEmits([
+  "handleSelectFile",
+  "handleRemoveFile",
+  "handleTransferFile",
+]);
 const { label, required, error, defaultImgValue, maxSize } = toRefs(props);
 const filesSelect = ref(null);
 const imageAcceptTypes = "image/jpg,image/jpeg,image/gif,image/png";
@@ -44,9 +49,10 @@ const handleSelect = async (data: any) => {
 
     formData.append("file", data.files[0]);
 
-    const upload = await callApiUploadImage(formData);
+    // const upload = await callApiUploadImage(formData);
 
-    emit("handleSelectFile", upload?.id);
+    // emit("handleSelectFile", upload?.id);
+    emit("handleTransferFile", data.files[0]);
 
     isLoading.value = false;
   }

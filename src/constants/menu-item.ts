@@ -11,12 +11,16 @@ import {
   COMPANY_INTERVIEW_UPDATE_STATUS, 
   COMPANY_JOB, COMPANY_JOB_CREATE, 
   COMPANY_POST, 
-  COMPANY_POST_CREATE 
+  COMPANY_POST_CREATE, 
+  USER_APPLICATION, 
+  USER_JOB, 
+  USER_PROFILE
 } from "./route";
 
 export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
   {
     label: "Profile",
+    url: USER_PROFILE,
     items: [
       {
         label: "Profile",
@@ -30,16 +34,14 @@ export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
     items: [
       {
         label: "Jobs",
+        url: USER_JOB,
         icon: "pi pi-briefcase",
       },
       {
         label: "Application",
+        url: USER_APPLICATION,
         icon: "pi pi-file",
-      },
-      {
-        label: "Settings",
-        icon: "pi pi-cog",
-      },
+      }
     ],
   },
 ];

@@ -1,0 +1,38 @@
+<script lang="ts" setup>
+import { USER_TOKEN } from "~/constants/authentication";
+import { userStore } from "~/stores/user/user";
+
+definePageMeta({
+  layout: "user",
+});
+
+const store = userStore();
+const route = useRoute();
+const isLoading = computed(() => store.isLoading);
+const isSucceed = computed(() => store.isSucceed);
+
+const job = computed(() => store.job);
+
+useHead({ title: computed(() => store.job.title).value });
+
+onMounted(async () => {
+  await store.getDetailJob(Number(route.params.id));
+});
+
+const applyJob = async () => {
+  if (checkAuth(USER_TOKEN)) {
+    await store.applyJob(Number(route.params.id));
+
+    if (!isLoading.value && isSucceed.value) {
+      toastSuccess("Success", "Apply job successfully");
+    }
+  }
+};
+</script>
+
+<template>
+  <div class="w-full flex flex-col">
+    <UserJobDetailCard :job="job" @apply-job="applyJob" />
+  </div>
+</template>
+<style lang="scss" scoped></style>

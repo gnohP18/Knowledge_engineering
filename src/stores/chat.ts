@@ -1,5 +1,4 @@
 import { predictAPI } from "~/api/model";
-import type { Job, JobResult } from "~/entities/job";
 import type { PredictResponse } from "~/entities/message";
 
 interface State {

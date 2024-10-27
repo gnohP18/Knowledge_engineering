@@ -6,6 +6,7 @@ export const USER_SIGNUP = '/signup';
 export const USER_PROFILE = '/profile';
 export const USER_APPLICATION = '/applications';
 export const USER_JOB = '/jobs';
+export const USER_POST = '/posts';
 export const USER_CONNECTOR = '/connectors';
 
 /**

@@ -13,6 +13,7 @@
 a {
   &:hover {
     color: $primaryLinkColor;
+    transition: 0.5s;
   }
 }
 
@@ -44,12 +45,14 @@ html {
     color: black;
     border-width: 1px;
     border-color: $primaryTextHoverColor;
+    transition: 0.3s;
   }
 }
 
 .span-primary-hover {
   &:hover {
     color: $primaryLinkColor;
+    transition: 0.1s;
   }
 }
 

@@ -1,5 +1,3 @@
-import type { BasicJobEntity } from "./job";
-
 export interface CompanyEntity {
   id?: string;
   name?: string;
@@ -17,6 +15,7 @@ export interface CompanyEntity {
   connect_company?: number[];
   connect_user?: number[];
   status?: string;
+  company?: BasicCompanyEntity[]
 }
 
 export interface BasicCompanyEntity {

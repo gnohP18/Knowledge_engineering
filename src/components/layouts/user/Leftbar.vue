@@ -2,7 +2,6 @@
 import { MENU_ITEM_LEFT_BAR } from "~/constants/menu-item";
 import ProfileCard from "../../user/ProfileCard.vue";
 import { userStore } from "~/stores/user/user";
-import { USER_TOKEN } from "~/constants/authentication";
 
 const store = userStore();
 const user = computed(() => store.user);
@@ -20,7 +19,7 @@ const user = computed(() => store.user);
         <template #item="{ item, props }">
           <a v-ripple class="flex align-items-center" v-bind="props.action">
             <span :class="item.icon" />
-            <span class="pl-2">{{ item.label }}</span>
+            <a :href="item.url" class="pl-2">{{ item.label }}</a>
             <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
             <span
               v-if="item.shortcut"
