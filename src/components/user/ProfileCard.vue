@@ -6,12 +6,24 @@ const props = defineProps({
     type: Object as PropType<UserEntity>,
   },
 });
+const urlBg = ref<string>("/images/bg_1.jfif");
 
-onMounted(() => {});
+const urlBgArr = [
+  "/images/bg_1.jfif",
+  "/images/bg_2.jfif",
+  "/images/bg_3.jfif",
+  "/images/bg_4.jfif",
+];
+
+onMounted(() => {
+  urlBg.value = urlBgArr[Math.floor(Math.random() * urlBgArr.length)];
+});
 </script>
 <template>
   <div class="flex flex-col w-full h-full">
-    <div class="bg-black w-full h-1/2"></div>
+    <div class="bg-black w-full h-1/2">
+      <img :src="urlBg" alt="" />
+    </div>
     <div class="bg-white w-full h-1/2 flex flex-col justify-between gap-2 px-2">
       <div class="w-full relative">
         <img
