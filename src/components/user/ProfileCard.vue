@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { DEFAULT_AVATAR_URL } from "~/constants/common";
 import type { UserEntity } from "~/entities/user/user";
 
 const props = defineProps({
@@ -27,7 +28,7 @@ onMounted(() => {
     <div class="bg-white w-full h-1/2 flex flex-col justify-between gap-2 px-2">
       <div class="w-full relative">
         <img
-          :src="props.user?.avatar"
+          :src="props.user?.avatar ?? DEFAULT_AVATAR_URL"
           alt=""
           class="absolute rounded-full w-[75px] h-[75px] top-[-35px]"
         />

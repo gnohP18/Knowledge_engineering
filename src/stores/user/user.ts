@@ -63,8 +63,17 @@ export const userStore = defineStore("userStore", {
 
     async getDetail(): Promise<any> {
       this.$state.isLoading = true;
-
-      this.$state.user = await getDetailApi();
+      await getDetailApi()
+        .then((result) => {
+          this.$state.user = result[0];
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
 
       this.$state.isLoading = false;
     },

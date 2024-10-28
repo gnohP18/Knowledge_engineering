@@ -1,15 +1,9 @@
+import axios from "axios";
+import { USER_TOKEN } from "~/constants/authentication";
 import type { DataPostEntity } from "~/entities/user/post";
 
 export const getDetailApi = (): Promise<any> => {
-  // return axios
-  //   .post(`${API_URL}/model/predict`, { text: text })
-  //   .then((result) => {
-  //     return result.data
-  //   });
-
-  return fetch("/data/user/user.json")
-    .then((res) => res.json())
-    .then((d) => d.data);
+  return apiClient.get(`/user-service/users/1`, {}, USER_TOKEN);
 };
 
 export const getSuggestConnectorApi = (): Promise<any> => {
@@ -71,6 +65,13 @@ export const getHashtagListApi = (): Promise<any> => {
 };
 
 export const createPostApi = (data: DataPostEntity): Promise<any> => {
+  return fetch("/data/response/success.json").then((res) => res.json());
+};
+
+export const searchJobApi = (param: Object): Promise<any> => {
+  console.log(param);
+
+  const data = axios.get("localhost:3000", { params: param });
   console.log(data);
 
   return fetch("/data/response/success.json").then((res) => res.json());

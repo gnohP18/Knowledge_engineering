@@ -6,8 +6,10 @@ export const loginApi = (userLogin: UserLoginEntity): Promise<any> => {
   //   .then((result) => {
   //     return result.data
   //   });
+  const entity = {
+    UserName: userLogin.email,
+    password: userLogin.password,
+  };
 
-  return fetch("/data/user/auth.json")
-    .then((res) => res.json())
-    .then((d) => d.data);
+  return apiClient.post("/authen-service/auth/login", entity);
 };

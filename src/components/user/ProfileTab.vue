@@ -8,33 +8,20 @@ import KTATextArea from "../common/KTATextArea.vue";
 import { HASHTAG_EXAMPLE } from "~/constants/sample";
 import KTAButton from "../common/KTAButton.vue";
 
+const props = defineProps({
+  user: {
+    type: Object as PropType<UserEntity>,
+  },
+});
+
 const genderOption = ref([
   { name: "Male", code: "male" },
   { name: "Female", code: "female" },
 ]);
 
-const user = ref<UserEntity>({
-  id: "1",
-  last_name: "phong",
-  first_name: "nguyen hoang",
-  date_of_birth: "2002/18/04",
-  avatar: "/images/avatar_2.jpg",
-  email: "nhphong1804@gmail.com",
-  address: "Da Nang",
-  detail_address: "Lien Chieu",
-  is_married: false,
-  gender: "male",
-  self_introduce: "I'm currently student in Da Nang University of technology",
-  life_goal: "Become a solution architeccture",
-  job_title: "Backend developer",
-  hashtag: [1, 2, 3, 6, 8, 9],
-  connect_company: [],
-  connect_user: [],
-});
-
-const handleRemoveFile = () => {
-  user.value.avatar = "";
-};
+// const handleRemoveFile = () => {
+//  user.value.avatar = "";
+// };
 
 const selectedGender = { name: "Male", code: "male" };
 const selectedHashtag = ref([
@@ -44,19 +31,23 @@ const selectedHashtag = ref([
   { code: "4", name: "Project Management" },
   { code: "5", name: "Data Analysis" },
 ]);
+
+onMounted(() => {
+  console.log(props.user);
+});
 </script>
 <template>
-  <div class="flex flex-col w-full p-3 gap-x-4">
+  <div v-if="props.user" class="flex flex-col w-full p-3 gap-x-4">
     <div class="container-group-input w-full columns-2">
       <KTAInput
-        v-model="user.first_name"
+        v-model="props.user.first_name"
         :label="'First name'"
         required
         :validate-message="'Invalid first name'"
         :class="'w-full'"
       />
       <KTAInput
-        v-model="user.last_name"
+        v-model="props.user.last_name"
         :label="'Last name'"
         required
         :validate-message="'Invalid last name'"
@@ -67,7 +58,7 @@ const selectedHashtag = ref([
       <KTACalendar
         :label="'Date of birth'"
         :class="'w-full'"
-        v-model="user.date_of_birth"
+        v-model="props.user.date_of_birth"
       />
       <KTADropdown
         label="Gender"
@@ -79,14 +70,14 @@ const selectedHashtag = ref([
     </div>
     <div class="container-group-input w-full columns-2">
       <KTAInput
-        v-model="user.address"
+        v-model="props.user.address"
         label="Address"
         required
         :validate-message="'Invalid address'"
         :class="'w-full'"
       />
       <KTAInput
-        v-model="user.detail_address"
+        v-model="props.user.detail_address"
         label="Detail address"
         required
         :validate-message="'Invalid detail address'"
@@ -95,13 +86,13 @@ const selectedHashtag = ref([
     </div>
     <div class="container-group-input w-full columns-2">
       <div class="flex items-center">
-        <Checkbox v-model="user.is_married" :binary="true" />
+        <Checkbox v-model="props.user.is_married" :binary="true" />
         <label for="is_married" class="ml-2"> Is married </label>
       </div>
     </div>
     <div class="container-group-input w-full">
       <CImageUploadV1
-        :default-img-value="user.avatar"
+        :default-img-value="props.user.avatar"
         label="Avatar"
         name="logo"
         class="text-sm"
@@ -111,14 +102,14 @@ const selectedHashtag = ref([
     </div>
     <div class="container-group-input w-full columns-2">
       <KTAInput
-        v-model="user.email"
+        v-model="props.user.email"
         label="Email"
         required
         validate-message="Invalid Email"
         :class="'w-full'"
       />
       <KTAInput
-        v-model="user.job_title"
+        v-model="props.user.job_title"
         label="Job title"
         required
         :validate-message="'Invalid detail address'"
@@ -139,12 +130,12 @@ const selectedHashtag = ref([
     </div>
     <KTATextArea
       label="Self introduction"
-      v-model="user.self_introduce"
+      v-model="props.user.self_introduce"
       class="w-full min-h-[150px] font-bold container-group-input"
     />
     <KTATextArea
       label="Life goal"
-      v-model="user.life_goal"
+      v-model="props.user.life_goal"
       class="w-full min-h-[150px] font-bold container-group-input"
     />
     <div class="w-full flex justify-end px-2 py-4">

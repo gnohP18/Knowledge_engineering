@@ -37,7 +37,7 @@ export const AuthStore = defineStore("AuthStore", {
         .then((result) => {
           const redirectUrl = lastWorkspace ?? "/";
 
-          setToken(USER_TOKEN, result.access_token);
+          setToken(USER_TOKEN, result.token);
 
           navigateTo(redirectUrl, { external: true });
         })
