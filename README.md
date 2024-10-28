@@ -94,3 +94,17 @@ bun run preview
 	6. git push origin branh_name -f
 
 ### có thể rebase từ remote repo: git pull --rebase origin develop
+
+### Update github repo to deploy
+
+```sh
+# add one time use
+git remote add gitlab git@gitlab.com:tpham1467/ke_frontend.git
+```
+
+```sh
+# update code
+git fetch gitlab
+git rebase gitlab/develop
+git push 
+```
