@@ -1,15 +1,18 @@
 <script lang="ts" setup>
 import { MENU_ITEM_LEFT_BAR } from "~/constants/menu-item";
 import ProfileCard from "../../user/ProfileCard.vue";
-import { userStore } from "~/stores/user/user";
+import type { UserEntity } from "~/entities/user/user";
 
-const store = userStore();
-const user = computed(() => store.user);
+const props = defineProps({
+  user: {
+    type: Object as PropType<UserEntity>,
+  },
+});
 </script>
 <template>
   <div class="w-full h-full flex flex-col gap-y-2">
     <div class="primary-card common-rounded min-h-[30%] w-full">
-      <ProfileCard :user="user" />
+      <ProfileCard v-if="props.user" :user="props.user" />
     </div>
     <div class="primary-card w-full">
       <Menu :model="MENU_ITEM_LEFT_BAR" class="w-full">
@@ -17,7 +20,7 @@ const user = computed(() => store.user);
           <span class="text-black font-bold">{{ item.label }}</span>
         </template>
         <template #item="{ item, props }">
-          <a v-ripple class="flex align-items-center" v-bind="props.action">
+          <div v-ripple class="flex align-items-center" v-bind="props.action">
             <span :class="item.icon" />
             <a :href="item.url" class="pl-2">{{ item.label }}</a>
             <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
@@ -26,7 +29,7 @@ const user = computed(() => store.user);
               class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1"
               >{{ item.shortcut }}</span
             >
-          </a>
+          </div>
         </template>
       </Menu>
     </div>
@@ -34,11 +37,8 @@ const user = computed(() => store.user);
       <span class="text-md">SKILL HASHTAG</span>
       <hr class="w-full py-1" />
       <div class="flex flex-wrap gap-2">
-        <div v-for="hashtag in user.hashtag">
-          <Chip
-            class="text-xs p-1"
-            :label="`#${mappingHashtag(hashtag).name}`"
-          />
+        <div v-for="hashtag in props.user?.hashtag">
+          <Chip class="text-xs p-1" :label="`#${mappingHashtag(hashtag)}`" />
         </div>
       </div>
     </div>

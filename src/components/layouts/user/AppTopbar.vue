@@ -18,10 +18,10 @@ const items: MenuItem[] = [
     icon: "pi pi-file",
     route: "/applications",
   },
-  {
-    icon: "pi pi-search",
-    route: "/login",
-  },
+  // {
+  //   icon: "pi pi-search",
+  //   route: "/login",
+  // },
   {
     icon: "pi pi-user",
     route: "/profile",

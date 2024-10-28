@@ -15,6 +15,7 @@ definePageMeta({
 });
 
 const store = userStore();
+const user = computed(() => store.user);
 
 const active = ref<number>(2);
 
@@ -22,12 +23,6 @@ const maybeKnowConnectors = ref<ConnectorEntity[]>();
 
 onMounted(async () => {
   await store.getDetail();
-  maybeKnowConnectors.value = [
-    CONNECTOR_SAMPLE[4],
-    CONNECTOR_SAMPLE[5],
-    CONNECTOR_SAMPLE[6],
-    CONNECTOR_SAMPLE[7],
-  ];
 });
 </script>
 
@@ -37,10 +32,10 @@ onMounted(async () => {
       <TabMenu v-model:activeIndex="active" :model="MENU_PROFILE" />
       <ApplicationTab v-if="active == 0" />
       <ResumeTab v-if="active == 1" />
-      <ProfileTab v-if="active == 2" />
+      <ProfileTab :user="user" v-if="active == 2" />
     </div>
     <div class="flex flex-1 flex-col gap-2 items-start justify-start">
-      <CompleteProfile :user="USER_EXAMPLE" />
+      <CompleteProfile :user="user" />
       <div class="flex w-full justify-center">
         <a
           href="/profile/preview"
@@ -49,11 +44,11 @@ onMounted(async () => {
           <span class="pi pi-eye font-bold pr-2"></span>Preview profile
         </a>
       </div>
-      <label class="w-full p-3 bg-white rounded-2xl font-bold">
+      <!-- <label class="w-full p-3 bg-white rounded-2xl font-bold">
         <span class="pi pi-users font-bold pr-2"></span>
         Suggest Connector
         <SuggestConnector :connectors="maybeKnowConnectors" />
-      </label>
+      </label> -->
     </div>
   </div>
 </template>

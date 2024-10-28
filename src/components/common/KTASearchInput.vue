@@ -27,16 +27,17 @@
         </svg>
       </div>
       <InputText
-        type="search"
+        v-bind="$attrs"
         class="searching-input block w-full p-4 ps-10 text-sm text-gray-900 border rounded-2xl"
         placeholder="Job searching..."
         required
       />
-      <Button
-        type="submit"
+      <!-- <Button
         class="border text-black absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2"
+        @click="search"
+        @keydown.ctrl.enter="search"
         >Search</Button
-      >
+      > -->
     </div>
   </div>
 </template>

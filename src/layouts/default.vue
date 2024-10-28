@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import AppTopBar from "~/components/layouts/user/AppTopbar.vue";
 import Rightbar from "~/components/layouts/user/Rightbar.vue";
 import Leftbar from "~/components/layouts/user/Leftbar.vue";
@@ -6,8 +6,8 @@ import { USER_TOKEN } from "~/constants/authentication";
 import { userStore } from "~/stores/user/user";
 
 const store = userStore();
-
-onMounted(async () => {
+const user = computed(() => store.user);
+onBeforeMount(async () => {
   await store.getDetail();
   await store.getSuggestConnector();
 });
@@ -24,7 +24,7 @@ onMounted(async () => {
           v-if="checkAuth(USER_TOKEN)"
           class="left-bar-container h-full py-4 pr-2"
         >
-          <Leftbar />
+          <Leftbar :user="user" />
         </div>
         <div class="flex-1 py-4 px-2">
           <slot />
