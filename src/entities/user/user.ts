@@ -8,10 +8,10 @@ export interface UserEntity {
   address?: string;
   detail_address?: string;
   is_married?: boolean;
-  gender?: string;
+  gender?: number;
   self_introduce?: string;
   life_goal?: string;
-  job_title?: string;
+  job_position?: number;
   hashtag: number[];
   connect_company: number[];
   connect_user: number[];

@@ -9,7 +9,7 @@ export interface BasicJobEntity {
 }
 
 export interface PositionNameEntity {
-  id?: string;
+  id?: number;
   name?: string;
 }
 
@@ -30,15 +30,15 @@ export interface JobAttributeEntity {
 export interface JobEntity {
   id?: string;
   title?: string;
-  position_id?: string;
+  position_id?: number;
   status?: number;
   description?: string;
   type_of_employee?: number;
   number_of_position?: number;
-  working_time?: string,
-  expected_onboard_date?: string,
-  close_date?: string,
-  address?: string,
-  interview_type?: number,
-  job_attribute? : string[],
+  working_time?: string;
+  expected_onboard_date?: string;
+  close_date?: string;
+  address?: string;
+  interview_type?: number;
+  job_attribute?: string[];
 }

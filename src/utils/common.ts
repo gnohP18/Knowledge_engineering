@@ -1,6 +1,4 @@
-import { isArray } from "lodash-es";
 import type { TreeNode } from "primevue/treenode";
-import type { number, string } from "zod";
 import { HASHTAG_EXAMPLE } from "~/constants/sample";
 import type { PartialSelectedNode } from "~/entities/common";
 import type {
@@ -152,4 +150,15 @@ export const mappingResultData = (
   }
 
   return { data: result, countChild, parentPartialChecked };
+};
+
+/**
+ * parse object to options select
+ * @param object object need to parse
+ * @returns
+ */
+export const convertOptions = (object: Object) => {
+  return Object.keys(object).map((_) => {
+    return { id: _, name: String(object[_ as keyof Object]) };
+  });
 };

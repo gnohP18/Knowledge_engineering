@@ -5,7 +5,7 @@ export interface CompanyEntity {
   phone?: string;
   email?: string;
   logo?: string;
-  company_type?: string;
+  company_type?: number;
   address?: string;
   detail_address?: string;
   size?: number;
@@ -15,13 +15,13 @@ export interface CompanyEntity {
   connect_company?: number[];
   connect_user?: number[];
   status?: string;
-  company?: BasicCompanyEntity[]
+  company?: BasicCompanyEntity[];
 }
 
 export interface BasicCompanyEntity {
   id?: string;
   name?: string;
-  company_type?: string;
+  company_type?: number;
   address?: string;
   size?: number;
   logo?: string;

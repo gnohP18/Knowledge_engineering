@@ -1,11 +1,11 @@
 import {
   applyJobApi,
   createPostApi,
-  getDetailApi,
   getDetailJobApi,
   getDetailPostApi,
   getHashtagListApi,
   getIndexPostApi,
+  getResumeListApi,
   getSuggestConnectorApi,
   getSuggestConnectorListApi,
 } from "~/api/user/user";
@@ -17,6 +17,7 @@ import type {
   DataPostEntity,
   HashtagEntity,
 } from "~/entities/user/post";
+import type { BasicResumeEntity } from "~/entities/user/resume";
 import type { ConnectorEntity, UserEntity } from "~/entities/user/user";
 
 interface State {
@@ -28,6 +29,7 @@ interface State {
   posts: BasicPostEntity[];
   post: BasicPostEntity;
   job: JobEntity;
+  resumes: BasicResumeEntity[];
   attachmentJobs: AttachmentJob[];
   hashtags: HashtagEntity[];
   errors: ErrorData;
@@ -50,6 +52,7 @@ const defaultState: State = {
   post: {},
   attachmentJobs: [],
   hashtags: [],
+  resumes: [],
   errors: {},
 };
 
@@ -59,23 +62,6 @@ export const userStore = defineStore("userStore", {
   actions: {
     resetState() {
       this.$state = defaultState;
-    },
-
-    async getDetail(): Promise<any> {
-      this.$state.isLoading = true;
-      await getDetailApi()
-        .then((result) => {
-          this.$state.user = result[0];
-        })
-        .catch((err) => {
-          this.$state.isSucceed = false;
-          this.$state.errors = handleApiErrors(err);
-        })
-        .finally(() => {
-          this.$state.isLoading = false;
-        });
-
-      this.$state.isLoading = false;
     },
 
     /**
@@ -225,6 +211,23 @@ export const userStore = defineStore("userStore", {
         .finally(() => {
           this.$state.isLoading = false;
         });
+    },
+
+    /**
+     * Get list resume have pagiantion
+     * @param params Object params like limit, page
+     */
+    async getResumeList(params: Object): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      const { data, meta } = await getResumeListApi(params);
+      console.log(data);
+
+      this.$state.resumes = data;
+      this.$state.meta = meta;
+
+      this.$state.isLoading = false;
     },
   },
 });

@@ -3,6 +3,7 @@ import { USER_TOKEN } from "~/constants/authentication";
 import type { QueryParamsEntity } from "~/entities/common";
 import * as Pagination from "~/constants/pagination";
 import { userStore } from "~/stores/user/user";
+import { AuthStore } from "~/stores/user/auth";
 
 useHead({ title: "Job finding" });
 
@@ -11,10 +12,11 @@ definePageMeta({
 });
 
 const store = userStore();
+const userAuthStore = AuthStore();
 const route = useRoute();
 const isLoading = computed(() => store.isLoading);
 const isSucceed = computed(() => store.isSucceed);
-const userAuth = computed(() => store.user);
+const me = computed(() => userAuthStore.me);
 const posts = computed(() => store.posts);
 const currentPage = ref<number>(1);
 
@@ -27,7 +29,7 @@ onMounted(async () => {
   const param = {};
   if (checkAuth(USER_TOKEN)) {
     queryParams = Object.assign(queryParams, {
-      hashtag: userAuth.value.hashtag,
+      hashtag: me.value.hashtag,
     });
   }
 
@@ -55,8 +57,7 @@ const handleScroll = async () => {
       class="overflow-scroll w-full post-list flex flex-col gap-2"
       @scroll="handleScroll"
     >
-      <UserCreatePost :user="userAuth" />
-
+      <UserCreatePost v-if="checkAuth(USER_TOKEN)" :user="me" />
       <PostList :posts="posts" />
     </div>
     <div v-if="isLoading" class="w-full relative flex justify-center">

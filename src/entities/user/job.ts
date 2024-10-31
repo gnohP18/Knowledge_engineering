@@ -25,9 +25,9 @@ export interface BasicJobEntity {
   title?: string;
   description?: string;
   salary_from?: number;
-  salary_upto?: number;
+  salary_up_to?: number;
   position_name?: string;
-  type_of_employee?: string;
+  type_of_employee?: number;
   vacancy?: number;
   address?: string;
   hashtag?: number[];
@@ -45,13 +45,7 @@ export interface SearchingJobEntity {
   type_of_employee?: string;
   vacancy?: number;
   address?: string;
-  interview_type?: string;
-  company_id?: string;
-  company_name?: string;
-  company_type?: string;
-  company_address?: string;
-  company_size?: number;
-  company_logo?: string;
+  company?: BasicCompanyEntity;
 }
 
 export interface AttachmentJob {
@@ -63,4 +57,9 @@ export interface AttachmentJob {
   position_name?: number;
   type_of_employee?: number;
   address?: string;
+}
+
+export interface PositionEntity {
+  id?: number;
+  name?: string;
 }

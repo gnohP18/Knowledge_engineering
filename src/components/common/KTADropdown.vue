@@ -28,7 +28,10 @@ const props = defineProps({
 </script>
 <template>
   <div :class="props.parentClass">
-    <label v-if="label.length > 0" class="block mb-2 text-sm">
+    <label
+      v-if="label.length > 0"
+      class="block mb-2 text-sm span-primary-hover"
+    >
       {{ props.label }}
       <strong v-if="props.required" class="text-red-500">*</strong>
     </label>

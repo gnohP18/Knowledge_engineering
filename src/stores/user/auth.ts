@@ -1,18 +1,21 @@
-import { loginApi } from "~/api/user/auth";
+import { getMeApi, loginApi } from "~/api/user/auth";
 import { USER_LAST_WORKSPACE, USER_TOKEN } from "~/constants/authentication";
 import type { ErrorData } from "~/entities/api-error";
 import type { UserLoginEntity } from "~/entities/user/auth";
+import type { UserEntity } from "~/entities/user/user";
 
 interface State {
   isLoading: Boolean;
   isSucceed: Boolean;
   errors: ErrorData;
+  me: UserEntity;
 }
 
 const defaultState: State = {
   isLoading: false,
   isSucceed: false,
   errors: {},
+  me: { connect_company: [], connect_user: [], hashtag: [] },
 };
 
 export const AuthStore = defineStore("AuthStore", {
@@ -42,8 +45,42 @@ export const AuthStore = defineStore("AuthStore", {
           navigateTo(redirectUrl, { external: true });
         })
         .catch((err) => {
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
           this.$state.isLoading = false;
+        });
 
+      this.$state.isLoading = false;
+    },
+
+    /**
+     * Logout
+     */
+    async logout(): Promise<any> {
+      this.$state.isLoading = true;
+
+      setToken(USER_TOKEN, "");
+
+      const router = useRouter();
+      await router.push("/");
+      this.$state.isLoading = false;
+    },
+
+    /**
+     * Get auth profile
+     */
+    async getMe(): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await getMeApi()
+        .then((result) => {
+          this.$state.me = result[0];
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
           this.$state.errors = handleApiErrors(err);
         })
         .finally(() => {
