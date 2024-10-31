@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from "vee-validate";
+import KTALoading from "~/components/common/KTALoading.vue";
 import Validate from "~/components/common/Validate.vue";
 import type { UserLoginEntity } from "~/entities/user/auth";
 import { userLoginSchema } from "~/schemas/user/auth.schema";
@@ -12,7 +13,7 @@ definePageMeta({
 });
 
 const store = AuthStore();
-
+const isLoading = computed(() => store.isLoading);
 const { handleSubmit, errors, defineField } = useForm({
   validationSchema: userLoginSchema,
 });
@@ -28,24 +29,24 @@ const onSubmit = handleSubmit(async (values) => {
 
   await store.login(userLogin);
 });
-
-const test = async () => {
-  await store.login({ email: "12323", password: "result.data.access_token" });
-};
 </script>
 
 <template>
-  <div class="flex w-full h-full background-login justify-center items-center">
+  <KTALoading v-if="isLoading" />
+  <div
+    v-else
+    class="flex w-full h-full background-login justify-center items-center"
+  >
     <div
       class="w-1/4 min-h-[200px] flex flex-col justify-center items-center gap-4"
     >
       <label class="text-2xl text-white font-bold">LOGIN</label>
       <form @submit.prevent="onSubmit" class="w-full">
         <Validate label="Email" :error="errors.email" class="w-full">
-          <CommonKTAInput v-model="email" class="w-full" />
+          <CommonKTAInput v-model="email" name="email" class="w-full" />
         </Validate>
         <Validate label="Password" :error="errors.password" class="w-full">
-          <CommonKTAInput v-model="password" class="w-full" />
+          <CommonKTAInput v-model="password" name="password" class="w-full" />
         </Validate>
         <div class="w-full flex items-center justify-center">
           <Button

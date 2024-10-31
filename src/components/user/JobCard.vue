@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import type { BasicJobEntity } from "~/entities/job";
+import type { BasicJobEntity } from "~/entities/user/job";
+import { COMPANY_TYPE } from "~/constants/company";
+import { TYPE_OF_EMPLOYEE } from "~/constants/job";
 
 const props = defineProps({
   job: {
@@ -8,6 +10,22 @@ const props = defineProps({
 });
 
 onMounted(() => {});
+
+const convertSalary = (salaryFrom: number, salaryUpto: number) => {
+  if (!salaryFrom && !salaryUpto) {
+    return "Negotiate";
+  }
+
+  if (salaryFrom && salaryUpto) {
+    return `${salaryFrom} ~ ${salaryUpto}`;
+  }
+
+  if (salaryFrom) {
+    return `Min ${salaryFrom}`;
+  }
+
+  return `Max ${salaryFrom}`;
+};
 </script>
 <template>
   <div class="primary-card flex gap-2 p-2">
@@ -26,7 +44,11 @@ onMounted(() => {});
         <label for="company_type"
           >Company type:
           <span class="font-bold">
-            {{ props.job?.company?.company_type }}
+            {{
+              COMPANY_TYPE[
+                props.job?.company?.company_type as keyof typeof COMPANY_TYPE
+              ]
+            }}
           </span>
         </label>
       </div>
@@ -34,13 +56,22 @@ onMounted(() => {});
         <label for="employee_type"
           >Type of employee:
           <span class="font-bold">
-            {{ props.job?.type_of_employee }}
+            {{
+              TYPE_OF_EMPLOYEE[
+                props.job?.type_of_employee as keyof typeof TYPE_OF_EMPLOYEE
+              ]
+            }}
           </span>
         </label>
         <label for="company_type"
           >Salary:
           <span class="font-bold">
-            {{ props.job?.salary_from }} - {{ props.job?.salary_upto }}
+            {{
+              convertSalary(
+                props.job?.salary_from ?? 0,
+                props.job?.salary_up_to ?? 0,
+              )
+            }}
           </span>
         </label>
       </div>

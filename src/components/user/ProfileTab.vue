@@ -1,12 +1,16 @@
 <script lang="ts" setup>
+import { get, isEmpty } from "lodash-es";
 import type { UserEntity } from "~/entities/user/user";
 import KTAInput from "../common/KTAInput.vue";
+import Validate from "../common/Validate.vue";
 import CImageUploadV1 from "../common/CImageUploadV1.vue";
 import KTACalendar from "../common/KTACalendar.vue";
 import KTADropdown from "../common/KTADropdown.vue";
 import KTATextArea from "../common/KTATextArea.vue";
 import { HASHTAG_EXAMPLE } from "~/constants/sample";
-import KTAButton from "../common/KTAButton.vue";
+import { useForm } from "vee-validate";
+import { userUpdateSchema } from "~/schemas/user/profile.schema";
+import type { OptionSelect } from "~/entities/common";
 
 const props = defineProps({
   user: {
@@ -14,16 +18,53 @@ const props = defineProps({
   },
 });
 
-const genderOption = ref([
-  { name: "Male", code: "male" },
-  { name: "Female", code: "female" },
-]);
+const genderOption = [
+  { name: "Male", id: 0 },
+  { name: "Female", id: 1 },
+];
+
+const { errors, defineField, setFieldValue, handleSubmit } = useForm({
+  validationSchema: userUpdateSchema,
+});
+
+const [firstName] = defineField("first_name");
+const [lastName] = defineField("last_name");
+const [dateOfBirth] = defineField("date_of_birth");
+const dateOfBirthSelected = ref<Date>();
+
+const [address] = defineField("address");
+const [detailAddress] = defineField("detail_address");
+const [email] = defineField("email");
+const [jobPosition] = defineField("job_position");
+const [selfIntroduce] = defineField("self_introduce");
+const [lifeGoal] = defineField("life_goal");
+const [gender] = defineField("gender");
+const [avatar] = defineField("avatar");
 
 // const handleRemoveFile = () => {
 //  user.value.avatar = "";
 // };
+const selectedGender = ref<OptionSelect>({ name: "Male", id: 0 });
 
-const selectedGender = { name: "Male", code: "male" };
+onMounted(() => {
+  setFieldValue("first_name", get(props.user, "first_name", ""));
+  setFieldValue("last_name", get(props.user, "last_name", ""));
+  setFieldValue("date_of_birth", get(props.user, "date_of_birth", ""));
+  dateOfBirthSelected.value = new Date(dateOfBirth.value);
+  setFieldValue("address", get(props.user, "address", ""));
+  setFieldValue("detail_address", get(props.user, "detail_address", ""));
+  setFieldValue("email", get(props.user, "email", ""));
+  setFieldValue("self_introduce", get(props.user, "self_introduce", ""));
+  setFieldValue("life_goal", get(props.user, "life_goal", ""));
+  setFieldValue("avatar", get(props.user, "avatar", ""));
+  setFieldValue("job_position", get(props.user, "job_position", 0));
+  setFieldValue("gender", get(props.user, "gender", 0));
+
+  selectedGender.value = genderOption.filter(
+    (_) => props.user?.gender === _.id,
+  )[0];
+});
+
 const selectedHashtag = ref([
   { code: "1", name: "Back End" },
   { code: "2", name: "Front End" },
@@ -32,57 +73,59 @@ const selectedHashtag = ref([
   { code: "5", name: "Data Analysis" },
 ]);
 
-onMounted(() => {
-  console.log(props.user);
+const changeGender = () => {
+  gender.value = selectedGender.value.id;
+};
+
+const changeDateOfBirth = () => {
+  dateOfBirth.value = dateOfBirthSelected.value?.toDateString();
+};
+
+const onSubmit = handleSubmit(async () => {});
+
+watch(errors, () => {
+  console.log(errors.value);
 });
 </script>
 <template>
-  <div v-if="props.user" class="flex flex-col w-full p-3 gap-x-4">
+  <form
+    v-if="props.user"
+    @submit.prevent="onSubmit"
+    class="flex flex-col w-full p-3 gap-x-4"
+  >
     <div class="container-group-input w-full columns-2">
-      <KTAInput
-        v-model="props.user.first_name"
-        :label="'First name'"
-        required
-        :validate-message="'Invalid first name'"
-        :class="'w-full'"
-      />
-      <KTAInput
-        v-model="props.user.last_name"
-        :label="'Last name'"
-        required
-        :validate-message="'Invalid last name'"
-        :class="'w-full'"
-      />
+      <Validate label="First name" :error="errors.first_name" required>
+        <KTAInput v-model="firstName" :class="'w-full'" />
+      </Validate>
+      <Validate label="Last name" :error="errors.last_name" required>
+        <KTAInput v-model="lastName" :class="'w-full'" />
+      </Validate>
     </div>
     <div class="container-group-input w-full columns-2">
-      <KTACalendar
-        :label="'Date of birth'"
-        :class="'w-full'"
-        v-model="props.user.date_of_birth"
-      />
+      <Validate label="Date of birth" :error="errors.date_of_birth" required>
+        <KTACalendar
+          :class="'w-full'"
+          v-model="dateOfBirthSelected"
+          date-format="yy-mm-dd"
+          @change="changeDateOfBirth"
+        />
+      </Validate>
       <KTADropdown
         label="Gender"
         :class="'w-full'"
         v-model="selectedGender"
         :options="genderOption"
+        @change="changeGender"
         option-label="name"
       />
     </div>
     <div class="container-group-input w-full columns-2">
-      <KTAInput
-        v-model="props.user.address"
-        label="Address"
-        required
-        :validate-message="'Invalid address'"
-        :class="'w-full'"
-      />
-      <KTAInput
-        v-model="props.user.detail_address"
-        label="Detail address"
-        required
-        :validate-message="'Invalid detail address'"
-        :class="'w-full'"
-      />
+      <Validate label="Address" :error="errors.address" required>
+        <KTAInput v-model="address" :class="'w-full'" />
+      </Validate>
+      <Validate label="Detail address" :error="errors.detail_address" required>
+        <KTAInput v-model="detailAddress" :class="'w-full'" />
+      </Validate>
     </div>
     <div class="container-group-input w-full columns-2">
       <div class="flex items-center">
@@ -97,22 +140,16 @@ onMounted(() => {
         name="logo"
         class="text-sm"
         :max-size="5"
-        @handle-remove-file="handleRemoveFile"
+        :error="errors.avatar ?? ''"
       />
     </div>
     <div class="container-group-input w-full columns-2">
+      <Validate label="Email" :error="errors.email" required>
+        <KTAInput v-model="email" :class="'w-full'" />
+      </Validate>
       <KTAInput
-        v-model="props.user.email"
-        label="Email"
-        required
-        validate-message="Invalid Email"
-        :class="'w-full'"
-      />
-      <KTAInput
-        v-model="props.user.job_title"
-        label="Job title"
-        required
-        :validate-message="'Invalid detail address'"
+        v-model="props.user.job_position"
+        label="Job Position"
         :class="'w-full'"
       />
     </div>
@@ -128,20 +165,26 @@ onMounted(() => {
         class="w-full border"
       />
     </div>
-    <KTATextArea
-      label="Self introduction"
-      v-model="props.user.self_introduce"
-      class="w-full min-h-[150px] font-bold container-group-input"
-    />
-    <KTATextArea
-      label="Life goal"
-      v-model="props.user.life_goal"
-      class="w-full min-h-[150px] font-bold container-group-input"
-    />
+    <Validate label="Self introduction" :error="errors.self_introduce">
+      <KTATextArea
+        v-model="selfIntroduce"
+        class="w-full min-h-[150px] font-bold container-group-input"
+      />
+    </Validate>
+    <Validate label="Life goal" :error="errors.self_introduce">
+      <KTATextArea
+        v-model="lifeGoal"
+        class="w-full min-h-[150px] font-bold container-group-input"
+      />
+    </Validate>
     <div class="w-full flex justify-end px-2 py-4">
-      <KTAButton label="Save" />
+      <Button
+        label="Save"
+        type="submit"
+        class="custom-button w-[80px] h-[40px]"
+      />
     </div>
-  </div>
+  </form>
 </template>
 <style lang="scss" scoped>
 .menu-item {

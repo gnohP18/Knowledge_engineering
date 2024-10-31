@@ -1,4 +1,3 @@
-import axios from "axios";
 import { USER_TOKEN } from "~/constants/authentication";
 import type { DataPostEntity } from "~/entities/user/post";
 
@@ -68,11 +67,15 @@ export const createPostApi = (data: DataPostEntity): Promise<any> => {
   return fetch("/data/response/success.json").then((res) => res.json());
 };
 
-export const searchJobApi = (param: Object): Promise<any> => {
-  console.log(param);
+export const searchJobApi = (params: Object): Promise<any> => {
+  // return fetch("/data/response/success.json").then((res) => res.json());
+  return apiClient.get(`/job-service/jobs`, params, USER_TOKEN);
+};
 
-  const data = axios.get("localhost:3000", { params: param });
-  console.log(data);
+export const getResumeListApi = (param: Object): Promise<any> => {
+  return apiClient.get("/user-service/users/resumes/", param, USER_TOKEN);
+};
 
-  return fetch("/data/response/success.json").then((res) => res.json());
+export const getPositionNameListApi = (param: Object): Promise<any> => {
+  return apiClient.get("/job-service/jobs/job-positions", param, USER_TOKEN);
 };

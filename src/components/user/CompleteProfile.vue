@@ -44,10 +44,13 @@ const countCompleteField = (user: UserEntity | undefined) => {
 
   const percentage = (emptyFieldsCount / (Object.keys(user).length - 1)) * 100;
 
-  return percentage.toFixed(0);
+  return Number(percentage.toFixed(0));
 };
 
-onMounted(() => {});
+const percentage = ref<number>(100);
+onMounted(() => {
+  percentage.value = countCompleteField(props.user);
+});
 </script>
 <template>
   <div class="flex flex-col w-full bg-white rounded-2xl p-2 gap-2">

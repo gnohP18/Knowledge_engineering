@@ -1,5 +1,3 @@
-import { USER_LAST_WORKSPACE } from "~/constants/authentication";
-
 /**
  * Set token authentication
  *
@@ -7,8 +5,6 @@ import { USER_LAST_WORKSPACE } from "~/constants/authentication";
  * @param token token
  */
 export const setToken = (key: string, token: string) => {
-  console.log({ token });
-
   localStorage.setItem(key, token);
 };
 
@@ -24,9 +20,9 @@ export const getToken = (key: string) => {
 
 /**
  * get last workspace by type
- * 
+ *
  * @param type type of authentication
- * @returns 
+ * @returns
  */
 export const getLastWorkspace = (type: string) => {
   return localStorage.getItem(type);
@@ -47,6 +43,6 @@ export const setLastWorkspace = (type: string, lastWorkspace: string) => {
  * @param type type of authenticator
  * @returns true if have token, else false
  */
-export const checkAuth = (type: string): Boolean => {  
+export const checkAuth = (type: string): Boolean => {
   return !!getToken(type);
 };

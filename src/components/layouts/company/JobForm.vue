@@ -32,7 +32,7 @@ const store = JobStore();
 const jobAttributes = computed(() => store.jobAttributes);
 
 const positionNameOptions = computed(() => store.positionNames);
-const positionNameSelected = ref<OptionSelect>({ id: "0", name: "Default" });
+const positionNameSelected = ref<OptionSelect>({ id: 0, name: "Default" });
 
 const statusOptionSelected = ref<OptionSelect>(JOB_STATUS_OPTIONS[0]);
 
@@ -215,7 +215,6 @@ const onSubmit = handleSubmit(async (value) => {
     interview_type: Number(typeOfInterviewSelected.value.id) ?? 0,
     job_attribute: jobAttribute.value,
   };
-  console.log(entity);
 
   emits("submit", entity);
 });

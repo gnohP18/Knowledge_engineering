@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { USER_TOKEN } from "~/constants/authentication";
 import { DEFAULT_AVATAR_URL } from "~/constants/common";
+import { USER_LOGIN } from "~/constants/route";
 import type { UserEntity } from "~/entities/user/user";
 
 const props = defineProps({
@@ -21,11 +23,15 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="flex flex-col w-full h-full">
-    <div class="bg-black w-full h-1/2">
-      <img :src="urlBg" alt="" />
-    </div>
-    <div class="bg-white w-full h-1/2 flex flex-col justify-between gap-2 px-2">
+  <div
+    class="flex flex-col w-full h-full"
+    :class="{ 'justify-between gap-2': checkAuth(USER_TOKEN) }"
+  >
+    <img :src="urlBg" alt="" class="w-full h-1/2 common-rounded object-cover" />
+    <div
+      v-if="checkAuth(USER_TOKEN)"
+      class="bg-white w-full h-1/2 flex flex-col justify-between gap-2 px-2"
+    >
       <div class="w-full relative">
         <img
           :src="props.user?.avatar ?? DEFAULT_AVATAR_URL"
@@ -39,6 +45,13 @@ onMounted(() => {
         }}</a>
         <span class="text-md">{{ props.user?.job_title }}</span>
       </div>
+    </div>
+    <div v-else class="flex w-full items-center flex-1 h-full p-1">
+      <Button
+        label="Login to find the job"
+        class="custom-button w-full h-[40px]"
+        @click="navigateTo(USER_LOGIN)"
+      />
     </div>
   </div>
 </template>

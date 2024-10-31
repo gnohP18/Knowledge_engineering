@@ -1,20 +1,21 @@
 import type { MenuItem } from "primevue/menuitem";
-import { 
+import {
   ADMIN_ADMIN,
   ADMIN_ADMIN_CREATE,
   ADMIN_COMPANY,
   ADMIN_COMPANY_CREATE,
   ADMIN_USER,
   ADMIN_USER_CREATE,
-  COMPANY_INTERVIEW, 
-  COMPANY_INTERVIEW_SET_DATE, 
-  COMPANY_INTERVIEW_UPDATE_STATUS, 
-  COMPANY_JOB, COMPANY_JOB_CREATE, 
-  COMPANY_POST, 
-  COMPANY_POST_CREATE, 
-  USER_APPLICATION, 
-  USER_JOB, 
-  USER_PROFILE
+  COMPANY_INTERVIEW,
+  COMPANY_INTERVIEW_SET_DATE,
+  COMPANY_INTERVIEW_UPDATE_STATUS,
+  COMPANY_JOB,
+  COMPANY_JOB_CREATE,
+  COMPANY_POST,
+  COMPANY_POST_CREATE,
+  USER_APPLICATION,
+  USER_JOB,
+  USER_PROFILE,
 } from "./route";
 
 export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
@@ -41,16 +42,16 @@ export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
         label: "Application",
         url: USER_APPLICATION,
         icon: "pi pi-file",
-      }
+      },
     ],
   },
 ];
 
 export const MENU_PROFILE: MenuItem[] = [
-  {
-    label: "Application",
-    icon: "pi pi-file-export",
-  },
+  // {
+  //   label: "Application",
+  //   icon: "pi pi-file-export",
+  // },
   {
     label: "Resume",
     icon: "pi pi-file",
@@ -79,7 +80,7 @@ export const MENU_COMPANY: MenuItem[] = [
         label: "Create",
         icon: "pi pi-plus",
         route: COMPANY_POST_CREATE,
-      }
+      },
     ],
   },
   {
@@ -92,7 +93,7 @@ export const MENU_COMPANY: MenuItem[] = [
         label: "Create",
         icon: "pi pi-plus",
         route: COMPANY_JOB_CREATE,
-      }
+      },
     ],
   },
   {
@@ -115,7 +116,6 @@ export const MENU_COMPANY: MenuItem[] = [
   },
 ];
 
-
 export const MENU_ADMIN = [
   {
     key: "dashboard",
@@ -133,7 +133,7 @@ export const MENU_ADMIN = [
         label: "Create",
         icon: "pi pi-plus",
         route: ADMIN_USER_CREATE,
-      }
+      },
     ],
   },
   {
@@ -146,7 +146,7 @@ export const MENU_ADMIN = [
         label: "Create",
         icon: "pi pi-plus",
         route: ADMIN_COMPANY_CREATE,
-      }
+      },
     ],
   },
   {
@@ -159,7 +159,7 @@ export const MENU_ADMIN = [
         label: "Create",
         icon: "pi pi-plus",
         route: ADMIN_ADMIN_CREATE,
-      }
+      },
     ],
   },
-]
+];

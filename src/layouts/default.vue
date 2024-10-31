@@ -4,12 +4,17 @@ import Rightbar from "~/components/layouts/user/Rightbar.vue";
 import Leftbar from "~/components/layouts/user/Leftbar.vue";
 import { USER_TOKEN } from "~/constants/authentication";
 import { userStore } from "~/stores/user/user";
+import { AuthStore } from "~/stores/user/auth";
 
 const store = userStore();
+const userAuthStore = AuthStore();
 const user = computed(() => store.user);
+const me = computed(() => userAuthStore.me);
 onBeforeMount(async () => {
-  await store.getDetail();
-  await store.getSuggestConnector();
+  if (checkAuth(USER_TOKEN)) {
+    await userAuthStore.getMe();
+    await store.getSuggestConnector();
+  }
 });
 </script>
 <template>
@@ -20,19 +25,13 @@ onBeforeMount(async () => {
     </div>
     <div class="w-full h-screen overflow-scroll flex justify-center">
       <div class="layout-container flex">
-        <div
-          v-if="checkAuth(USER_TOKEN)"
-          class="left-bar-container h-full py-4 pr-2"
-        >
-          <Leftbar :user="user" />
+        <div class="left-bar-container h-full py-4 pr-2">
+          <Leftbar :user="me" />
         </div>
         <div class="flex-1 py-4 px-2">
           <slot />
         </div>
-        <div
-          v-if="checkAuth(USER_TOKEN)"
-          class="right-bar-container h-full py-4 pl-2"
-        >
+        <div class="right-bar-container h-full py-4 pl-2">
           <Rightbar />
         </div>
       </div>

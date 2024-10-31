@@ -2,6 +2,7 @@
 import { MENU_ITEM_LEFT_BAR } from "~/constants/menu-item";
 import ProfileCard from "../../user/ProfileCard.vue";
 import type { UserEntity } from "~/entities/user/user";
+import { USER_TOKEN } from "~/constants/authentication";
 
 const props = defineProps({
   user: {
@@ -14,7 +15,7 @@ const props = defineProps({
     <div class="primary-card common-rounded min-h-[30%] w-full">
       <ProfileCard v-if="props.user" :user="props.user" />
     </div>
-    <div class="primary-card w-full">
+    <div v-if="checkAuth(USER_TOKEN)" class="primary-card w-full">
       <Menu :model="MENU_ITEM_LEFT_BAR" class="w-full">
         <template #submenuheader="{ item }">
           <span class="text-black font-bold">{{ item.label }}</span>
@@ -33,7 +34,10 @@ const props = defineProps({
         </template>
       </Menu>
     </div>
-    <div class="primary-card min-h-[20%] w-full px-4 py-2 overflow-scroll">
+    <div
+      v-if="checkAuth(USER_TOKEN)"
+      class="primary-card min-h-[20%] w-full px-4 py-2 overflow-scroll"
+    >
       <span class="text-md">SKILL HASHTAG</span>
       <hr class="w-full py-1" />
       <div class="flex flex-wrap gap-2">

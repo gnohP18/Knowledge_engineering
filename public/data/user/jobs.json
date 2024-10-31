@@ -26,16 +26,14 @@
       "salary_upto": 1500,
       "vacancy": 2,
       "position_name": "Backend developer",
-      "type_of_employee": "Part time",
+      "type_of_employee": 1,
       "address": "HCM",
-      "interview_type": "Offline",
+      "interview_type": 1,
       "company": {
         "id": "1",
         "name": "MC Solution",
-        "phone": "0123456678",
-        "email": "nhphong1804@mcsolution.vn",
         "logo": "/images/company_1.jpeg",
-        "company_type": "IT",
+        "company_type": 1,
         "size": 100
       }
     },
