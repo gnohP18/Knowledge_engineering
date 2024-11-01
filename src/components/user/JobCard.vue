@@ -10,22 +10,6 @@ const props = defineProps({
 });
 
 onMounted(() => {});
-
-const convertSalary = (salaryFrom: number, salaryUpto: number) => {
-  if (!salaryFrom && !salaryUpto) {
-    return "Negotiate";
-  }
-
-  if (salaryFrom && salaryUpto) {
-    return `${salaryFrom} ~ ${salaryUpto}`;
-  }
-
-  if (salaryFrom) {
-    return `Min ${salaryFrom}`;
-  }
-
-  return `Max ${salaryFrom}`;
-};
 </script>
 <template>
   <div class="primary-card flex gap-2 p-2">

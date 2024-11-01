@@ -162,3 +162,26 @@ export const convertOptions = (object: Object) => {
     return { id: _, name: String(object[_ as keyof Object]) };
   });
 };
+
+/**
+ * handle salary range
+ *
+ * @param salaryFrom salary from
+ * @param salaryUpto salary up to
+ * @returns string of salary
+ */
+export const convertSalary = (salaryFrom: number, salaryUpto: number) => {
+  if (!salaryFrom && !salaryUpto) {
+    return "Negotiate";
+  }
+
+  if (salaryFrom && salaryUpto) {
+    return `${salaryFrom} ~ ${salaryUpto}`;
+  }
+
+  if (salaryFrom) {
+    return `Min ${salaryFrom}`;
+  }
+
+  return `Max ${salaryFrom}`;
+};

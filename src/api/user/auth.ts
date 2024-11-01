@@ -11,5 +11,5 @@ export const loginApi = (userLogin: UserLoginEntity): Promise<any> => {
 };
 
 export const getMeApi = (): Promise<any> => {
-  return apiClient.get(`/user-service/users/1`, {}, USER_TOKEN);
+  return apiClient.get(`/user-service/users/get-me`, {}, USER_TOKEN);
 };

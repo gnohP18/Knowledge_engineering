@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { USER_TOKEN } from "~/constants/authentication";
 import { userStore } from "~/stores/user/user";
+import KTALoading from "~/components/common/KTALoading.vue";
 
 definePageMeta({
   layout: "user",
@@ -31,7 +32,8 @@ const applyJob = async () => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col">
+  <KTALoading v-if="isLoading" />
+  <div v-else class="w-full flex flex-col">
     <UserJobDetailCard :job="job" @apply-job="applyJob" />
   </div>
 </template>

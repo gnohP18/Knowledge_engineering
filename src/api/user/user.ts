@@ -48,9 +48,10 @@ export const getDetailPostApi = (id: number): Promise<any> => {
 };
 
 export const getDetailJobApi = (id: number): Promise<any> => {
-  return fetch("/data/user/job.json")
-    .then((res) => res.json())
-    .then((d) => d.data);
+  // return fetch("/data/user/job.json")
+  //   .then((res) => res.json())
+  //   .then((d) => d.data);
+  return apiClient.get(`/job-service/jobs/${id}`, {}, USER_TOKEN);
 };
 
 export const applyJobApi = (id: number): Promise<any> => {

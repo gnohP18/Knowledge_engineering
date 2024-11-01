@@ -3,6 +3,7 @@ import { INTERVIEW_TYPE, TYPE_OF_EMPLOYEE } from "~/constants/job";
 import { USER_CONNECTOR } from "~/constants/route";
 import type { JobEntity } from "~/entities/user/job";
 import { DEFAULT_AVATAR_URL } from "~/constants/common";
+import { COMPANY_TYPE } from "~/constants/company";
 
 const props = defineProps({
   job: {
@@ -43,7 +44,11 @@ const applyJob = () => {
         <div class="flex flex-col">
           <label class="text-md font-bold"
             >Author - Company type:
-            {{ props.job?.company?.company_type }}</label
+            {{
+              COMPANY_TYPE[
+                props.job?.company?.company_type as keyof typeof COMPANY_TYPE
+              ]
+            }}</label
           >
           <a
             :href="`${USER_CONNECTOR}/company/${props.job?.company?.id}`"
@@ -107,11 +112,58 @@ const applyJob = () => {
         @click="applyJob"
       />
     </div>
+
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-money-bill span-primary-hover"></span>
+        <label for="salary" class="span-primary-hover">Salary</label>
+        <span class="font-bold">{{
+          convertSalary(props.job?.salary_from, props.job?.salary_upto)
+        }}</span>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-users span-primary-hover"></span>
+        <label for="number_of_position" class="span-primary-hover"
+          >Number of position</label
+        >
+        <span class="font-bold">{{ props.job?.number_of_position }}</span>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-clock span-primary-hover"></span>
+        <label for="salary" class="span-primary-hover">Working time</label>
+        <span class="font-bold">{{ props.job?.working_time }}</span>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-paperclip span-primary-hover"></span>
+        <label for="salary" class="span-primary-hover"
+          >Expected onboard date</label
+        >
+        <span class="font-bold">{{ props.job?.expected_onboard_date }}</span>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-map-marker span-primary-hover"></span>
+        <label for="salary" class="span-primary-hover">On site at</label>
+        <span class="font-bold">{{ props.job?.address }}</span>
+      </div>
+    </div>
+
     <div class="border common-rounded p-3">
       <div
-        class="whitespace-pre-line"
-        v-html="convertHTMLtoString(props.job?.description ?? '')"
-      />
+        class="whitespace-pre-wrap"
+        v-html="escapeString(props.job?.description ?? '')"
+      ></div>
     </div>
     <label id="requirement" class="font-bold text-2xl" for="requirement"
       >Job Requirements</label
