@@ -176,14 +176,14 @@ export const convertSalary = (salaryFrom: number, salaryUpto: number) => {
   }
 
   if (salaryFrom && salaryUpto) {
-    return `${salaryFrom} ~ ${salaryUpto}`;
+    return `$${salaryFrom} ~ $${salaryUpto}`;
   }
 
   if (salaryFrom) {
-    return `Min ${salaryFrom}`;
+    return `Min $${salaryFrom}`;
   }
 
-  return `Max ${salaryFrom}`;
+  return `Max $${salaryFrom}`;
 };
 
 /**

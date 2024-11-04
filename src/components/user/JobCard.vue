@@ -13,7 +13,11 @@ onMounted(() => {});
 </script>
 <template>
   <div class="primary-card flex gap-2 p-2">
-    <img :src="props.job?.company?.logo" alt="" class="w-[150px] h-[150px]" />
+    <img
+      :src="props.job?.company?.logo"
+      alt=""
+      class="w-[150px] h-[150px] common-rounded"
+    />
     <div class="flex-1 flex flex-col gap-2">
       <a :href="`/jobs/${props.job?.id}`" class="text-xl">
         {{ props.job?.title }}
@@ -53,7 +57,7 @@ onMounted(() => {});
             {{
               convertSalary(
                 props.job?.salary_from ?? 0,
-                props.job?.salary_up_to ?? 0,
+                props.job?.salary_upto ?? 0,
               )
             }}
           </span>

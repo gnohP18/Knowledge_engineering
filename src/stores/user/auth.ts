@@ -43,7 +43,7 @@ export const AuthStore = defineStore("AuthStore", {
           const redirectUrl = lastWorkspace ?? "/";
 
           setToken(USER_TOKEN, result.token);
-
+          toastSuccess("Welcome", "Login Successfully");
           navigateTo(redirectUrl, { external: true });
         })
         .catch((err) => {
@@ -52,8 +52,6 @@ export const AuthStore = defineStore("AuthStore", {
         .finally(() => {
           this.$state.isLoading = false;
         });
-
-      this.$state.isLoading = false;
     },
 
     /**

@@ -28,6 +28,7 @@
       </div>
       <InputText
         v-bind="$attrs"
+        autocomplete="on"
         class="searching-input block w-full p-4 ps-10 text-sm text-gray-900 border rounded-2xl"
         placeholder="Job searching..."
         required
