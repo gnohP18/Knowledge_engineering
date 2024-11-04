@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { BasicJobEntity } from "~/entities/user/job";
+import type { SearchingJobEntity } from "~/entities/user/job";
 import { COMPANY_TYPE } from "~/constants/company";
 import { TYPE_OF_EMPLOYEE } from "~/constants/job";
 
 const props = defineProps({
   job: {
-    type: Object as PropType<BasicJobEntity>,
+    type: Object as PropType<SearchingJobEntity>,
   },
 });
 

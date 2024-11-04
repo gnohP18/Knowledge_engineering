@@ -18,7 +18,7 @@ import {
 } from "~/constants/common";
 import type { OptionSelect } from "~/entities/common";
 import type { PositionEntity } from "~/entities/user/job";
-import { isValid } from "zod";
+import EmptyData from "~/components/common/EmptyData.vue";
 
 useHead({ title: "Job finding" });
 
@@ -36,20 +36,20 @@ const positions = computed(() => store.positions);
  */
 const isUseAI = ref<boolean>(true);
 interface SearchParam {
-  prompt?: string;
-  limit?: string;
-  page?: string;
-  position_id?: string;
-  direction?: string;
-  is_use_ai?: boolean;
-  salary_from?: number;
-  salary_up_to?: number;
+  SearchText?: string;
+  Limit?: string;
+  Page?: string;
+  PositionId?: string;
+  Direction?: string;
+  IsUseAi?: boolean;
+  SalaryFrom?: number;
+  SalaryUpTo?: number;
 }
 
 const param = ref<SearchParam>({
-  page: "1",
-  limit: Pagination.PAGE_LIMIT_DEFAULT,
-  is_use_ai: true,
+  Page: "1",
+  Limit: Pagination.PAGE_LIMIT_DEFAULT,
+  IsUseAi: true,
 });
 
 const { errors, defineField, handleSubmit, resetForm } = useForm({
@@ -74,26 +74,24 @@ const limitSelected = ref<OptionSelect>(LIMIT_OBJECT_OPTIONS[0]);
 const positionSelected = ref<PositionEntity>();
 
 const setQueryParams = () => {
-  console.log(param.value.is_use_ai);
-
-  if (param.value.is_use_ai) {
-    param.value.is_use_ai = true;
-    param.value.limit = "30";
-    param.value.page = "1";
+  if (param.value.IsUseAi) {
+    param.value.IsUseAi = true;
+    param.value.Limit = "30";
+    param.value.Page = "1";
   } else {
-    param.value.is_use_ai = false;
-    param.value.position_id = String(
+    param.value.IsUseAi = false;
+    param.value.PositionId = String(
       positionSelected.value?.id ?? positions.value[0].id,
     );
-    param.value.limit = limitSelected.value.name;
-    param.value.page = "1";
-    param.value.direction = directionSortSelected.value.id;
+    param.value.Limit = limitSelected.value.name;
+    param.value.Page = "1";
+    param.value.Direction = directionSortSelected.value.id;
 
     if (salaryFrom.value) {
-      param.value.salary_from = salaryFrom.value;
+      param.value.SalaryFrom = salaryFrom.value;
     }
     if (salaryUpto.value) {
-      param.value.salary_up_to = salaryUpto.value;
+      param.value.SalaryUpTo = salaryUpto.value;
     }
   }
 };
@@ -110,17 +108,18 @@ onMounted(async () => {
 const search = async () => {
   setQueryParams();
   console.log(param.value);
-  if (param.value.is_use_ai && isEmpty(param.value.prompt)) {
+  if (param.value.IsUseAi && isEmpty(param.value.SearchText)) {
     return;
   }
-
-  await store.searchJob(param.value);
+  if (!isLoading.value) {
+    await store.searchJob(param.value);
+  }
 };
 
 const changeSearchAdvance = () => {
-  param.value.is_use_ai = isUseAI.value;
+  param.value.IsUseAi = isUseAI.value;
 
-  if (param.value.is_use_ai) {
+  if (param.value.IsUseAi) {
     resetForm();
 
     typeOfEmployeeSelected.value = TYPE_OF_EMPLOYEE_OPTIONS[0];
@@ -146,13 +145,15 @@ const onSubmit = handleSubmit(async () => {
           >Search you job</label
         >
         <div class="flex gap-2">
-          <CommonKTASearchInput v-model="param.prompt" />
+          <CommonKTASearchInput
+            v-model="param.SearchText"
+            @keydown.enter.prevent="search"
+          />
           <Button
             type="button"
             label="Search"
             class="custom-button min-w-[100px] text-center common-rounded"
             @click="search"
-            @keydown.ctrl.enter="search"
           />
         </div>
         <Accordion :active-index="1" class="w-full rounded-xl">
@@ -160,11 +161,6 @@ const onSubmit = handleSubmit(async () => {
             <template #header>Advanced search</template>
             <template #default>
               <div class="flex gap-2 p-2">
-                <!-- <Checkbox
-                  v-model="isUseAI"
-                  :binary="true"
-                  @change="changeSearchAdvance"
-                /> -->
                 <ToggleButton
                   v-model="isUseAI"
                   onLabel="On"
@@ -189,7 +185,7 @@ const onSubmit = handleSubmit(async () => {
                     :options="ORDER_BY_TYPE_OPTIONS"
                     option-label="name"
                     class="w-full"
-                    :disabled="param.is_use_ai"
+                    :disabled="param.IsUseAi"
                   />
                   <CommonKTADropdown
                     label="Direction"
@@ -197,7 +193,7 @@ const onSubmit = handleSubmit(async () => {
                     :options="DIRECTION_TYPE_OPTIONS"
                     option-label="name"
                     class="w-full"
-                    :disabled="param.is_use_ai"
+                    :disabled="param.IsUseAi"
                   />
                   <CommonKTADropdown
                     label="Limit result"
@@ -205,7 +201,7 @@ const onSubmit = handleSubmit(async () => {
                     :options="LIMIT_OBJECT_OPTIONS"
                     option-label="name"
                     class="w-full"
-                    :disabled="param.is_use_ai"
+                    :disabled="param.IsUseAi"
                   />
                   <CommonKTADropdown
                     label="Position"
@@ -214,7 +210,7 @@ const onSubmit = handleSubmit(async () => {
                     option-label="name"
                     filters
                     class="w-full"
-                    :disabled="param.is_use_ai"
+                    :disabled="param.IsUseAi"
                   />
                   <div class="flex flex-col">
                     <div class="flex gap-2 items-start">
@@ -226,7 +222,7 @@ const onSubmit = handleSubmit(async () => {
                         <KTAInputNumber
                           class="w-full"
                           v-model="salaryFrom"
-                          :disabled="param.is_use_ai"
+                          :disabled="param.IsUseAi"
                         />
                       </Validate>
                       <span class="text-center text-xl pt-8">~</span>
@@ -238,7 +234,7 @@ const onSubmit = handleSubmit(async () => {
                         <KTAInputNumber
                           class="w-full"
                           v-model="salaryUpto"
-                          :disabled="param.is_use_ai"
+                          :disabled="param.IsUseAi"
                         />
                       </Validate>
                     </div>
@@ -250,7 +246,7 @@ const onSubmit = handleSubmit(async () => {
                     :options="TYPE_OF_EMPLOYEE_OPTIONS"
                     option-label="name"
                     class="w-full"
-                    :disabled="param.is_use_ai"
+                    :disabled="param.IsUseAi"
                   />
                 </div>
               </form>
@@ -261,7 +257,10 @@ const onSubmit = handleSubmit(async () => {
     </div>
     <div>
       <KTALoading v-if="isLoading" />
-      <JobList v-else :jobs="jobs" />
+      <div class="flex" v-else>
+        <JobList v-if="jobs.length > 0" :jobs="jobs" />
+        <EmptyData class="flex-1" v-else />
+      </div>
     </div>
   </div>
 </template>

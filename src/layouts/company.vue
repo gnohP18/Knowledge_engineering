@@ -4,10 +4,7 @@ import AppTopBar from "~/components/layouts/company/AppTopBar.vue";
 import type { CompanyEntity } from "~/entities/user/company";
 import { DETAIL_COMPANY_SAMPLE } from "~/constants/sample";
 import type { MenuItem } from "primevue/menuitem";
-import {
-  COMPANY_LAST_WORKSPACE,
-  COMPANY_TOKEN,
-} from "~/constants/authentication";
+import { COMPANY_TOKEN } from "~/constants/authentication";
 import { COMPANY_LOGIN } from "~/constants/route";
 
 const companyAuth = ref<CompanyEntity>();

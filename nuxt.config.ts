@@ -1,6 +1,13 @@
 import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   ssr: false,
+  // devServer: {
+  //   https: {
+  //     key: "./https/localhost_key.pem",
+  //     cert: "./https/localhost_cert.pem",
+  //   },
+  //   port: 3000,
+  // },
   $production: {
     routeRules: {
       "/**": { isr: true },
@@ -18,13 +25,16 @@ export default defineNuxtConfig({
   $development: {
     //
   },
+
   devtools: { enabled: true },
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   css: [
     "primeicons/primeicons.css",
     "primevue/resources/themes/aura-light-green/theme.css",
@@ -51,4 +61,5 @@ export default defineNuxtConfig({
   },
 
   plugins: ["~/utils/tooltip.ts"],
+  compatibilityDate: "2024-11-01",
 });

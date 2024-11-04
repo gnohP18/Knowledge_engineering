@@ -13,6 +13,7 @@ import {
   COMPANY_JOB_CREATE,
   COMPANY_POST,
   COMPANY_POST_CREATE,
+  COMPANY_PROFILE,
   USER_APPLICATION,
   USER_JOB,
   USER_PROFILE,
@@ -74,7 +75,6 @@ export const MENU_COMPANY: MenuItem[] = [
     label: "Posts",
     icon: "pi pi-th-large",
     route: COMPANY_POST,
-
     items: [
       {
         label: "Create",
@@ -113,6 +113,12 @@ export const MENU_COMPANY: MenuItem[] = [
         route: COMPANY_INTERVIEW_UPDATE_STATUS,
       },
     ],
+  },
+  {
+    key: "profile",
+    label: "Profile",
+    icon: "pi pi-box",
+    route: COMPANY_PROFILE,
   },
 ];
 

@@ -20,8 +20,6 @@ const goToElement = (elementId: string) => {
 };
 
 const applyJob = () => {
-  console.log(1);
-
   emits("applyJob");
 };
 </script>
@@ -112,7 +110,13 @@ const applyJob = () => {
         @click="applyJob"
       />
     </div>
-
+    <div class="flex">
+      <div class="flex gap-2 justify-center items-center">
+        <span class="pi pi-info-circle span-primary-hover"></span>
+        <label for="salary" class="span-primary-hover">Position Name</label>
+        <span class="font-bold">{{ props.job?.position_name }}</span>
+      </div>
+    </div>
     <div class="flex">
       <div class="flex gap-2 justify-center items-center">
         <span class="pi pi-money-bill span-primary-hover"></span>
@@ -147,7 +151,11 @@ const applyJob = () => {
         <label for="salary" class="span-primary-hover"
           >Expected onboard date</label
         >
-        <span class="font-bold">{{ props.job?.expected_onboard_date }}</span>
+        <span class="font-bold">{{
+          props.job?.expected_onboard_date
+            ? convertDateTimeServer(props.job?.expected_onboard_date)
+            : ""
+        }}</span>
       </div>
     </div>
 
@@ -171,7 +179,7 @@ const applyJob = () => {
     <div class="flex flex-col gap-2 border common-rounded p-3">
       <Chip
         class="block w-fit tag-item"
-        v-for="requirement in props.job?.job_attribute"
+        v-for="requirement in props.job?.job_attribute_names"
         :label="requirement"
       />
     </div>

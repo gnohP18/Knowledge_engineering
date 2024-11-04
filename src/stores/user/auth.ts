@@ -2,13 +2,14 @@ import { getMeApi, loginApi } from "~/api/user/auth";
 import { USER_LAST_WORKSPACE, USER_TOKEN } from "~/constants/authentication";
 import type { ErrorData } from "~/entities/api-error";
 import type { UserLoginEntity } from "~/entities/user/auth";
-import type { UserEntity } from "~/entities/user/user";
+import type { ConnectorEntity, UserEntity } from "~/entities/user/user";
 
 interface State {
   isLoading: Boolean;
   isSucceed: Boolean;
   errors: ErrorData;
   me: UserEntity;
+  suggestConnectors: ConnectorEntity[];
 }
 
 const defaultState: State = {
@@ -16,6 +17,7 @@ const defaultState: State = {
   isSucceed: false,
   errors: {},
   me: { connect_company: [], connect_user: [], hashtag: [] },
+  suggestConnectors: [],
 };
 
 export const AuthStore = defineStore("AuthStore", {
@@ -76,7 +78,8 @@ export const AuthStore = defineStore("AuthStore", {
 
       await getMeApi()
         .then((result) => {
-          this.$state.me = result[0];
+          this.$state.me = result.user_profile;
+          this.$state.suggestConnectors = result.suggest_connector;
           this.$state.isSucceed = true;
         })
         .catch((err) => {

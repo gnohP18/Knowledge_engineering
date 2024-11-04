@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { BasicJobEntity } from "~/entities/user/job";
+import type { SearchingJobEntity } from "~/entities/user/job";
 import JobCard from "~/components/user/JobCard.vue";
 
 const props = defineProps({
   jobs: {
-    type: Array<BasicJobEntity>,
+    type: Array<SearchingJobEntity>,
   },
 });
 

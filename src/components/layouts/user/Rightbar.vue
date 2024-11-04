@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { USER_TOKEN } from "~/constants/authentication";
 import SuggestConnector from "../../common/SuggestConnector.vue";
-import { userStore } from "~/stores/user/user";
+import { AuthStore } from "~/stores/user/auth";
 
-const store = userStore();
+const store = AuthStore();
 
 const suggestionConnector = computed(() => store.suggestConnectors);
 const urlBg = ref<string>("/images/finding_job_1.gif");
-const userAuth = computed(() => store.user);
 const urlBgArr = [
   "/images/finding_job_1.gif",
   "/images/finding_job_2.gif",

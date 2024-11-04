@@ -1,3 +1,5 @@
+import type { PositionEntity } from "./job";
+
 export interface UserEntity {
   id?: string;
   first_name?: string;
@@ -22,6 +24,5 @@ export interface ConnectorEntity {
   first_name?: string;
   last_name?: string;
   avatar?: string;
-  connector_type?: string;
-  connector_position?: string;
+  job_position?: PositionEntity;
 }
