@@ -185,3 +185,14 @@ export const convertSalary = (salaryFrom: number, salaryUpto: number) => {
 
   return `Max ${salaryFrom}`;
 };
+
+/**
+ * format type string
+ * @param dateStr dateTime type string
+ * @returns dateTime format
+ */
+export const convertDateTimeServer = (dateStr: string) => {
+  const date = new Date(dateStr);
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  return new Intl.DateTimeFormat("en-CA", options).format(date);
+};

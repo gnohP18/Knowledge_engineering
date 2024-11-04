@@ -82,10 +82,6 @@ const changeDateOfBirth = () => {
 };
 
 const onSubmit = handleSubmit(async () => {});
-
-watch(errors, () => {
-  console.log(errors.value);
-});
 </script>
 <template>
   <form

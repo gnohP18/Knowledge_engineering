@@ -3,17 +3,13 @@ import AppTopBar from "~/components/layouts/user/AppTopbar.vue";
 import Rightbar from "~/components/layouts/user/Rightbar.vue";
 import Leftbar from "~/components/layouts/user/Leftbar.vue";
 import { USER_TOKEN } from "~/constants/authentication";
-import { userStore } from "~/stores/user/user";
 import { AuthStore } from "~/stores/user/auth";
 
-const store = userStore();
-const userAuthStore = AuthStore();
-const user = computed(() => store.user);
-const me = computed(() => userAuthStore.me);
+const store = AuthStore();
+const me = computed(() => store.me);
 onBeforeMount(async () => {
   if (checkAuth(USER_TOKEN)) {
-    await userAuthStore.getMe();
-    await store.getSuggestConnector();
+    await store.getMe();
   }
 });
 </script>

@@ -32,12 +32,15 @@
         placeholder="Job searching..."
         required
       />
-      <!-- <Button
-        class="border text-black absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2"
-        @click="search"
-        @keydown.ctrl.enter="search"
-        >Search</Button
-      > -->
+      <div
+        class="absolute flex items-center justify-center inset-y-0 end-[1%] ps-4"
+      >
+        <Button
+          v-tooltip="'Press Enter to search'"
+          class="border px-4 h-1/2"
+          label="↵"
+        ></Button>
+      </div>
     </div>
   </div>
 </template>

@@ -17,6 +17,7 @@ export interface JobEntity {
   is_applied?: boolean;
   number_of_applicants?: number;
   job_attribute?: string[];
+  job_attribute_names?: string[];
   company: BasicCompanyEntity;
 }
 

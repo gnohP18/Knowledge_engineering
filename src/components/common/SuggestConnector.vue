@@ -50,11 +50,11 @@ const props = defineProps({
           </a>
           <div class="flex justify-between">
             <LimitSpan
-              v-if="connector.connector_position"
+              v-if="connector.job_position"
               :parent-class="'text-sm'"
               :limit="props.limitCharacter"
               :is-primary-text="false"
-              :text="connector.connector_position"
+              :text="connector.job_position.name"
             />
             <Button class="text-xs" icon="pi pi-plus" />
           </div>

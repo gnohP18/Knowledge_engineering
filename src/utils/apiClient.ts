@@ -1,4 +1,9 @@
-import { USER_TOKEN } from "~/constants/authentication";
+import {
+  ADMIN_TOKEN,
+  COMPANY_TOKEN,
+  USER_TOKEN,
+} from "~/constants/authentication";
+import { ADMIN_LOGIN, COMPANY_LOGIN, USER_LOGIN } from "~/constants/route";
 import * as StatusCode from "~/constants/status-code";
 
 const config = useRuntimeConfig();
@@ -14,9 +19,8 @@ class ApiClient {
     if (enforcer !== singletonEnforcer) {
       throw new Error("Cannot initialize client single instance");
     }
-
+    this.typeToken = USER_TOKEN;
     this.client = $fetch.create(this.makeClient());
-    this.typeToken = USER_TOKEN
   }
 
   static get instance(): ApiClient {
@@ -30,6 +34,7 @@ class ApiClient {
   }
 
   makeClient(): Object {
+    const type = this.typeToken;
     return {
       baseURL: config.public.API_BASE_URL,
       headers: this.getHeaders(),
@@ -46,6 +51,20 @@ class ApiClient {
           navigateTo("/notfound");
         } else if (response.status === StatusCode.UNAUTHENTICATED) {
           console.log(`Log status code ${StatusCode.UNAUTHENTICATED}`);
+          setToken(type, "");
+          switch (type) {
+            case USER_TOKEN:
+              navigateTo(USER_LOGIN);
+              break;
+            case COMPANY_TOKEN:
+              navigateTo(COMPANY_LOGIN);
+              break;
+            case ADMIN_TOKEN:
+              navigateTo(ADMIN_LOGIN);
+              break;
+            default:
+              break;
+          }
         } else if (
           [
             StatusCode.UNPROCESSABLE_CONTENT,
@@ -62,23 +81,21 @@ class ApiClient {
   getHeaders(): Object {
     const token = getToken(this.typeToken);
     let headers = {
-      Accept: "application/json"
+      Accept: "application/json",
     };
 
     if (token) {
-      headers = Object.assign(headers, { Authorization: `Bearer ${token}` });
+      headers = Object.assign(headers, { Authorization: `${token}` });
     }
-
-    // if (config.public.API_TYPE === "tenant") {
-    //   headers = Object.assign(headers, {
-    //     "X-Tansocart-Client": config.public.API_TENAND_ID,
-    //   });
-    // }
 
     return headers;
   }
 
-  get(url: string, params: Object = {}, type: string = USER_TOKEN): Promise<any> {
+  get(
+    url: string,
+    params: Object = {},
+    type: string = USER_TOKEN,
+  ): Promise<any> {
     this.typeToken = type;
 
     return this.client(url, {
@@ -87,7 +104,11 @@ class ApiClient {
     });
   }
 
-  post(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+  post(
+    url: string,
+    data: Object = {},
+    type: string = USER_TOKEN,
+  ): Promise<any> {
     this.typeToken = type;
 
     return this.client(url, {
@@ -105,7 +126,11 @@ class ApiClient {
     });
   }
 
-  patch(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+  patch(
+    url: string,
+    data: Object = {},
+    type: string = USER_TOKEN,
+  ): Promise<any> {
     this.typeToken = type;
 
     return this.client(url, {
@@ -114,9 +139,13 @@ class ApiClient {
     });
   }
 
-  delete(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+  delete(
+    url: string,
+    data: Object = {},
+    type: string = USER_TOKEN,
+  ): Promise<any> {
     this.typeToken = type;
-    
+
     return this.client(url, {
       method: "DELETE",
       body: data,
