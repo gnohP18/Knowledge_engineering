@@ -6,7 +6,9 @@ import { jobStore } from "~/stores/user/job";
 import { useForm } from "vee-validate";
 import { userJobSearchSchema } from "~/schemas/user/job.schema";
 import KTAInputNumber from "~/components/common/KTAInputNumber.vue";
+import KTASearchInput from "~/components/common/KTASearchInput.vue";
 import KTALoading from "~/components/common/KTALoading.vue";
+import KTAImageBlock from "~/components/common/KTAImageBlock.vue";
 import Validate from "~/components/common/Validate.vue";
 import {
   ORDER_BY_TYPE_OPTIONS,
@@ -27,10 +29,11 @@ definePageMeta({
 });
 const store = jobStore();
 const jobs = computed(() => store.jobs);
+const meta = computed(() => store.meta);
 const isLoading = computed(() => store.isLoading);
 const isSucceed = computed(() => store.isSucceed);
+const firstTimeLoad = ref<boolean>(true);
 const positions = computed(() => store.positions);
-
 /**
  * Searching param
  */
@@ -76,7 +79,7 @@ const positionSelected = ref<PositionEntity>();
 const setQueryParams = () => {
   if (param.value.IsUseAi) {
     param.value.IsUseAi = true;
-    param.value.Limit = "30";
+    param.value.Limit = Pagination.PAGE_LIMIT_DEFAULT;
     param.value.Page = "1";
   } else {
     param.value.IsUseAi = false;
@@ -100,14 +103,16 @@ const setQueryParams = () => {
  * */
 onMounted(async () => {
   setQueryParams();
+
   await store.getPositionNameList({ limit: 100 });
 
   positionSelected.value = positions.value[0];
 });
 
 const search = async () => {
+  firstTimeLoad.value = false;
   setQueryParams();
-  console.log(param.value);
+
   if (param.value.IsUseAi && isEmpty(param.value.SearchText)) {
     return;
   }
@@ -132,9 +137,45 @@ const changeSearchAdvance = () => {
   }
 };
 
+const checkEmptySearchText = () => {
+  if (isEmpty(param.value.SearchText)) {
+    firstTimeLoad.value = true;
+  }
+};
+
 const onSubmit = handleSubmit(async () => {
   console.log("onSubmit");
 });
+
+const changePaginator = async (value: any) => {
+  if (param.value.IsUseAi) {
+    param.value.IsUseAi = true;
+    param.value.Limit = value.Limit;
+    param.value.Page = value.Page;
+  } else {
+    param.value.IsUseAi = false;
+    param.value.PositionId = String(
+      positionSelected.value?.id ?? positions.value[0].id,
+    );
+    param.value.Limit = limitSelected.value.name;
+    param.value.Page = value.Page;
+    param.value.Direction = directionSortSelected.value.id;
+
+    if (salaryFrom.value) {
+      param.value.SalaryFrom = salaryFrom.value;
+    }
+    if (salaryUpto.value) {
+      param.value.SalaryUpTo = salaryUpto.value;
+    }
+  }
+
+  if (param.value.IsUseAi && isEmpty(param.value.SearchText)) {
+    return;
+  }
+  if (!isLoading.value) {
+    await store.searchJob(param.value);
+  }
+};
 </script>
 
 <template>
@@ -145,9 +186,12 @@ const onSubmit = handleSubmit(async () => {
           >Search you job</label
         >
         <div class="flex gap-2">
-          <CommonKTASearchInput
+          <KTASearchInput
             v-model="param.SearchText"
+            name="search_text"
+            autocomplete="on"
             @keydown.enter.prevent="search"
+            @input="checkEmptySearchText"
           />
           <Button
             type="button"
@@ -255,13 +299,19 @@ const onSubmit = handleSubmit(async () => {
         </Accordion>
       </div>
     </div>
-    <div>
+    <div v-if="!firstTimeLoad">
       <KTALoading v-if="isLoading" />
       <div class="flex" v-else>
-        <JobList v-if="jobs.length > 0" :jobs="jobs" />
+        <JobList
+          v-if="jobs.length > 0"
+          :jobs="jobs"
+          :meta="meta"
+          @change-paginator="changePaginator"
+        />
         <EmptyData class="flex-1" v-else />
       </div>
     </div>
+    <KTAImageBlock v-else />
   </div>
 </template>
 <style lang="scss" scoped>

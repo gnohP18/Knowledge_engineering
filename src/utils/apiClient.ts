@@ -1,9 +1,4 @@
-import {
-  ADMIN_TOKEN,
-  COMPANY_TOKEN,
-  USER_TOKEN,
-} from "~/constants/authentication";
-import { ADMIN_LOGIN, COMPANY_LOGIN, USER_LOGIN } from "~/constants/route";
+import { USER_TOKEN } from "~/constants/authentication";
 import * as StatusCode from "~/constants/status-code";
 
 const config = useRuntimeConfig();
@@ -52,19 +47,20 @@ class ApiClient {
         } else if (response.status === StatusCode.UNAUTHENTICATED) {
           console.log(`Log status code ${StatusCode.UNAUTHENTICATED}`);
           setToken(type, "");
-          switch (type) {
-            case USER_TOKEN:
-              navigateTo(USER_LOGIN);
-              break;
-            case COMPANY_TOKEN:
-              navigateTo(COMPANY_LOGIN);
-              break;
-            case ADMIN_TOKEN:
-              navigateTo(ADMIN_LOGIN);
-              break;
-            default:
-              break;
-          }
+          toastError("Error", response._data.message);
+          // switch (type) {
+          //   case USER_TOKEN:
+          //     navigateTo(USER_LOGIN);
+          //     break;
+          //   case COMPANY_TOKEN:
+          //     navigateTo(COMPANY_LOGIN);
+          //     break;
+          //   case ADMIN_TOKEN:
+          //     navigateTo(ADMIN_LOGIN);
+          //     break;
+          //   default:
+          //     break;
+          // }
         } else if (
           [
             StatusCode.UNPROCESSABLE_CONTENT,

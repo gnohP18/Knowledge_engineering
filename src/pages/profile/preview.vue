@@ -1,28 +1,24 @@
 <script lang="ts" setup>
-import { USER_EXAMPLE } from "~/constants/sample";
-import { sleep } from "@whoj/utils-core";
-import type { UserEntity } from "~/entities/user/user";
 import Profile from "~/components/user/Profile.vue";
+import { AuthStore } from "~/stores/user/auth";
 
 definePageMeta({
   layout: "user",
   middleware: "auth-user",
 });
-const user = ref<UserEntity>();
-const isLoading = ref<boolean>(false);
+const store = AuthStore();
+const me = computed(() => store.me);
+const isLoading = computed(() => store.isLoading);
 
 onMounted(async () => {
-  isLoading.value = true;
-  sleep(2);
-  user.value = USER_EXAMPLE;
-  isLoading.value = false;
+  await store.getMe();
 });
 </script>
 
 <template>
   <CommonKTALoading v-if="isLoading" />
   <div v-else class="primary-card">
-    <Profile :user="user" />
+    <Profile :user="me" />
   </div>
 </template>
 <style lang="scss" scoped></style>

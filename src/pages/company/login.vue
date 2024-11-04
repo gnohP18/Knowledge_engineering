@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useForm } from "vee-validate";
+import KTAPassword from "~/components/common/KTAPassword.vue";
 import type { CompanyLoginEntity } from "~/entities/company/auth";
 import Validate from "~/components/common/Validate.vue";
 import { companyLoginSchema } from "~/schemas";
@@ -37,10 +38,10 @@ const [password] = defineField("password");
       <label class="text-2xl text-white font-bold">LOGIN</label>
       <form @submit.prevent="onSubmit" class="w-full">
         <Validate label="Email" :error="errors.email" class="w-full">
-          <CommonKTAInput v-model="email" class="w-full" />
+          <CommonKTAInput v-model="email" name="email" class="w-full" />
         </Validate>
         <Validate label="Password" :error="errors.password" class="w-full">
-          <CommonKTAInput v-model="password" class="w-full" />
+          <KTAPassword v-model="password" name="password" class="w-full" />
         </Validate>
         <div class="w-full flex items-center justify-center">
           <Button

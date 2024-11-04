@@ -97,7 +97,10 @@ const initFormData = () => {
     dataNode.value = mappingTreeNode(jobAttributes.value);
   } else {
     setFieldValue("title", get(props.job, "title", ""));
-    setFieldValue("description", get(props.job, "description", ""));
+    setFieldValue(
+      "description",
+      escapeString(get(props.job, "description", "")),
+    );
 
     setFieldValue("position_id", get(props.job, "position_id", 0));
     positionNameSelected.value = findingOption(
@@ -120,8 +123,10 @@ const initFormData = () => {
       get(props.job, "type_of_interview", 0),
     );
 
-    setFieldValue("close_date", get(props.job, "close_date", ""));
-    closeDateSelected.value = get(props.job, "close_date", null);
+    setFieldValue("close_date", get(props.job, "close_date", null));
+    closeDateSelected.value = get(props.job, "close_date", null)
+      ? new Date(convertDateTimeServer(get(props.job, "close_date", null)))
+      : null;
 
     setFieldValue("address", get(props.job, "address", ""));
 
@@ -142,7 +147,11 @@ const initFormData = () => {
       props.job,
       "expected_on_board_date",
       null,
-    );
+    )
+      ? new Date(
+          convertDateTimeServer(get(props.job, "expected_on_board_date", null)),
+        )
+      : null;
 
     setFieldValue(
       "job_attribute",

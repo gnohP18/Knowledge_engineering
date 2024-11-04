@@ -1,5 +1,8 @@
 import { loginApi } from "~/api/company/auth";
-import { COMPANY_LAST_WORKSPACE, COMPANY_TOKEN } from "~/constants/authentication";
+import {
+  COMPANY_LAST_WORKSPACE,
+  COMPANY_TOKEN,
+} from "~/constants/authentication";
 import type { ErrorData } from "~/entities/api-error";
 import type { CompanyLoginEntity } from "~/entities/company/auth";
 
@@ -38,19 +41,15 @@ export const AuthStore = defineStore("AuthStore", {
           const redirectUrl = lastWorkspace ?? "/company";
 
           setToken(COMPANY_TOKEN, result.access_token);
-
+          toastSuccess("Welcome", "Login Successfully");
           navigateTo(redirectUrl, { external: true });
         })
         .catch((err) => {
-          this.$state.isLoading = false;
-
           this.$state.errors = handleApiErrors(err);
         })
         .finally(() => {
           this.$state.isLoading = false;
         });
-
-      this.$state.isLoading = false;
     },
   },
 });

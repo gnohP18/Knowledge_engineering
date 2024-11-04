@@ -19,8 +19,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <CommonKTALoading v-if="!props.user" />
-  <div v-else class="flex p-4 gap-4">
+  <div class="flex p-4 gap-4">
     <div class="flex flex-col gap-3 w-[25%]">
       <img
         :src="props.user.avatar ?? DEFAULT_AVATAR_URL"
@@ -73,11 +72,8 @@ const props = defineProps({
           <span>Hashtag</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <div v-for="Hashtag in props.user.hashtag">
-            <Chip
-              class="text-xs p-1 hashtag-item"
-              :label="`#${mappingHashtag(Hashtag).name}`"
-            />
+          <div v-for="hashtag in props.user.hashtag">
+            <Chip class="text-xs p-1 hashtag-item" :label="`#${hashtag}`" />
           </div>
         </div>
       </div>

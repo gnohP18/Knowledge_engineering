@@ -69,7 +69,7 @@ export const createPostApi = (data: DataPostEntity): Promise<any> => {
 };
 
 export const searchJobApi = (params: Object): Promise<any> => {
-  // return fetch("/data/response/success.json").then((res) => res.json());
+  // return fetch("/data/user/jobs.json").then((res) => res.json());
   return apiClient.get(`/job-service/jobs`, params, USER_TOKEN);
 };
 
