@@ -22,6 +22,7 @@ import {
 import type { OptionSelect } from "~/entities/common";
 import type { PositionEntity } from "~/entities/user/job";
 import EmptyData from "~/components/common/EmptyData.vue";
+import { USER_TROUBLESHOOTING } from "~/constants/route";
 
 useHead({ title: "Job finding" });
 
@@ -324,6 +325,13 @@ const changePaginator = async (value: any) => {
                     class="w-full"
                     :disabled="param.IsUseAi"
                   />
+                </div>
+                <div v-if="positions.length === 1">
+                  <small
+                    >If the Position dropdown has only one option please go to
+                    the troubleshooting page
+                  </small>
+                  <a class="text-xs" :href="USER_TROUBLESHOOTING">Click here</a>
                 </div>
               </form>
             </template>

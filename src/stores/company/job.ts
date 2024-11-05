@@ -23,7 +23,7 @@ interface State {
   jobs: BasicJobEntity[];
   positionNames: PositionNameEntity[];
   jobAttributes: AttributeTypeEntity[];
-  job: JobEntity
+  job: JobEntity;
 }
 
 const defaultState: State = {
@@ -34,7 +34,7 @@ const defaultState: State = {
   positionNames: [],
   errors: {},
   jobAttributes: [],
-  job: {}
+  job: {},
 };
 
 export const JobStore = defineStore("JobStore", {
@@ -62,16 +62,16 @@ export const JobStore = defineStore("JobStore", {
       this.$state.isSucceed = false;
 
       await getDetailJobApi(id)
-      .then((result) => {
-        this.$state.job = result;        
-      })
-      .catch((err) => {
-        this.$state.isSucceed = false;
-        this.$state.errors = handleApiErrors(err);
-      })
-      .finally(() => {
-        this.$state.isLoading = false;
-      });
+        .then((result) => {
+          this.$state.job = result;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
 
       this.$state.isLoading = true;
       await getListJobAttributeApi()
@@ -87,24 +87,6 @@ export const JobStore = defineStore("JobStore", {
         });
 
       this.$state.isLoading = true;
-      await getListPositionNameApi()
-      .then((result) => {
-        this.$state.isSucceed = true;
-        this.$state.positionNames = result;
-      })
-      .catch((err) => {
-        this.$state.isSucceed = false;
-        this.$state.errors = handleApiErrors(err);
-      })
-      .finally(() => {
-        this.$state.isLoading = false;
-      });
-    },
-
-    async getIndexCreate(): Promise<any> {
-      this.$state.isLoading = true;
-      this.$state.isSucceed = false;
-
       await getListPositionNameApi()
         .then((result) => {
           this.$state.isSucceed = true;
@@ -117,6 +99,24 @@ export const JobStore = defineStore("JobStore", {
         .finally(() => {
           this.$state.isLoading = false;
         });
+    },
+
+    async getIndexCreate(): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await getListPositionNameApi()
+        .then((result) => {
+          this.$state.isSucceed = true;
+          this.$state.positionNames = result.data;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
 
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
@@ -124,7 +124,7 @@ export const JobStore = defineStore("JobStore", {
       await getListJobAttributeApi()
         .then((result) => {
           this.$state.isSucceed = true;
-          this.$state.jobAttributes = result;
+          this.$state.jobAttributes = result.data;
         })
         .catch((err) => {
           this.$state.isSucceed = false;
@@ -141,30 +141,34 @@ export const JobStore = defineStore("JobStore", {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      await createJobApi(entity).then(() => {
-        this.$state.isSucceed = true;
-      }) .catch((err) => {
-        this.$state.isSucceed = false;
-        this.$state.errors = handleApiErrors(err);
-      })
-      .finally(() => {
-        this.$state.isLoading = false;
-      });
+      await createJobApi(entity)
+        .then(() => {
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
 
     async updateJob(id: string, entity: JobEntity): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      await updateJobApi(id, entity).then(() => {
-        this.$state.isSucceed = true;
-      }) .catch((err) => {
-        this.$state.isSucceed = false;
-        this.$state.errors = handleApiErrors(err);
-      })
-      .finally(() => {
-        this.$state.isLoading = false;
-      });
-    }
+      await updateJobApi(id, entity)
+        .then(() => {
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+    },
   },
 });

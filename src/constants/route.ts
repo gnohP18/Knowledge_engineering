@@ -8,6 +8,7 @@ export const USER_APPLICATION = "/applications";
 export const USER_JOB = "/jobs";
 export const USER_POST = "/posts";
 export const USER_CONNECTOR = "/connectors";
+export const USER_TROUBLESHOOTING = "/troubleshooting";
 
 /**
  * Company route
