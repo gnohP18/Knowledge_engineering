@@ -40,5 +40,5 @@ export interface JobEntity {
   close_date?: string;
   address?: string;
   interview_type?: number;
-  job_attribute?: string[];
+  job_attributes?: string[];
 }

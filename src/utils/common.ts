@@ -92,6 +92,43 @@ export const mappingJobAttribute = (data: JobAttributeEntity[]): TreeNode[] => {
   return [];
 };
 
+export const filterChildrenAttribute = (
+  jobAttributes: AttributeTypeEntity[],
+) => {
+  let ids: string[] = [];
+  jobAttributes.forEach((typeAttribute) => {
+    if (
+      typeAttribute.job_attributes &&
+      typeAttribute.job_attributes?.length > 0
+    ) {
+      ids = [...ids, ...getChildrenAttribute(typeAttribute.job_attributes)];
+    }
+  });
+
+  return ids;
+};
+
+/**
+ * get children attribute
+ *
+ * @param jobAttribute JobAttributeEntity
+ * @returns array ids children attribute
+ */
+export const getChildrenAttribute = (jobAttributes: JobAttributeEntity[]) => {
+  let ids: string[] = [];
+  jobAttributes.forEach((jobAttribute) => {
+    if (jobAttribute.job_attribute) {
+      if (jobAttribute.job_attribute.length > 0) {
+        ids = [...ids, ...getChildrenAttribute(jobAttribute.job_attribute)];
+      }
+    } else {
+      ids.push(String(jobAttribute.id));
+    }
+  });
+
+  return ids;
+};
+
 /**
  * Mapping job attribute id to PartialSelectedNode[] with key
  *

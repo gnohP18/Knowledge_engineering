@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { MenuItem } from "primevue/menuitem";
+import { USER_TROUBLESHOOTING } from "~/constants/route";
 
 const items: MenuItem[] = [
   {
@@ -11,20 +12,20 @@ const items: MenuItem[] = [
     route: "/connectors",
   },
   {
-    icon: "pi pi-briefcase",
+    icon: "pi pi-search",
     route: "/jobs",
   },
   {
     icon: "pi pi-file",
     route: "/applications",
   },
-  // {
-  //   icon: "pi pi-search",
-  //   route: "/login",
-  // },
   {
     icon: "pi pi-user",
     route: "/profile",
+  },
+  {
+    icon: "pi pi-question-circle",
+    route: USER_TROUBLESHOOTING,
   },
 ];
 </script>

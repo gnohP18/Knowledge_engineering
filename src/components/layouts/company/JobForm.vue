@@ -164,8 +164,6 @@ const initFormData = () => {
       dataNode.value,
       get(props.job, "job_attributes", []),
     ).data;
-
-    console.log(selectedNode.value);
   }
 };
 
@@ -211,6 +209,13 @@ const selectTreeNode = () => {
  * Submit handle
  */
 const onSubmit = handleSubmit(async (value) => {
+  const mappingIdAttributes = Object.keys(jobAttribute.value).map((_) =>
+    String(_),
+  );
+  const childrenAttributeIds = filterChildrenAttribute(jobAttributes.value);
+  const resultUnique = mappingIdAttributes.filter((_) => {
+    childrenAttributeIds.includes(_);
+  });
   const entity: JobEntity = {
     id: props.job?.id,
     title: title.value,
@@ -220,11 +225,11 @@ const onSubmit = handleSubmit(async (value) => {
     type_of_employee: Number(typeOfEmployeeSelected.value.id) ?? 0,
     number_of_position: numberOfPosition.value,
     working_time: workingTime.value,
-    expected_onboard_date: expectedOnBoardDate.value,
-    close_date: closeDate.value,
+    expected_onboard_date: new Date(expectedOnBoardDate.value).toISOString(),
+    close_date: new Date(closeDate.value).toISOString(),
     address: address.value,
     interview_type: Number(typeOfInterviewSelected.value.id) ?? 0,
-    job_attribute: jobAttribute.value,
+    job_attributes: resultUnique,
   };
 
   emits("submit", entity);
@@ -232,7 +237,7 @@ const onSubmit = handleSubmit(async (value) => {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="flex flex-col gap-2 w-full">
+  <form class="flex flex-col gap-2 w-full">
     <div class="w-full grid gap-2 grid-cols-2">
       <Validate label="Title" :error="errors.title" required>
         <CommonKTAInput v-model="title" name="title" class="w-full" />
@@ -262,7 +267,6 @@ const onSubmit = handleSubmit(async (value) => {
           :options="positionNameOptions"
           filter
           option-label="name"
-          select-on-focus
           class="w-full"
           @change="changePositionName"
         />
@@ -421,7 +425,7 @@ const onSubmit = handleSubmit(async (value) => {
         @change="selectTreeNode"
       />
     </Validate>
-    <CommonKTAButton label="Create" type="submit" />
+    <CommonKTAButton label="Create" type="button" @click="onSubmit" />
   </form>
 </template>
 <style lang="scss" scoped>

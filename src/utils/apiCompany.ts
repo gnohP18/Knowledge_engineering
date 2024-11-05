@@ -1,35 +1,33 @@
-import { USER_TOKEN } from "~/constants/authentication";
+import { COMPANY_TOKEN } from "~/constants/authentication";
 import * as StatusCode from "~/constants/status-code";
 
 const config = useRuntimeConfig();
 const singletonEnforcer = Symbol();
 const nuxtApp = useNuxtApp();
 
-class ApiClient {
-  private static inst: ApiClient;
+class ApiCompany {
+  private static inst: ApiCompany;
 
   private client: any;
-  private typeToken: string;
+
   constructor(enforcer: any) {
     if (enforcer !== singletonEnforcer) {
       throw new Error("Cannot initialize client single instance");
     }
-    this.typeToken = USER_TOKEN;
     this.client = $fetch.create(this.makeClient());
   }
 
-  static get instance(): ApiClient {
+  static get instance(): ApiCompany {
     if (this.inst) {
       return this.inst;
     }
 
-    this.inst = new ApiClient(singletonEnforcer);
+    this.inst = new ApiCompany(singletonEnforcer);
 
     return this.inst;
   }
 
   makeClient(): Object {
-    const type = this.typeToken;
     return {
       baseURL: config.public.API_BASE_URL,
       headers: this.getHeaders(),
@@ -46,7 +44,6 @@ class ApiClient {
           navigateTo("/notfound");
         } else if (response.status === StatusCode.UNAUTHENTICATED) {
           console.log(`Log status code ${StatusCode.UNAUTHENTICATED}`);
-          setToken(type, "");
           toastError("Error", response._data.message);
         } else if (
           [
@@ -62,8 +59,7 @@ class ApiClient {
   }
 
   getHeaders(): Object {
-    const token = getToken(this.typeToken);
-    console.log(token);
+    const token = getToken(COMPANY_TOKEN);
 
     let headers = {
       Accept: "application/json",
@@ -76,61 +72,35 @@ class ApiClient {
     return headers;
   }
 
-  get(
-    url: string,
-    params: Object = {},
-    type: string = USER_TOKEN,
-  ): Promise<any> {
-    this.typeToken = type;
-
+  get(url: string, params: Object = {}): Promise<any> {
     return this.client(url, {
       method: "GET",
       query: params,
     });
   }
 
-  post(
-    url: string,
-    data: Object = {},
-    type: string = USER_TOKEN,
-  ): Promise<any> {
-    this.typeToken = type;
-
+  post(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "POST",
       body: data,
     });
   }
 
-  put(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
-    this.typeToken = type;
-
+  put(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "PUT",
       body: data,
     });
   }
 
-  patch(
-    url: string,
-    data: Object = {},
-    type: string = USER_TOKEN,
-  ): Promise<any> {
-    this.typeToken = type;
-
+  patch(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "PATCH",
       body: data,
     });
   }
 
-  delete(
-    url: string,
-    data: Object = {},
-    type: string = USER_TOKEN,
-  ): Promise<any> {
-    this.typeToken = type;
-
+  delete(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "DELETE",
       body: data,
@@ -138,4 +108,4 @@ class ApiClient {
   }
 }
 
-export const apiClient = ApiClient.instance;
+export const apiCompany = ApiCompany.instance;
