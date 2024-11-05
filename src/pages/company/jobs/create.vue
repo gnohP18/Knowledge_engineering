@@ -2,7 +2,6 @@
 import { JobStore } from "~/stores/company/job";
 
 import type { JobEntity } from "~/entities/company/job";
-import { COMPANY_JOB } from "~/constants/route";
 import { MODE_FORM_CREATE } from "~/constants/common";
 
 useHead({ title: "Create job" });
@@ -28,7 +27,7 @@ const onSubmit = async (entity: JobEntity) => {
 
   if (!isLoading.value && isSucceed.value) {
     toastSuccess("Success", "Create job successfully");
-    router.push({ path: COMPANY_JOB });
+    // router.push({ path: COMPANY_JOB });
   }
 };
 </script>

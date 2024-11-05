@@ -20,14 +20,6 @@ export const createJobApi = (data: JobEntity): Promise<any> => {
   return apiCompany.post("/job-service/jobs", data);
 };
 
-export const updateJobApi = (id: string, entity: JobEntity): Promise<any> => {
-  // return axios
-  //   .post(`${API_URL}/model/predict`, { text: text })
-  //   .then((result) => {
-  //     return result.data
-  //   });
-
-  return fetch("/data/response/success.json")
-    .then((res) => res.json())
-    .then((d) => d.data);
+export const updateJobApi = (id: string, data: JobEntity): Promise<any> => {
+  return apiCompany.put(`/job-service/jobs/${id}`, data);
 };
