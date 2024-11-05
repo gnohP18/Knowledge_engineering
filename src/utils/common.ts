@@ -117,10 +117,8 @@ export const filterChildrenAttribute = (
 export const getChildrenAttribute = (jobAttributes: JobAttributeEntity[]) => {
   let ids: string[] = [];
   jobAttributes.forEach((jobAttribute) => {
-    if (jobAttribute.job_attribute) {
-      if (jobAttribute.job_attribute.length > 0) {
-        ids = [...ids, ...getChildrenAttribute(jobAttribute.job_attribute)];
-      }
+    if (jobAttribute.job_attribute && jobAttribute.job_attribute.length > 0) {
+      ids = [...ids, ...getChildrenAttribute(jobAttribute.job_attribute)];
     } else {
       ids.push(String(jobAttribute.id));
     }

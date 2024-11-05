@@ -64,7 +64,7 @@ const [closeDate] = defineField("close_date");
 const [address] = defineField("address");
 const [status] = defineField("status");
 const [salaryFrom] = defineField("salary_from");
-const [salaryUpto] = defineField("salary_upto");
+const [salaryUpto] = defineField("salary_up_to");
 const [workingTime] = defineField("working_time");
 const [expectedOnBoardDate] = defineField("expected_on_board_date");
 const [jobAttribute] = defineField("job_attributes");
@@ -96,6 +96,8 @@ const initFormData = () => {
     // Mapping tree node
     dataNode.value = mappingTreeNode(jobAttributes.value);
   } else {
+    console.log(props.job);
+
     setFieldValue("title", get(props.job, "title", ""));
     setFieldValue(
       "description",
@@ -137,7 +139,7 @@ const initFormData = () => {
     );
 
     setFieldValue("salary_from", get(props.job, "salary_from", null));
-    setFieldValue("salary_upto", get(props.job, "salary_upto", null));
+    setFieldValue("salary_up_to", get(props.job, "salary_up_to", null));
     setFieldValue("working_time", get(props.job, "working_time", null));
     setFieldValue(
       "expected_on_board_date",
@@ -203,19 +205,21 @@ const changeExpectedOnboardDate = () => {
 
 const selectTreeNode = () => {
   jobAttribute.value = Object.keys(selectedNode.value) ?? [];
+  filterChildrenAttribute(jobAttributes.value);
 };
 
 /**
  * Submit handle
  */
 const onSubmit = handleSubmit(async (value) => {
-  const mappingIdAttributes = Object.keys(jobAttribute.value).map((_) =>
+  const mappingIdAttributes = Object.values(jobAttribute.value).map((_) =>
     String(_),
   );
   const childrenAttributeIds = filterChildrenAttribute(jobAttributes.value);
   const resultUnique = mappingIdAttributes.filter((_) => {
-    childrenAttributeIds.includes(_);
+    return childrenAttributeIds.includes(_);
   });
+
   const entity: JobEntity = {
     id: props.job?.id,
     title: title.value,
@@ -224,6 +228,8 @@ const onSubmit = handleSubmit(async (value) => {
     description: description.value,
     type_of_employee: Number(typeOfEmployeeSelected.value.id) ?? 0,
     number_of_position: numberOfPosition.value,
+    salary_from: salaryFrom.value,
+    salary_up_to: salaryUpto.value,
     working_time: workingTime.value,
     expected_onboard_date: new Date(expectedOnBoardDate.value).toISOString(),
     close_date: new Date(closeDate.value).toISOString(),
@@ -425,7 +431,7 @@ const onSubmit = handleSubmit(async (value) => {
         @change="selectTreeNode"
       />
     </Validate>
-    <CommonKTAButton label="Create" type="button" @click="onSubmit" />
+    <CommonKTAButton label="Save" type="button" @click="onSubmit" />
   </form>
 </template>
 <style lang="scss" scoped>

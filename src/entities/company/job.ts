@@ -33,6 +33,8 @@ export interface JobEntity {
   position_id?: number;
   status?: number;
   description?: string;
+  salary_from?: number;
+  salary_up_to?: number;
   type_of_employee?: number;
   number_of_position?: number;
   working_time?: string;

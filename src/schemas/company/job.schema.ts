@@ -20,7 +20,7 @@ export const companyJobObject = zod.object({
   address: zod.string(requireMess("Address")),
   status: zod.number().default(1),
   salary_from: zod.number().min(0).nullish().nullable(),
-  salary_upto: zod.number().min(0).nullish().nullable(),
+  salary_up_to: zod.number().min(0).nullish().nullable(),
   job_attributes: zod.string(requireMess("Job Attribute")).array().nonempty({
     message: "Can't be empty!",
   }),

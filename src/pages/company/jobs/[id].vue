@@ -24,11 +24,11 @@ onMounted(async () => {
 });
 
 const update = async (entity: JobEntity) => {
-  await store.updateJob(route.params.id[0], entity);
-  console.log(entity);
+  await store.updateJob(route.params.id, entity);
 
   if (!isLoading.value && isSucceed.value) {
     toastSuccess("Success", "Update job successfully");
+    await store.getDetail(route.params.id);
   }
 };
 </script>
