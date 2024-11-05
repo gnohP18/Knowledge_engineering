@@ -40,7 +40,7 @@ export const AuthStore = defineStore("AuthStore", {
         .then((result) => {
           const redirectUrl = lastWorkspace ?? "/company";
 
-          setToken(COMPANY_TOKEN, result.access_token);
+          setToken(COMPANY_TOKEN, result.token);
           toastSuccess("Welcome", "Login Successfully");
           navigateTo(redirectUrl, { external: true });
         })

@@ -23,6 +23,14 @@ onMounted(() => {});
         {{ props.job?.title }}
       </a>
       <div class="w-full flex justify-between">
+        <label for="position_name"
+          >Position name:
+          <span class="font-bold">
+            {{ props.job?.position_name }}
+          </span>
+        </label>
+      </div>
+      <div class="w-full flex justify-between">
         <a
           :href="`/connectors/company/${props.job?.company?.id}`"
           class="text-md"

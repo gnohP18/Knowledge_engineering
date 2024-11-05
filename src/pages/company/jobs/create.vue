@@ -5,7 +5,7 @@ import type { JobEntity } from "~/entities/company/job";
 import { COMPANY_JOB } from "~/constants/route";
 import { MODE_FORM_CREATE } from "~/constants/common";
 
-useHead({ title: "List job" });
+useHead({ title: "Create job" });
 
 definePageMeta({
   layout: "company",

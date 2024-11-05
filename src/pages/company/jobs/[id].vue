@@ -3,7 +3,7 @@ import { MODE_FORM_UPDATE } from "~/constants/common";
 import type { JobEntity } from "~/entities/company/job";
 import { JobStore } from "~/stores/company/job";
 
-useHead({ title: "List job" });
+useHead({ title: "Update job" });
 
 definePageMeta({
   layout: "company",

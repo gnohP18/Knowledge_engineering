@@ -34,16 +34,16 @@ const bgGroup = [
 </script>
 <template>
   <div class="flex w-full animation-visible">
-    <div class="flex gap-3 h-[500px]">
+    <div class="flex flex-col md:flex-row gap-3 h-[500px]">
       <div
         v-for="item in bgGroup"
-        :class="`w-1/${bgGroup.length}`"
-        class="common-rounded bg-item h-full relative"
+        :class="`md:w-1/${bgGroup.length}`"
+        class="common-rounded bg-item md:h-full relative"
       >
         <label class="absolute index common-rounded" for="index">{{
           item.beginWord
         }}</label>
-        <label class="absolute caption common-rounded" for="caption">{{
+        <label class="hidden absolute caption common-rounded" for="caption">{{
           item.caption
         }}</label>
         <img
@@ -69,74 +69,116 @@ const bgGroup = [
   }
 }
 
-.bg-item {
-  width: 200%;
-  transition: width 0.3s ease;
+@media (max-width: 767px) {
+  .bg-item {
+    width: 100%;
+    max-height: 200px;
 
-  .index {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #ffffff;
-    display: none;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
+    &::before {
+      border-radius: 16px;
+      content: "";
+      position: absolute;
+      top: 0; /* Đặt vị trí lớp phủ */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8); /* Lớp phủ đen với độ trong suốt */
+      opacity: 1; /* Hiện lớp phủ khi không hover */
+      transition: opacity 0.3s ease;
+    }
 
-  .caption {
-    display: inherit;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    text-align: center;
-    font-weight: bold;
-    color: #ffffff;
-    // text-shadow: rgb(6, 6, 5) 1px 0 10px;
-    text-shadow:
-      rgb(115, 115, 115) 10px 0px 20px,
-      rgb(115, 115, 115) -10px 0px 20px,
-      rgb(115, 115, 115) 0px 10px 20px,
-      rgb(115, 115, 115) 0px -10px 20px;
+    .index {
+      top: 25%;
+      // left: 50%;
+      font-size: 80px;
+      color: #ffffff;
+      text-shadow:
+        rgb(115, 115, 115) 10px 0px 20px,
+        rgb(115, 115, 115) -10px 0px 20px,
+        rgb(115, 115, 115) 0px 10px 20px,
+        rgb(115, 115, 115) 0px -10px 20px;
+      // display: inherit;
+      text-align: center;
+      transition: opacity 0.3s ease;
+      min-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .caption {
+      display: none;
+    }
   }
 }
 
-.bg-item:not(:hover) {
-  width: 100%;
-  &::before {
-    border-radius: 16px;
-    content: "";
-    position: absolute;
-    top: 0; /* Đặt vị trí lớp phủ */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8); /* Lớp phủ đen với độ trong suốt */
-    opacity: 1; /* Hiện lớp phủ khi không hover */
-    transition: opacity 0.3s ease;
+@media (min-width: 768px) {
+  .bg-item {
+    width: 200%;
+    transition: width 0.3s ease;
+
+    .index {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      display: none;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .caption {
+      display: inherit;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      text-align: center;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow:
+        rgb(115, 115, 115) 10px 0px 20px,
+        rgb(115, 115, 115) -10px 0px 20px,
+        rgb(115, 115, 115) 0px 10px 20px,
+        rgb(115, 115, 115) 0px -10px 20px;
+    }
   }
 
-  .index {
-    top: 50%;
-    left: 50%;
-    font-size: 120px;
-    color: #ffffff;
-    text-shadow:
-      rgb(115, 115, 115) 10px 0px 20px,
-      rgb(115, 115, 115) -10px 0px 20px,
-      rgb(115, 115, 115) 0px 10px 20px,
-      rgb(115, 115, 115) 0px -10px 20px;
-    display: inherit;
-    text-align: center;
-    transition: opacity 0.3s ease;
-    min-width: 100%;
-    overflow-x: hidden;
-  }
+  .bg-item:not(:hover) {
+    width: 100%;
+    &::before {
+      border-radius: 16px;
+      content: "";
+      position: absolute;
+      top: 0; /* Đặt vị trí lớp phủ */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8); /* Lớp phủ đen với độ trong suốt */
+      opacity: 1; /* Hiện lớp phủ khi không hover */
+      transition: opacity 0.3s ease;
+    }
 
-  .caption {
-    display: none;
+    .index {
+      top: 50%;
+      left: 50%;
+      font-size: 120px;
+      color: #ffffff;
+      text-shadow:
+        rgb(115, 115, 115) 10px 0px 20px,
+        rgb(115, 115, 115) -10px 0px 20px,
+        rgb(115, 115, 115) 0px 10px 20px,
+        rgb(115, 115, 115) 0px -10px 20px;
+      display: inherit;
+      text-align: center;
+      transition: opacity 0.3s ease;
+      min-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .caption {
+      display: none;
+    }
   }
 }
 </style>
