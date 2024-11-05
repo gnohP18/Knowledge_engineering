@@ -319,7 +319,7 @@ const changePaginator = async (value: any) => {
                   <CommonKTADropdown
                     label="Type of employee"
                     v-model="typeOfEmployeeSelected"
-                    :options="TYPE_OF_EMPLOYEE_OPTIONS"
+                    :options="[...[OPTION_ALL], ...TYPE_OF_EMPLOYEE_OPTIONS]"
                     option-label="name"
                     class="w-full"
                     :disabled="param.IsUseAi"

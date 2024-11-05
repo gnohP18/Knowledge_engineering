@@ -220,8 +220,10 @@ const onSubmit = handleSubmit(async (value) => {
     type_of_employee: Number(typeOfEmployeeSelected.value.id) ?? 0,
     number_of_position: numberOfPosition.value,
     working_time: workingTime.value,
-    expected_onboard_date: expectedOnBoardDate.value,
-    close_date: closeDate.value,
+    expected_onboard_date: new Date(
+      expectedOnBoardDate.value,
+    ).toLocaleDateString(),
+    close_date: new Date(closeDate.value).toLocaleDateString(),
     address: address.value,
     interview_type: Number(typeOfInterviewSelected.value.id) ?? 0,
     job_attribute: jobAttribute.value,
@@ -262,7 +264,6 @@ const onSubmit = handleSubmit(async (value) => {
           :options="positionNameOptions"
           filter
           option-label="name"
-          select-on-focus
           class="w-full"
           @change="changePositionName"
         />
