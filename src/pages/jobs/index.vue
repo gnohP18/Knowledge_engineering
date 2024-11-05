@@ -17,6 +17,7 @@ import {
 import {
   DIRECTION_TYPE_OPTIONS,
   LIMIT_OBJECT_OPTIONS,
+  OPTION_ALL,
 } from "~/constants/common";
 import type { OptionSelect } from "~/entities/common";
 import type { PositionEntity } from "~/entities/user/job";
@@ -27,13 +28,14 @@ useHead({ title: "Job finding" });
 definePageMeta({
   layout: "user",
 });
+
 const store = jobStore();
 const jobs = computed(() => store.jobs);
 const meta = computed(() => store.meta);
 const isLoading = computed(() => store.isLoading);
 const isSucceed = computed(() => store.isSucceed);
 const firstTimeLoad = ref<boolean>(true);
-const positions = computed(() => store.positions);
+const positions = computed(() => [...[OPTION_ALL], ...store.positions]);
 /**
  * Searching param
  */
@@ -42,6 +44,7 @@ interface SearchParam {
   SearchText?: string;
   Limit?: string;
   Page?: string;
+  TypeOfEmployee?: number;
   PositionId?: string;
   Direction?: string;
   IsUseAi?: boolean;
@@ -83,18 +86,33 @@ const setQueryParams = () => {
     param.value.Page = "1";
   } else {
     param.value.IsUseAi = false;
-    param.value.PositionId = String(
-      positionSelected.value?.id ?? positions.value[0].id,
-    );
+    if (positionSelected.value?.id !== OPTION_ALL.id) {
+      param.value.PositionId = String(
+        positionSelected.value?.id ?? positions.value[0].id,
+      );
+    } else {
+      delete param.value.PositionId;
+    }
+
+    if (typeOfEmployeeSelected.value.id !== OPTION_ALL.id) {
+      param.value.TypeOfEmployee = typeOfEmployeeSelected.value.id;
+    } else {
+      delete param.value.TypeOfEmployee;
+    }
+
     param.value.Limit = limitSelected.value.name;
     param.value.Page = "1";
     param.value.Direction = directionSortSelected.value.id;
 
     if (salaryFrom.value) {
       param.value.SalaryFrom = salaryFrom.value;
+    } else {
+      delete param.value.SalaryFrom;
     }
     if (salaryUpto.value) {
       param.value.SalaryUpTo = salaryUpto.value;
+    } else {
+      delete param.value.SalaryUpTo;
     }
   }
 };
@@ -154,18 +172,32 @@ const changePaginator = async (value: any) => {
     param.value.Page = value.Page;
   } else {
     param.value.IsUseAi = false;
-    param.value.PositionId = String(
-      positionSelected.value?.id ?? positions.value[0].id,
-    );
+    if (positionSelected.value?.id !== OPTION_ALL.id) {
+      param.value.PositionId = String(
+        positionSelected.value?.id ?? positions.value[0].id,
+      );
+    } else {
+      delete param.value.PositionId;
+    }
     param.value.Limit = limitSelected.value.name;
     param.value.Page = value.Page;
     param.value.Direction = directionSortSelected.value.id;
 
+    if (typeOfEmployeeSelected.value.id !== OPTION_ALL.id) {
+      param.value.TypeOfEmployee = typeOfEmployeeSelected.value.id;
+    } else {
+      delete param.value.TypeOfEmployee;
+    }
+
     if (salaryFrom.value) {
       param.value.SalaryFrom = salaryFrom.value;
+    } else {
+      delete param.value.SalaryFrom;
     }
     if (salaryUpto.value) {
       param.value.SalaryUpTo = salaryUpto.value;
+    } else {
+      delete param.value.SalaryUpTo;
     }
   }
 
@@ -185,7 +217,7 @@ const changePaginator = async (value: any) => {
         <label class="text-2xl font-bold text-left w-full" for="search-input"
           >Search you job</label
         >
-        <div class="flex gap-2">
+        <div class="flex flex-col md:flex-row gap-2">
           <KTASearchInput
             v-model="param.SearchText"
             name="search_text"
@@ -222,7 +254,7 @@ const changePaginator = async (value: any) => {
                 </div>
               </div>
               <form @submit.prevent="onSubmit" class="w-full">
-                <div class="grid grid-cols-3 gap-2">
+                <div class="md:grid md:grid-cols-3 gap-2">
                   <CommonKTADropdown
                     label="Order by"
                     v-model="orderBySelected"

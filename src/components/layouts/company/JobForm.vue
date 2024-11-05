@@ -67,7 +67,7 @@ const [salaryFrom] = defineField("salary_from");
 const [salaryUpto] = defineField("salary_upto");
 const [workingTime] = defineField("working_time");
 const [expectedOnBoardDate] = defineField("expected_on_board_date");
-const [jobAttribute] = defineField("job_attribute");
+const [jobAttribute] = defineField("job_attributes");
 
 onMounted(async () => {
   initFormData();
@@ -154,16 +154,18 @@ const initFormData = () => {
       : null;
 
     setFieldValue(
-      "job_attribute",
-      get(props.job, "job_attribute", []).map((item: number) => String(item)),
+      "job_attributes",
+      get(props.job, "job_attributes", []).map((item: number) => String(item)),
     );
 
     // Mapping tree node
     dataNode.value = mappingTreeNode(jobAttributes.value);
     selectedNode.value = mappingResultData(
       dataNode.value,
-      get(props.job, "job_attribute", []),
+      get(props.job, "job_attributes", []),
     ).data;
+
+    console.log(selectedNode.value);
   }
 };
 
@@ -233,7 +235,7 @@ const onSubmit = handleSubmit(async (value) => {
   <form @submit.prevent="onSubmit" class="flex flex-col gap-2 w-full">
     <div class="w-full grid gap-2 grid-cols-2">
       <Validate label="Title" :error="errors.title" required>
-        <CommonKTAInput v-model="title" class="w-full" />
+        <CommonKTAInput v-model="title" name="title" class="w-full" />
       </Validate>
 
       <Validate label="Status" :error="errors.status" class="w-full">
@@ -307,6 +309,7 @@ const onSubmit = handleSubmit(async (value) => {
         <KTAInputNumber
           v-model="numberOfPosition"
           class="w-full"
+          name="number_of_position"
           showButtons
           :min="0"
           :max="100"
@@ -322,11 +325,19 @@ const onSubmit = handleSubmit(async (value) => {
     <div class="w-full flex gap-2">
       <div class="flex gap-2">
         <Validate class="w-1/3" :error="errors.salary_from">
-          <KTAInputNumber v-model="salaryFrom" class="w-full" />
+          <KTAInputNumber
+            v-model="salaryFrom"
+            class="w-full"
+            name="salary_from"
+          />
         </Validate>
         <span class="text-center text-xl pt-2">~</span>
         <Validate class="w-1/3" :error="errors.salary_upto">
-          <KTAInputNumber v-model="salaryUpto" class="w-full" />
+          <KTAInputNumber
+            v-model="salaryUpto"
+            class="w-full"
+            name="salary_up_to"
+          />
         </Validate>
 
         <label
@@ -348,7 +359,11 @@ const onSubmit = handleSubmit(async (value) => {
 
     <div class="w-full grid gap-2 grid-cols-2">
       <Validate label="Working time" :error="errors.working_time">
-        <CommonKTAInput v-model="workingTime" class="w-full" />
+        <CommonKTAInput
+          v-model="workingTime"
+          class="w-full"
+          name="working_time"
+        />
       </Validate>
       <Validate
         label="Expected onboard date"
@@ -367,7 +382,7 @@ const onSubmit = handleSubmit(async (value) => {
 
     <div class="w-full grid gap-2 grid-cols-2">
       <Validate label="Address" :error="errors.address" required>
-        <CommonKTAInput v-model="address" class="w-full" />
+        <CommonKTAInput v-model="address" class="w-full" name="address" />
       </Validate>
       <Validate label="Close date" :error="errors.close_date">
         <CommonKTACalendar
@@ -393,7 +408,7 @@ const onSubmit = handleSubmit(async (value) => {
     <Validate
       label="Attribute"
       required
-      :error="errors.job_attribute"
+      :error="errors.job_attributes"
       class="w-full"
     >
       <TreeSelect

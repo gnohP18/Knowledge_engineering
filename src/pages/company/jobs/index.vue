@@ -34,13 +34,6 @@ interface QueryParamsEntity {
   limit?: string;
   status?: string;
   keyword?: string;
-  s_email?: string;
-  s_status?: string;
-  s_username?: string;
-  s_id?: string;
-  s_role_name?: string;
-  s_name?: string;
-  s_phone?: string;
 }
 
 let queryParams = reactive<QueryParamsEntity>({

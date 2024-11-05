@@ -65,3 +65,5 @@ export const LIMIT_OBJECT_OPTIONS: { id: number; name: string }[] = [
   { id: 20, name: "20" },
   { id: 30, name: "30" },
 ];
+
+export const OPTION_ALL: OptionSelect = { id: -1, name: "All" };

@@ -1,3 +1,6 @@
+import type { OptionSelect } from "~/entities/common";
+import { OPTION_ALL } from "./common";
+
 /**
  * Job status
  */
@@ -32,7 +35,8 @@ export const TYPE_OF_EMPLOYEE = {
   [OUT_SOURCED]: "Out sourced",
 };
 
-export const TYPE_OF_EMPLOYEE_OPTIONS = [
+export const TYPE_OF_EMPLOYEE_OPTIONS: OptionSelect[] = [
+  OPTION_ALL,
   { name: TYPE_OF_EMPLOYEE[FULL_TIME], id: FULL_TIME },
   { name: TYPE_OF_EMPLOYEE[PART_TIME], id: PART_TIME },
   { name: TYPE_OF_EMPLOYEE[CONTRACT], id: CONTRACT },

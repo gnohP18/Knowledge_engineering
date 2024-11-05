@@ -108,3 +108,8 @@ git fetch gitlab
 git rebase gitlab/develop
 git push 
 ```
+
+### https, remember create folder `https` before run command
+```code
+openssl req -x509 -newkey rsa:4096 -keyout localhost_key.pem -out localhost_cert.pem -sha256 -days 365 -nodes
+```
