@@ -76,7 +76,8 @@ export const JobStore = defineStore("JobStore", {
       this.$state.isLoading = true;
       await getListJobAttributeApi()
         .then((result) => {
-          this.$state.jobAttributes = result;
+          this.$state.isSucceed = true;
+          this.$state.jobAttributes = result.data;
         })
         .catch((err) => {
           this.$state.isSucceed = false;
@@ -90,7 +91,7 @@ export const JobStore = defineStore("JobStore", {
       await getListPositionNameApi()
         .then((result) => {
           this.$state.isSucceed = true;
-          this.$state.positionNames = result;
+          this.$state.positionNames = result.data;
         })
         .catch((err) => {
           this.$state.isSucceed = false;

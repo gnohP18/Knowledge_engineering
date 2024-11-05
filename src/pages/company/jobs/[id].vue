@@ -18,7 +18,8 @@ const isSucceed = computed(() => store.isSucceed);
 const job = computed(() => store.job);
 
 onMounted(async () => {
-  const id = route.params.id[0];
+  const id = route.params.id;
+  await store.getIndexCreate();
   await store.getDetail(id);
 });
 
