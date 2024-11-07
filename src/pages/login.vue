@@ -3,7 +3,7 @@ import { useForm } from "vee-validate";
 import KTALoading from "~/components/common/KTALoading.vue";
 import KTAPassword from "~/components/common/KTAPassword.vue";
 import Validate from "~/components/common/Validate.vue";
-import { USER_SIGNUP } from "~/constants/route";
+import { COMPANY_LOGIN, USER_SIGNUP } from "~/constants/route";
 import type { UserLoginEntity } from "~/entities/user/auth";
 import { userLoginSchema } from "~/schemas/user/auth.schema";
 import { AuthStore } from "~/stores/user/auth";
@@ -40,9 +40,11 @@ const onSubmit = handleSubmit(async (values) => {
     class="flex w-full h-full background-login justify-center items-center"
   >
     <div
-      class="w-1/4 min-h-[200px] flex flex-col justify-center items-center gap-2"
+      class="md:w-1/4 min-h-[200px] flex flex-col justify-center items-center gap-2 p-5 common-rounded bg-black/[0.3]"
     >
-      <label class="text-2xl text-white font-bold">LOGIN</label>
+      <label class="text-2xl text-white font-bold span-primary-hover"
+        >LOGIN</label
+      >
       <form @submit.prevent="onSubmit" class="w-full">
         <Validate label="Email" :error="errors.email" class="w-full">
           <CommonKTAInput v-model="email" name="email" class="w-full" />
@@ -59,15 +61,22 @@ const onSubmit = handleSubmit(async (values) => {
           />
         </div>
       </form>
-      <a :href="USER_SIGNUP">Don't have account? Sign up now!</a>
-      <a href="/">Home</a>
+      <a class="text-white" :href="USER_SIGNUP"
+        >Don't have account? Sign up now!</a
+      >
+      <a class="text-white" :href="COMPANY_LOGIN">Business Hiring</a>
+      <a class="text-white" href="/">Home</a>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .background-login {
-  background-image: url("../assets/images/test1.jpeg");
+  background-image: url("../assets/images/test1.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.p-label.h6 {
+  color: white;
 }
 </style>

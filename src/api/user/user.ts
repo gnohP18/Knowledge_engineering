@@ -1,8 +1,7 @@
-import { USER_TOKEN } from "~/constants/authentication";
 import type { DataPostEntity } from "~/entities/user/post";
 
 export const getDetailApi = (): Promise<any> => {
-  return apiClient.get(`/user-service/users/1`, {}, USER_TOKEN);
+  return apiClient.get(`/user-service/users/1`, {});
 };
 
 export const getSuggestConnectorApi = (): Promise<any> => {
@@ -51,7 +50,7 @@ export const getDetailJobApi = (id: number): Promise<any> => {
   // return fetch("/data/user/job.json")
   //   .then((res) => res.json())
   //   .then((d) => d.data);
-  return apiClient.get(`/job-service/jobs/${id}`, {}, USER_TOKEN);
+  return apiClient.get(`/job-service/jobs/${id}`, {});
 };
 
 export const applyJobApi = (id: number): Promise<any> => {
@@ -70,13 +69,13 @@ export const createPostApi = (data: DataPostEntity): Promise<any> => {
 
 export const searchJobApi = (params: Object): Promise<any> => {
   // return fetch("/data/user/jobs.json").then((res) => res.json());
-  return apiClient.get(`/job-service/jobs`, params, USER_TOKEN);
+  return apiClient.get(`/job-service/jobs`, params);
 };
 
 export const getResumeListApi = (param: Object): Promise<any> => {
-  return apiClient.get("/user-service/users/resumes/", param, USER_TOKEN);
+  return apiClient.get("/user-service/users/resumes/", param);
 };
 
 export const getPositionNameListApi = (param: Object): Promise<any> => {
-  return apiClient.get("/job-service/jobs/job-positions", param, USER_TOKEN);
+  return apiClient.get("/job-service/jobs/job-positions", param);
 };

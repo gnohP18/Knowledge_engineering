@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { sleep } from "@whoj/utils-core";
-import { CONNECTOR_SAMPLE } from "~/constants/sample";
-import type { ConnectorEntity } from "~/entities/user/user";
 import ConnectorCard from "~/components/user/ConnectorCard.vue";
 import KTALoading from "~/components/common/KTALoading.vue";
 import { userStore } from "~/stores/user/user";
@@ -21,7 +18,7 @@ onMounted(async () => {
 <template>
   <KTALoading v-if="isLoading" />
   <div v-else class="layout-main container">
-    <div class="grid grid-cols-8 gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-8 gap-3">
       <div v-for="connector in connectors">
         <ConnectorCard :connector="connector" />
       </div>

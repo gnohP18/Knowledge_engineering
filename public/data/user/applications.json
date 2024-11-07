@@ -3,7 +3,7 @@
     {
       "id": "1",
       "job_id": "2",
-      "job_name": "Backend developer",
+      "job_position": "Backend developer",
       "first_name": "Nguyen Hoang",
       "last_name": "Phong",
       "date_of_birth": "2002/04/18",
@@ -70,7 +70,7 @@
     {
       "id": "2",
       "job_id": "2",
-      "job_name": "Frontend developer",
+      "job_position": "Frontend developer",
       "first_name": "Nguyen Hoang",
       "last_name": "Phong",
       "date_of_birth": "2002/04/18",

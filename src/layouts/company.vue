@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { MENU_COMPANY } from "~/constants/menu-item";
-import AppTopBar from "~/components/layouts/company/AppTopBar.vue";
-import type { CompanyEntity } from "~/entities/user/company";
-import { DETAIL_COMPANY_SAMPLE } from "~/constants/sample";
 import type { MenuItem } from "primevue/menuitem";
 import { COMPANY_TOKEN } from "~/constants/authentication";
 import { COMPANY_LOGIN } from "~/constants/route";
+import { AuthStore } from "~/stores/company/auth";
 
-const companyAuth = ref<CompanyEntity>();
+const store = AuthStore();
+// const companyAuth = computed(() => store.);
 onMounted(() => {
-  companyAuth.value = DETAIL_COMPANY_SAMPLE;
+  // companyAuth.value = DETAIL_COMPANY_SAMPLE;
 });
 
 const router = useRouter();
@@ -46,7 +45,7 @@ const logout = () => {
 <template>
   <div class="flex flex-col max-w-screen min-h-screen">
     <!-- Header -->
-    <AppTopBar :company-auth="companyAuth" />
+    <!-- <AppTopBar :company-auth="companyAuth" /> -->
     <Toast />
     <!-- Main Layout -->
     <div class="flex flex-1">

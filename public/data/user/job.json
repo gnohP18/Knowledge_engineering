@@ -15,7 +15,7 @@
     "address": "06 Tran Phu, Da Nang",
     "interview_type": 0,
     "number_of_applicants": 12,
-    "job_attribute" : [
+    "job_attribute_names" : [
       "Amazon Web Services Cloud Practitioner",
       "BachelorDegree",
       "English",

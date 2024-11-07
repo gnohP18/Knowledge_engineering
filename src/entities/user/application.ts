@@ -4,7 +4,7 @@ import type { BasicJobEntity } from "./job";
 export interface ApplicationEntity {
   id?: string;
   job_id?: string;
-  job_name: string;
+  job_position: string;
   first_name?: string;
   last_name?: string;
   date_of_birth?: string;
