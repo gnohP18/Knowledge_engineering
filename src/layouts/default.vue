@@ -21,13 +21,13 @@ onBeforeMount(async () => {
     </div>
     <div class="w-full h-screen overflow-scroll flex justify-center">
       <div class="layout-container flex">
-        <div class="left-bar-container h-full py-4 pr-2">
+        <div class="hidden md:block flex-grow-0 h-full py-4 pr-2">
           <Leftbar :user="me" />
         </div>
-        <div class="flex-1 py-4 px-2">
+        <div class="py-4 px-2 flex-grow-0">
           <slot />
         </div>
-        <div class="right-bar-container h-full py-4 pl-2">
+        <div class="hidden md:block flex-grow-0 h-full py-4 pl-2">
           <Rightbar />
         </div>
       </div>
@@ -37,18 +37,19 @@ onBeforeMount(async () => {
 <style scoped lang="scss">
 .layout-container {
   max-width: 1440px;
+  padding-inline: 4px;
 }
 
-.left-bar-container,
-.right-bar-container {
-  position: sticky;
-  width: 25%;
-  top: 0;
-}
+// .left-bar-container,
+// .right-bar-container {
+//   position: sticky;
+//   width: 25%;
+//   top: 0;
+// }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .layout-container {
-    max-width: 768px;
+    max-width: 992px;
   }
 }
 
@@ -57,10 +58,10 @@ onBeforeMount(async () => {
     max-width: 992px;
   }
 
-  .left-bar-container,
-  .right-bar-container {
-    width: 20%;
-  }
+  // .left-bar-container,
+  // .right-bar-container {
+  //   width: 20%;
+  // }
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -68,9 +69,9 @@ onBeforeMount(async () => {
     max-width: 1200px;
   }
 
-  .left-bar-container,
-  .right-bar-container {
-    width: 25%;
-  }
+  // .left-bar-container,
+  // .right-bar-container {
+  //   width: 25%;
+  // }
 }
 </style>

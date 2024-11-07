@@ -11,7 +11,7 @@ const props = defineProps({
 });
 </script>
 <template>
-  <div class="w-full h-full flex flex-col gap-y-2">
+  <div class="h-full flex flex-col gap-y-2">
     <div class="primary-card common-rounded min-h-[30%] w-full">
       <ProfileCard v-if="props.user" :user="props.user" />
     </div>

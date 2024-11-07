@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import type { ConnectorEntity } from "~/entities/user/user";
 import LimitSpan from "./LimitSpan.vue";
-import { LIMIT_NAME_CHARACTERS } from "~/constants/common";
+import {
+  LIMIT_NAME_CHARACTERS,
+  CONNECTOR_TYPE,
+  CONNECTOR_TYPE_USER,
+} from "~/constants/common";
 
 const props = defineProps({
   connectors: {
@@ -30,7 +34,7 @@ const props = defineProps({
               props.limitCharacter
             "
             class="primary-text text-sm"
-            href="/"
+            :href="`/connectors/${connector?.connector_type === CONNECTOR_TYPE[CONNECTOR_TYPE_USER] ? 'user' : 'company'}/${connector?.id}`"
           >
             {{ connector.last_name }} {{ connector.first_name }}
           </a>

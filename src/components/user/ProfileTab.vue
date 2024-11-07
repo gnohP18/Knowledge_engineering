@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { get, isEmpty } from "lodash-es";
+import { get } from "lodash-es";
 import type { UserEntity } from "~/entities/user/user";
 import KTAInput from "../common/KTAInput.vue";
 import Validate from "../common/Validate.vue";
@@ -11,10 +11,15 @@ import { HASHTAG_EXAMPLE } from "~/constants/sample";
 import { useForm } from "vee-validate";
 import { userUpdateSchema } from "~/schemas/user/profile.schema";
 import type { OptionSelect } from "~/entities/common";
+import type { PositionEntity } from "~/entities/user/job";
 
 const props = defineProps({
   user: {
     type: Object as PropType<UserEntity>,
+  },
+  jobPositions: {
+    type: Array<PositionEntity>,
+    default: [],
   },
 });
 
@@ -36,6 +41,7 @@ const [address] = defineField("address");
 const [detailAddress] = defineField("detail_address");
 const [email] = defineField("email");
 const [jobPosition] = defineField("job_position");
+const jobPositionSelected = ref<OptionSelect>(props.jobPositions[0]);
 const [selfIntroduce] = defineField("self_introduce");
 const [lifeGoal] = defineField("life_goal");
 const [gender] = defineField("gender");
@@ -57,12 +63,16 @@ onMounted(() => {
   setFieldValue("self_introduce", get(props.user, "self_introduce", ""));
   setFieldValue("life_goal", get(props.user, "life_goal", ""));
   setFieldValue("avatar", get(props.user, "avatar", ""));
-  setFieldValue("job_position", get(props.user, "job_position", 0));
+  setFieldValue("job_position", get(props.user, "job_position.id", 0));
   setFieldValue("gender", get(props.user, "gender", 0));
 
   selectedGender.value = genderOption.filter(
     (_) => props.user?.gender === _.id,
   )[0];
+
+  jobPositionSelected.value =
+    props.jobPositions.filter((_) => _.id === jobPosition.value)[0] ??
+    props.jobPositions[0];
 });
 
 const selectedHashtag = ref([
@@ -89,7 +99,7 @@ const onSubmit = handleSubmit(async () => {});
     @submit.prevent="onSubmit"
     class="flex flex-col w-full p-3 gap-x-4"
   >
-    <div class="container-group-input w-full columns-2">
+    <div class="container-group-input w-full md:columns-2">
       <Validate label="First name" :error="errors.first_name" required>
         <KTAInput v-model="firstName" :class="'w-full'" />
       </Validate>
@@ -97,7 +107,7 @@ const onSubmit = handleSubmit(async () => {});
         <KTAInput v-model="lastName" :class="'w-full'" />
       </Validate>
     </div>
-    <div class="container-group-input w-full columns-2">
+    <div class="container-group-input w-full md:columns-2">
       <Validate label="Date of birth" :error="errors.date_of_birth" required>
         <KTACalendar
           :class="'w-full'"
@@ -115,7 +125,7 @@ const onSubmit = handleSubmit(async () => {});
         option-label="name"
       />
     </div>
-    <div class="container-group-input w-full columns-2">
+    <div class="container-group-input w-full md:columns-2">
       <Validate label="Address" :error="errors.address" required>
         <KTAInput v-model="address" :class="'w-full'" />
       </Validate>
@@ -123,7 +133,7 @@ const onSubmit = handleSubmit(async () => {});
         <KTAInput v-model="detailAddress" :class="'w-full'" />
       </Validate>
     </div>
-    <div class="container-group-input w-full columns-2">
+    <div class="container-group-input w-full md:columns-2">
       <div class="flex items-center">
         <Checkbox v-model="props.user.is_married" :binary="true" />
         <label for="is_married" class="ml-2"> Is married </label>
@@ -139,15 +149,18 @@ const onSubmit = handleSubmit(async () => {});
         :error="errors.avatar ?? ''"
       />
     </div>
-    <div class="container-group-input w-full columns-2">
+    <div class="container-group-input w-full md:columns-2">
       <Validate label="Email" :error="errors.email" required>
         <KTAInput v-model="email" :class="'w-full'" />
       </Validate>
-      <KTAInput
-        v-model="props.user.job_position"
-        label="Job Position"
-        :class="'w-full'"
-      />
+      <Validate label="Job Position" :error="errors.job_position">
+        <KTADropdown
+          v-model="jobPositionSelected"
+          :options="props.jobPositions"
+          option-label="name"
+          :class="'w-full'"
+        />
+      </Validate>
     </div>
     <div class="card flex justify-center flex-col container-group-input">
       <label class="text-sm font-bold"> #Hashtag Skill</label>

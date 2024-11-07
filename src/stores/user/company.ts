@@ -55,9 +55,12 @@ export const companyStore = defineStore("companyStore", {
     async getDetail(id: string): Promise<any> {
       this.$state.isLoading = true;
 
-      const data = await getDetailApi(id);
-      this.$state.company = data.company;
-      this.$state.recentlyPostedJobs = data.recently_posted_job;
+      await getDetailApi(id).then((result) => {
+        console.log(result);
+
+        this.$state.company = result[0];
+        // this.$state.recentlyPostedJobs = data.recently_posted_job;
+      });
 
       this.$state.isLoading = false;
     },

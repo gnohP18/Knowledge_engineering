@@ -33,7 +33,7 @@ const onChangePaginator = (event: any) => {
 </script>
 <template>
   <div class="flex flex-col w-full gap-2">
-    <div class="grid w-full h-full grid-cols-2 gap-2">
+    <div class="grid w-full h-full grid-cols-1 md:grid-cols-2 gap-2">
       <div v-for="job in props.jobs">
         <JobCard :job="job" />
       </div>

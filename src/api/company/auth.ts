@@ -6,5 +6,5 @@ export const loginApi = (companyLogin: CompanyLoginEntity): Promise<any> => {
     password: companyLogin.password,
   };
 
-  return apiClient.post("/authen-service/auth/login", entity);
+  return apiCompany.post("/authen-service/auth/login", entity);
 };

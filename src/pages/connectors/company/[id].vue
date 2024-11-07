@@ -4,7 +4,7 @@ import { companyStore } from "~/stores/user/company";
 definePageMeta({
   layout: "user",
 });
-
+const route = useRoute();
 const store = companyStore();
 const company = computed(() => store.company);
 const recentlyPostJobs = computed(() => store.recentlyPostedJobs);
@@ -12,7 +12,7 @@ const recentlyPostJobs = computed(() => store.recentlyPostedJobs);
 const isLoading = computed(() => store.isLoading);
 
 onMounted(async () => {
-  await store.getDetail("1");
+  await store.getDetail(route.params.id);
 });
 </script>
 
@@ -22,7 +22,7 @@ onMounted(async () => {
     <div class="primary-card">
       <UserCompanyProfile :company="company" />
     </div>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2" v-if="recentlyPostJobs.length > 0">
       <label
         class="text-xl font-bold w-full primary-text p-2 primary-card"
         for="recently-post-job"

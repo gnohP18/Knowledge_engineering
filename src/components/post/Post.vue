@@ -20,7 +20,7 @@ const copyLink = () => {
 };
 </script>
 <template>
-  <div class="primary-card w-full max-h-[600px] p-2 flex flex-col gap-y-3">
+  <div class="primary-card w-full min-h-[600px] p-2 flex flex-col gap-y-3">
     <div class="flex gap-x-2">
       <img
         :src="

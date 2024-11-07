@@ -13,14 +13,15 @@ export interface UserEntity {
   gender?: number;
   self_introduce?: string;
   life_goal?: string;
-  job_position?: number;
+  job_position?: PositionEntity;
   hashtag: number[];
   connect_company: number[];
   connect_user: number[];
 }
 
 export interface ConnectorEntity {
-  id?: string;
+  connector_type?: number;
+  id?: number;
   first_name?: string;
   last_name?: string;
   avatar?: string;

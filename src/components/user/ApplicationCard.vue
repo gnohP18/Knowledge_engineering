@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import type { ApplicationEntity } from "~/entities/user/application";
 import { INTERVIEW_STATUS_NAME, INTERVIEW_TYPE } from "~/constants/application";
-import { sleep } from "@whoj/utils-core";
-import { MODE_COMPANY_VIEW, MODE_USER_VIEW } from "~/constants/common";
+import { MODE_USER_VIEW } from "~/constants/common";
 
 const props = defineProps({
   application: {
@@ -18,6 +17,7 @@ const props = defineProps({
   <Accordion
     v-if="props.application"
     :active-index="props.mode === MODE_USER_VIEW ? null : 0"
+    :class="{ 'hidden md:block': props.mode === MODE_USER_VIEW }"
   >
     <AccordionTab>
       <template #header>
@@ -127,7 +127,7 @@ const props = defineProps({
                   >Job name:</label
                 >
                 <span class="span-primary-hover">{{
-                  props.application.job_name
+                  props.application.job_position
                 }}</span>
               </div>
             </div>
@@ -177,7 +177,7 @@ const props = defineProps({
                 >
                 <span
                   >{{ props.application.job?.salary_from }}$ -
-                  {{ props.application.job?.salary_upto }}$</span
+                  {{ props.application.job?.salary_up_to }}$</span
                 >
               </div>
             </div>
@@ -186,6 +186,17 @@ const props = defineProps({
       </div>
     </AccordionTab>
   </Accordion>
+  <div class="w-full md:hidden">
+    <span class="text-xl font-bold span-hover-primary">{{
+      props.application.job_title
+    }}</span>
+    <div class="flex justify-between">
+      <span class="span-hover-primary">Job position</span>
+      <span class="span-hover-primary">{{
+        props.application?.job_position
+      }}</span>
+    </div>
+  </div>
 </template>
 <style lang="scss" scoped>
 :deep(.p-timeline-event-opposite) {

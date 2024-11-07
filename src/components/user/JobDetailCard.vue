@@ -67,8 +67,8 @@ const applyJob = () => {
         </div>
       </div>
     </div>
-    <div class="flex justify-between">
-      <div class="flex gap-2">
+    <div class="flex flex-col md:flex-row gap-y-2 md:gap-y-0 justify-between">
+      <div class="flex flex-col md:flex-row gap-2">
         <span class="tag-item span-primary-hover rounded-md p-1">
           {{
             TYPE_OF_EMPLOYEE[
@@ -190,6 +190,7 @@ const applyJob = () => {
   background-color: #11b9b5;
   border: 1px solid #ffffff;
   color: #ffffff;
+  width: fit-content;
 
   &:hover {
     border: 1px solid #11b9b5;

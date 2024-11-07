@@ -22,7 +22,7 @@ const spanArr =
 </script>
 <template>
   <div class="w-full h-full flex flex-col gap-y-2">
-    <div class="primary-card max-h-[40%] w-full flex flex-col gap-2">
+    <div class="primary-card md:max-h-[40%] w-full flex flex-col gap-2">
       <img :src="urlBg" class="common-rounded max-h-[80%]" />
       <div class="w-full flex flex-wrap gap-x-2 justify-center flex-1">
         <span

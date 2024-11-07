@@ -8,5 +8,5 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return USER_LOGIN;
   }
 
-  setLastWorkspace(USER_LAST_WORKSPACE ,to.fullPath);
+  setLastWorkspace(USER_LAST_WORKSPACE, to.fullPath);
 });
