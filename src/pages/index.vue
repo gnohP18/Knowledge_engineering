@@ -4,6 +4,7 @@ import type { QueryParamsEntity } from "~/entities/common";
 import * as Pagination from "~/constants/pagination";
 import { userStore } from "~/stores/user/user";
 import { AuthStore } from "~/stores/user/auth";
+import WelcomePopup from "~/components/common/WelcomePopup.vue";
 
 useHead({ title: "Job finding" });
 
@@ -19,13 +20,14 @@ const isSucceed = computed(() => store.isSucceed);
 const me = computed(() => userAuthStore.me);
 const posts = computed(() => store.posts);
 const currentPage = ref<number>(1);
-
+const visibleWelcomePopup = ref<boolean>(false);
 let queryParams = reactive<QueryParamsEntity>({
   page: "1",
   limit: String(Pagination.PAGE_LIMIT_DEFAULT),
 });
 
 onMounted(async () => {
+  visibleWelcomePopup.value = true;
   const param = {};
   if (checkAuth(USER_TOKEN)) {
     queryParams = Object.assign(queryParams, {
@@ -69,6 +71,10 @@ const handleScroll = async () => {
         animationDuration=".5s"
       />
     </div>
+    <WelcomePopup
+      :visible="visibleWelcomePopup"
+      @close="visibleWelcomePopup = false"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

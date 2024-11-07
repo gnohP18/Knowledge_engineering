@@ -64,7 +64,7 @@ const onSubmit = handleSubmit(async (values) => {
       <a class="text-white" :href="USER_SIGNUP"
         >Don't have account? Sign up now!</a
       >
-      <a class="text-white" :href="COMPANY_LOGIN">Business Hiring</a>
+      <a class="text-white" :href="COMPANY_LOGIN">Business Login</a>
       <a class="text-white" href="/">Home</a>
     </div>
   </div>
