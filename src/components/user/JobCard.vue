@@ -19,7 +19,7 @@ onMounted(() => {});
       class="w-[150px] h-[150px] common-rounded"
     />
     <div class="flex-1 flex flex-col gap-2">
-      <a :href="`/jobs/${props.job?.id}`" class="text-xl">
+      <a :href="`/jobs/${props.job?.id}`" target="_blank" class="text-xl">
         {{ props.job?.title }}
       </a>
       <div class="w-full flex justify-between">
