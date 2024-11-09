@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import type { ConnectorEntity } from "~/entities/user/user";
 import LimitSpan from "./LimitSpan.vue";
-import {
-  LIMIT_NAME_CHARACTERS,
-  CONNECTOR_TYPE,
-  CONNECTOR_TYPE_USER,
-} from "~/constants/common";
+import { LIMIT_NAME_CHARACTERS, CONNECTOR_TYPE_USER } from "~/constants/common";
+import { COMPANY_TYPE } from "~/constants/company";
+import { userStore } from "~/stores/user/user";
 
 const props = defineProps({
   connectors: {
@@ -17,6 +15,10 @@ const props = defineProps({
     default: LIMIT_NAME_CHARACTERS,
   },
 });
+
+const userStageStore = userStore();
+
+const connect = (idConnector: number) => {};
 </script>
 
 <template>
@@ -30,23 +32,22 @@ const props = defineProps({
         <div class="flex flex-col flex-1 gap-y-1">
           <a
             v-if="
-              `${connector.last_name}${connector.first_name}`.length <=
-              props.limitCharacter
+              connector?.name && connector.name.length <= props.limitCharacter
             "
             class="primary-text text-sm"
-            :href="`/connectors/${connector?.connector_type === CONNECTOR_TYPE[CONNECTOR_TYPE_USER] ? 'user' : 'company'}/${connector?.id}`"
+            :href="`/connectors/${connector?.type === CONNECTOR_TYPE_USER ? 'user' : 'company'}/${connector?.id}`"
           >
-            {{ connector.last_name }} {{ connector.first_name }}
+            {{ connector.name }}
           </a>
           <a
             v-else
-            v-tooltip="`${connector.last_name}${connector.first_name}`"
+            v-tooltip="connector.name"
             class="primary-text text-sm"
             href="/"
           >
             {{
               substringWithLimitCharacters(
-                `${connector.last_name}${connector.first_name}`,
+                connector.name ?? "",
                 props.limitCharacter,
               ).textSub
             }}
@@ -58,9 +59,19 @@ const props = defineProps({
               :parent-class="'text-sm'"
               :limit="props.limitCharacter"
               :is-primary-text="false"
-              :text="connector.job_position.name"
+              :text="
+                connector.type === CONNECTOR_TYPE_USER
+                  ? connector.job_position.name
+                  : COMPANY_TYPE[
+                      connector.job_position.id as keyof typeof COMPANY_TYPE
+                    ]
+              "
             />
-            <Button class="text-xs" icon="pi pi-plus" />
+            <Button
+              class="text-xs"
+              icon="pi pi-plus"
+              @click="connect(connector.id)"
+            />
           </div>
         </div>
       </div>

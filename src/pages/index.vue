@@ -4,7 +4,6 @@ import type { QueryParamsEntity } from "~/entities/common";
 import * as Pagination from "~/constants/pagination";
 import { userStore } from "~/stores/user/user";
 import { AuthStore } from "~/stores/user/auth";
-import WelcomePopup from "~/components/common/WelcomePopup.vue";
 
 useHead({ title: "Job finding" });
 
@@ -71,10 +70,10 @@ const handleScroll = async () => {
         animationDuration=".5s"
       />
     </div>
-    <WelcomePopup
+    <!-- <WelcomePopup
       :visible="visibleWelcomePopup"
       @close="visibleWelcomePopup = false"
-    />
+    /> -->
   </div>
 </template>
 <style lang="scss" scoped>

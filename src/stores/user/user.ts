@@ -1,3 +1,4 @@
+import { getMeApi } from "~/api/user/auth";
 import {
   applyJobApi,
   createPostApi,
@@ -5,13 +6,17 @@ import {
   getDetailPostApi,
   getHashtagListApi,
   getIndexPostApi,
-  getResumeListApi,
+  getPositionNameListApi,
   getSuggestConnectorApi,
   getSuggestConnectorListApi,
 } from "~/api/user/user";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
-import type { AttachmentJob, JobEntity } from "~/entities/user/job";
+import type {
+  AttachmentJob,
+  JobEntity,
+  PositionEntity,
+} from "~/entities/user/job";
 import type {
   BasicPostEntity,
   DataPostEntity,
@@ -24,7 +29,8 @@ interface State {
   isLoading: Boolean;
   isSucceed: Boolean;
   meta: MetaEntity | null;
-  user: UserEntity;
+  profile: UserEntity;
+  positions: PositionEntity[];
   suggestConnectors: ConnectorEntity[];
   posts: BasicPostEntity[];
   post: BasicPostEntity;
@@ -39,11 +45,12 @@ const defaultState: State = {
   isLoading: false,
   isSucceed: false,
   meta: null,
-  user: {
+  profile: {
     connect_company: [],
     connect_user: [],
     hashtag: [],
   },
+  positions: [],
   job: {
     company: {},
   },
@@ -214,20 +221,47 @@ export const userStore = defineStore("userStore", {
     },
 
     /**
-     * Get list resume have pagiantion
-     * @param params Object params like limit, page
+     * Get index info profile
+     *
+     * @param paramPosition param pagination position
      */
-    async getResumeList(params: Object): Promise<any> {
+    async getIndexProfile(paramPosition: Object): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      const { data, meta } = await getResumeListApi(params);
-      console.log(data);
+      await getMeApi()
+        .then((result) => {
+          this.$state.profile = result.user_profile;
+          this.$state.suggestConnectors = result.suggest_connector;
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
 
-      this.$state.resumes = data;
-      this.$state.meta = meta;
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
 
-      this.$state.isLoading = false;
+      await getPositionNameListApi(paramPosition)
+        .then((result) => {
+          this.$state.positions = result.data;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+    },
+
+    async connect(id: number): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
     },
   },
 });

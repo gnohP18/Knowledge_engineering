@@ -9,6 +9,7 @@ export const USER_JOB = "/jobs";
 export const USER_POST = "/posts";
 export const USER_CONNECTOR = "/connectors";
 export const USER_TROUBLESHOOTING = "/troubleshooting";
+export const USER_RESUME = "/resumes";
 
 /**
  * Company route

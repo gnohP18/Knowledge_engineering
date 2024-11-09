@@ -36,13 +36,13 @@ const props = defineProps({
     </div>
     <div
       v-if="checkAuth(USER_TOKEN)"
-      class="primary-card min-h-[20%] w-full px-4 py-2 overflow-scroll"
+      class="primary-card min-h-[20%] w-full px-4 py-2 overflow-y-auto"
     >
       <span class="text-md">SKILL HASHTAG</span>
       <hr class="w-full py-1" />
       <div class="flex flex-wrap gap-2">
         <div v-for="hashtag in props.user?.hashtag">
-          <Chip class="text-xs p-1" :label="`#${mappingHashtag(hashtag)}`" />
+          <Chip class="text-xs p-1" :label="`#${hashtag}`" />
         </div>
       </div>
     </div>

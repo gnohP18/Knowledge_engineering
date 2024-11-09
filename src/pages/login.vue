@@ -12,6 +12,7 @@ useHead({ title: "Login" });
 
 definePageMeta({
   layout: "login",
+  middleware: ["auth-guest-user"],
 });
 
 const store = AuthStore();

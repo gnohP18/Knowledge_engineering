@@ -89,7 +89,7 @@ const props = defineProps({
       </div>
       <div class="flex flex-col gap-1">
         <label class="font-bold span-primary-hover" for="self_introduce"
-          >Lelf goal</label
+          >Left goal</label
         >
         <blockquote class="text-sm p-1">
           {{ props.user.life_goal }}

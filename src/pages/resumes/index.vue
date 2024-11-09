@@ -2,13 +2,19 @@
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
 import type { BasicResumeEntity } from "~/entities/user/resume";
-import { userStore } from "~/stores/user/user";
 import * as Pagination from "~/constants/pagination";
 import { COMMON_STATUS } from "~/constants/common";
+import { userResumeStore } from "~/stores/user/resume";
 
-const emits = defineEmits(["indexEvent"]);
+useHead({
+  title: "List resume",
+});
+definePageMeta({
+  layout: "user",
+  middleware: "auth-user",
+});
 
-const store = userStore();
+const store = userResumeStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -51,21 +57,22 @@ const setQueryParams = () => {
   }
 };
 
-// watch(
-//   () => route.query,
-//   () => {
-//     setQueryParams();
-//     store.getResumeList(queryParams);
-//   },
-// );
+watch(
+  () => route.query,
+  () => {
+    setQueryParams();
+    store.getResumeList(queryParams);
+  },
+);
 
-// onBeforeMount(() => {
-//   store.resetState();
-// });
+onBeforeMount(() => {
+  store.resetState();
+});
 
-// onMounted(async () => {
-//   console.log(1111);
-// });
+onMounted(async () => {
+  setQueryParams();
+  store.getResumeList(queryParams);
+});
 
 const searchKeyword = (event: any) => {
   setTimeout(() => {

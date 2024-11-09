@@ -30,8 +30,8 @@ export const INTERVIEW_ONLINE = 1;
 export const INTERVIEW_OFFLINE = 2;
 
 export const INTERVIEW_TYPE = {
-  [INTERVIEW_ONLINE]: "Interview Online",
-  [INTERVIEW_OFFLINE]: "Interview Offline",
+  [INTERVIEW_ONLINE]: "Online",
+  [INTERVIEW_OFFLINE]: "Offline",
 };
 
 export const INTERVIEW_STATUS_OPTIONS: OptionSelect[] = [

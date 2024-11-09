@@ -20,10 +20,9 @@ export interface UserEntity {
 }
 
 export interface ConnectorEntity {
-  connector_type?: number;
+  type?: number;
   id?: number;
-  first_name?: string;
-  last_name?: string;
+  name?: string;
   avatar?: string;
   job_position?: PositionEntity;
 }

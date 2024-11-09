@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
-import { COMPANY_LAST_WORKSPACE } from "~/constants/authentication";
 import { APPLICATION_INTERVIEW, COMPANY_INTERVIEW } from "~/constants/route";
 import { InterviewStore } from "~/stores/company/interview";
 import * as Pagination from "~/constants/pagination";
@@ -57,7 +56,6 @@ const setQueryParams = () => {
 onMounted(async () => {
   setQueryParams();
   await store.getList(queryParams);
-  console.log(interviews.value);
 });
 
 const onRowClick = (event: { originalEvent: any; data: { id: number } }) => {

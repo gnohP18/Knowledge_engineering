@@ -6,6 +6,8 @@ import { USER_TOKEN } from "~/constants/authentication";
 import { AuthStore } from "~/stores/user/auth";
 
 const store = AuthStore();
+const isLoading = computed(() => store.isLoading);
+const isSucceed = computed(() => store.isSucceed);
 const me = computed(() => store.me);
 onBeforeMount(async () => {
   if (checkAuth(USER_TOKEN)) {
@@ -22,13 +24,13 @@ onBeforeMount(async () => {
     <div class="w-full h-screen overflow-scroll flex justify-center">
       <div class="layout-container flex">
         <div class="hidden md:block flex-grow-0 h-full py-4 pr-2">
-          <Leftbar :user="me" />
+          <Leftbar v-if="!isLoading" :user="me" />
         </div>
         <div class="py-4 px-2 flex-grow-0">
           <slot />
         </div>
         <div class="hidden md:block flex-grow-0 h-full py-4 pl-2">
-          <Rightbar />
+          <Rightbar v-if="!isLoading" />
         </div>
       </div>
     </div>
