@@ -30,6 +30,7 @@ definePageMeta({
   layout: "user",
 });
 
+const config = useRuntimeConfig();
 const store = jobStore();
 const jobs = computed(() => store.jobs);
 const meta = computed(() => store.meta);
@@ -40,7 +41,7 @@ const positions = computed(() => [...[OPTION_ALL], ...store.positions]);
 /**
  * Searching param
  */
-const isUseAI = ref<boolean>(true);
+const isUseAI = ref<boolean>(config.app.ALLOW_SEARCH_AI);
 interface SearchParam {
   SearchText?: string;
   Limit?: string;
@@ -56,7 +57,7 @@ interface SearchParam {
 const param = ref<SearchParam>({
   Page: "1",
   Limit: Pagination.PAGE_LIMIT_DEFAULT,
-  IsUseAi: true,
+  IsUseAi: config.app.ALLOW_SEARCH_AI,
 });
 
 const { errors, defineField, handleSubmit, resetForm } = useForm({
@@ -237,7 +238,7 @@ const changePaginator = async (value: any) => {
           <AccordionTab class="rounded-xl">
             <template #header>Advanced search</template>
             <template #default>
-              <div class="flex gap-2 p-2">
+              <div v-if="config.app.ALLOW_SEARCH_AI" class="flex gap-2 p-2">
                 <ToggleButton
                   v-model="isUseAI"
                   onLabel="On"
