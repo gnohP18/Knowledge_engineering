@@ -57,6 +57,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_BASE_URL: `${process.env.API_BASE_URL}/`,
+      ALLOW_SEARCH_AI: process.env.ALLOW_SEARCH_AI
+        ? Boolean(process.env.ALLOW_SEARCH_AI)
+        : false,
     },
   },
 
