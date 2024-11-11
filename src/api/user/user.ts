@@ -5,36 +5,18 @@ export const getDetailApi = (): Promise<any> => {
 };
 
 export const getSuggestConnectorApi = (): Promise<any> => {
-  // return axios
-  //   .post(`${API_URL}/model/predict`, { text: text })
-  //   .then((result) => {
-  //     return result.data
-  //   });
-
   return fetch("/data/user/suggest-connector.json")
     .then((res) => res.json())
     .then((d) => d.data);
 };
 
 export const getSuggestConnectorListApi = (params: Object): Promise<any> => {
-  // return axios
-  //   .post(`${API_URL}/model/predict`, { text: text })
-  //   .then((result) => {
-  //     return result.data
-  //   });
-
   return fetch("/data/user/suggest-connectors.json")
     .then((res) => res.json())
     .then((d) => d.data);
 };
 
 export const getIndexPostApi = (param: Object): Promise<any> => {
-  // return axios
-  //   .post(`${API_URL}/model/predict`, { text: text })
-  //   .then((result) => {
-  //     return result.data
-  //   });
-
   return fetch("/data/user/posts.json")
     .then((res) => res.json())
     .then((d) => d.data);
@@ -47,9 +29,6 @@ export const getDetailPostApi = (id: number): Promise<any> => {
 };
 
 export const getDetailJobApi = (id: number): Promise<any> => {
-  // return fetch("/data/user/job.json")
-  //   .then((res) => res.json())
-  //   .then((d) => d.data);
   return apiClient.get(`/job-service/jobs/${id}`, {});
 };
 
@@ -68,14 +47,17 @@ export const createPostApi = (data: DataPostEntity): Promise<any> => {
 };
 
 export const searchJobApi = (params: Object): Promise<any> => {
-  // return fetch("/data/user/jobs.json").then((res) => res.json());
   return apiClient.get(`/job-service/jobs`, params);
 };
 
-export const getResumeListApi = (param: Object): Promise<any> => {
-  return apiClient.get("/user-service/users/resumes/", param);
+export const getResumeListApi = (params: Object): Promise<any> => {
+  return apiClient.get("/user-service/users/resumes", params);
 };
 
 export const getPositionNameListApi = (param: Object): Promise<any> => {
   return apiClient.get("/job-service/jobs/job-positions", param);
+};
+
+export const connectApi = (id: number): Promise<any> => {
+  return apiClient.post("/user-service/relationships");
 };

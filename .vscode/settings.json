@@ -3,8 +3,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-    "source.removeUnusedImports":"explicit"
-  }
+      "source.removeUnusedImports": "explicit"
+    }
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -12,7 +12,7 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": true
   },
   "[json]": {
     "editor.quickSuggestions": {
@@ -21,6 +21,7 @@
     "editor.suggest.insertMode": "replace"
   },
   "editor.codeActionsOnSave": {
-    "source.removeUnusedImports":"explicit"
-  }
+    "source.removeUnusedImports": "explicit"
+  },
+  "editor.indentSize": 2
 }

@@ -8,3 +8,7 @@ export const loginApi = (companyLogin: CompanyLoginEntity): Promise<any> => {
 
   return apiCompany.post("/authen-service/auth/login", entity);
 };
+
+export const getMeApi = (): Promise<any> => {
+  return apiCompany.get("/user-service/companies/2");
+};

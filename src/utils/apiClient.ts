@@ -79,18 +79,14 @@ class ApiClient {
     });
   }
 
-  post(
-    url: string,
-    data: Object = {},
-    type: string = USER_TOKEN,
-  ): Promise<any> {
+  post(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "POST",
       body: data,
     });
   }
 
-  put(url: string, data: Object = {}, type: string = USER_TOKEN): Promise<any> {
+  put(url: string, data: Object = {}): Promise<any> {
     return this.client(url, {
       method: "PUT",
       body: data,

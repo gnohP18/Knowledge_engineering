@@ -32,7 +32,10 @@ const spanArr =
         >
       </div>
     </div>
-    <div v-if="checkAuth(USER_TOKEN)" class="primary-card w-full flex flex-col">
+    <div
+      v-if="checkAuth(USER_TOKEN)"
+      class="primary-card w-full flex flex-col overflow-y-auto"
+    >
       <label for="connector" class="w-full text-start p-2 font-bold"
         >People you maybe know:</label
       >

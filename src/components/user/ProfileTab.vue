@@ -11,17 +11,16 @@ import { HASHTAG_EXAMPLE } from "~/constants/sample";
 import { useForm } from "vee-validate";
 import { userUpdateSchema } from "~/schemas/user/profile.schema";
 import type { OptionSelect } from "~/entities/common";
-import type { PositionEntity } from "~/entities/user/job";
+import { userStore } from "~/stores/user/user";
 
 const props = defineProps({
   user: {
     type: Object as PropType<UserEntity>,
   },
-  jobPositions: {
-    type: Array<PositionEntity>,
-    default: [],
-  },
 });
+
+const userStageStore = userStore();
+const jobPositions = computed(() => userStageStore.positions);
 
 const genderOption = [
   { name: "Male", id: 0 },
@@ -41,7 +40,7 @@ const [address] = defineField("address");
 const [detailAddress] = defineField("detail_address");
 const [email] = defineField("email");
 const [jobPosition] = defineField("job_position");
-const jobPositionSelected = ref<OptionSelect>(props.jobPositions[0]);
+const jobPositionSelected = ref<OptionSelect>(jobPositions.value[0]);
 const [selfIntroduce] = defineField("self_introduce");
 const [lifeGoal] = defineField("life_goal");
 const [gender] = defineField("gender");
@@ -71,8 +70,8 @@ onMounted(() => {
   )[0];
 
   jobPositionSelected.value =
-    props.jobPositions.filter((_) => _.id === jobPosition.value)[0] ??
-    props.jobPositions[0];
+    jobPositions.value.filter((_) => _.id === jobPosition.value)[0] ??
+    jobPositions.value[0];
 });
 
 const selectedHashtag = ref([
@@ -155,8 +154,10 @@ const onSubmit = handleSubmit(async () => {});
       </Validate>
       <Validate label="Job Position" :error="errors.job_position">
         <KTADropdown
+          v-if="jobPositions"
           v-model="jobPositionSelected"
-          :options="props.jobPositions"
+          :options="jobPositions"
+          filter
           option-label="name"
           :class="'w-full'"
         />
@@ -206,7 +207,6 @@ const onSubmit = handleSubmit(async () => {});
 .area-input-container {
   width: 100%;
   min-height: 150px;
-  font-weight: bold;
 }
 
 .container-group-input {

@@ -15,9 +15,43 @@ import {
   COMPANY_POST_CREATE,
   COMPANY_PROFILE,
   USER_APPLICATION,
+  USER_CONNECTOR,
   USER_JOB,
   USER_PROFILE,
+  USER_RESUME,
+  USER_TROUBLESHOOTING,
 } from "./route";
+
+export const MENU_USER: MenuItem[] = [
+  {
+    icon: "pi pi-home",
+    route: "/",
+  },
+  {
+    icon: "pi pi-users",
+    route: USER_CONNECTOR,
+  },
+  {
+    icon: "pi pi-search",
+    route: USER_JOB,
+  },
+  {
+    icon: "pi pi-file",
+    route: USER_APPLICATION,
+  },
+  {
+    icon: "pi pi-folder",
+    route: USER_RESUME,
+  },
+  {
+    icon: "pi pi-user",
+    route: USER_PROFILE,
+  },
+  {
+    icon: "pi pi-question-circle",
+    route: USER_TROUBLESHOOTING,
+  },
+];
 
 export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
   {
@@ -45,21 +79,6 @@ export const MENU_ITEM_LEFT_BAR: MenuItem[] = [
         icon: "pi pi-file",
       },
     ],
-  },
-];
-
-export const MENU_PROFILE: MenuItem[] = [
-  // {
-  //   label: "Application",
-  //   icon: "pi pi-file-export",
-  // },
-  {
-    label: "Resume",
-    icon: "pi pi-file",
-  },
-  {
-    label: "Profile",
-    icon: "pi pi-user-edit",
   },
 ];
 

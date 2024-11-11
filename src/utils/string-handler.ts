@@ -52,7 +52,6 @@ export const convertHTMLtoString = (str: string) => {
 export const escapeString = (str: string) => {
   // Convert \\n to \n (break line)
   let newStr = str.replace(/\\n/g, "\n");
-  console.log(newStr);
 
   return newStr;
 };

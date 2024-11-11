@@ -13,12 +13,18 @@ export const LIMIT_NAME_CHARACTERS = 30;
 /**
  * For connector
  * */
-export const CONNECTOR_TYPE_COMPANY = "COMPANY";
-export const CONNECTOR_TYPE_USER = "USER";
+export const CONNECTOR_TYPE_COMPANY = 0;
+export const CONNECTOR_TYPE_USER = 1;
 export const CONNECTOR_TYPE = {
   [CONNECTOR_TYPE_COMPANY]: "Company",
   [CONNECTOR_TYPE_USER]: "User",
 };
+
+export const CONNECTOR_ACTION_CONNECT = 0;
+export const CONNECTOR_ACTION_DISCONNECT = 2;
+export const CONNECTOR_ACTION_BLOCK = 1;
+
+// export const CONNECTOR_ACTION_TYPE
 
 /**
  * For mode action
@@ -67,3 +73,15 @@ export const LIMIT_OBJECT_OPTIONS: { id: number; name: string }[] = [
 ];
 
 export const OPTION_ALL: OptionSelect = { id: -1, name: "All" };
+
+/**
+ * For gender
+ */
+
+export const GENDER_MALE = 1;
+export const GENDER_FEMALE = 0;
+
+export const GENDER = {
+  [GENDER_MALE]: "Male",
+  [GENDER_FEMALE]: "Female",
+};
