@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { CompanyEntity } from "~/entities/user/company";
+import CompanyProfileCard from "./CompanyProfileCard.vue";
 
 const props = defineProps({
   company: {
@@ -11,7 +12,7 @@ onMounted(() => {});
 </script>
 <template>
   <div class="flex flex-col">
-    <UserCompanyProfileCard :company="company" />
+    <CompanyProfileCard :company="company" />
   </div>
 </template>
 <style lang="scss" scoped></style>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { CompanyEntity } from "~/entities/user/company";
+import { COMPANY_TYPE } from "~/constants/company";
 
 const props = defineProps({
   company: {
@@ -50,15 +51,24 @@ onMounted(() => {});
       <span class="font-bold span-primary-hover text-md">Email</span>
       <span class="col-span-3">{{ props.company?.email }}</span>
       <span class="font-bold span-primary-hover text-md">Company type</span>
-      <span class="col-span-3">{{ props.company?.company_type }}</span>
+      <span class="col-span-3">{{
+        COMPANY_TYPE[props.company?.company_type as keyof typeof COMPANY_TYPE]
+      }}</span>
       <span class="font-bold span-primary-hover text-md">Address</span>
       <span class="col-span-3">{{ props.company?.address }}</span>
       <span class="font-bold span-primary-hover text-md">Detail address</span>
       <span class="col-span-3">{{ props.company?.detail_address }}</span>
       <span class="font-bold span-primary-hover text-md">Company size</span>
       <span class="col-span-3">{{ props.company?.size }}</span>
-      <span class="font-bold span-primary-hover text-md">Accessibility</span>
-      <div class="col-span-3 frame-map" v-html="props.company?.accessibility" />
+      <span
+        v-if="props.company?.accessibility"
+        class="font-bold span-primary-hover text-md"
+        >Accessibility</span
+      >
+      <div
+        class="col-span-3 frame-map"
+        v-html="convertHTMLtoString(props.company?.accessibility ?? '')"
+      />
     </div>
   </div>
 </template>

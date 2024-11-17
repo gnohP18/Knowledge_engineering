@@ -11,9 +11,7 @@ export const getSuggestConnectorApi = (): Promise<any> => {
 };
 
 export const getSuggestConnectorListApi = (params: Object): Promise<any> => {
-  return fetch("/data/user/suggest-connectors.json")
-    .then((res) => res.json())
-    .then((d) => d.data);
+  return apiClient.get("/user-service/relationships/", params);
 };
 
 export const getIndexPostApi = (param: Object): Promise<any> => {
@@ -54,10 +52,22 @@ export const getResumeListApi = (params: Object): Promise<any> => {
   return apiClient.get("/user-service/users/resumes", params);
 };
 
+export const uploadResumeApi = (data: FormData): Promise<any> => {
+  return apiClient.post("/user-service/users/resumes/", data);
+};
+
+export const removeResumeApi = (id: number): Promise<any> => {
+  return apiClient.delete(`/user-service/users/resumes/${id}/`);
+};
+
 export const getPositionNameListApi = (param: Object): Promise<any> => {
   return apiClient.get("/job-service/jobs/job-positions", param);
 };
 
 export const connectApi = (id: number): Promise<any> => {
   return apiClient.post("/user-service/relationships");
+};
+
+export const updateProfileApi = (data: FormData): Promise<any> => {
+  return apiClient.put(`/user-service/users/update/`, data);
 };

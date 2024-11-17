@@ -1,4 +1,8 @@
-import { getResumeListApi } from "~/api/user/user";
+import {
+  getResumeListApi,
+  removeResumeApi,
+  uploadResumeApi,
+} from "~/api/user/user";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
 import type { BasicResumeEntity } from "~/entities/user/resume";
@@ -36,12 +40,50 @@ export const userResumeStore = defineStore("userResumeStore", {
       this.$state.isSucceed = false;
 
       const { data, meta } = await getResumeListApi(params);
-      console.log(data);
 
       this.$state.resumes = data;
       this.$state.meta = meta;
 
       this.$state.isLoading = false;
+    },
+
+    /**
+     * upload resume with info
+     *
+     * @param data Form data have resume
+     */
+    async uploadResume(data: FormData): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await uploadResumeApi(data)
+        .then(() => {
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+    },
+
+    async removeResume(id: number): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await removeResumeApi(id)
+        .then(() => {
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
   },
 });

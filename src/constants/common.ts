@@ -4,6 +4,16 @@ import type { OptionSelect } from "~/entities/common";
  * For image
  */
 export const DEFAULT_AVATAR_URL = "/images/default_avatar.jpeg";
+export const DEFAULT_FILE_URL = "/images/default_file.jpeg";
+
+/**
+ * For upload
+ */
+export const IMAGE_ACCEPT_TYPE = "image/jpg,image/jpeg,image/gif,image/png";
+export const FILE_ACCEPT_TYPE =
+  "application/pdf, application/doc, application/docx";
+export const MEDIA_FILE_TYPE_RESUME: number = 1;
+export const MEDIA_FILE_TYPE_IMAGE: number = 0;
 
 /**
  * For string, limit

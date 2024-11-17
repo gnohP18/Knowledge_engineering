@@ -1,4 +1,4 @@
-import { getMeApi, loginApi } from "~/api/company/auth";
+import { getMeApi, loginApi, updateMeApi } from "~/api/company/auth";
 import {
   COMPANY_LAST_WORKSPACE,
   COMPANY_TOKEN,
@@ -6,6 +6,7 @@ import {
 import type { ErrorData } from "~/entities/api-error";
 import type { CompanyLoginEntity } from "~/entities/company/auth";
 import type { CompanyEntity } from "~/entities/company/company";
+import { unescape } from "lodash-es";
 
 interface State {
   isLoading: Boolean;
@@ -55,6 +56,9 @@ export const AuthStore = defineStore("AuthStore", {
         });
     },
 
+    /**
+     * Get company profile
+     */
     async getMe(): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
@@ -62,7 +66,29 @@ export const AuthStore = defineStore("AuthStore", {
       await getMeApi()
         .then((result) => {
           this.$state.isSucceed = true;
-          this.$state.profile = result;
+          this.$state.profile = result.company_profile;
+          this.$state.profile.accessibility = unescape(
+            this.$state.profile.accessibility,
+          );
+        })
+        .catch((err) => {
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+    },
+
+    /**
+     * Update company profile
+     */
+    async updateMe(form: FormData): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await updateMeApi(form)
+        .then(() => {
+          this.$state.isSucceed = true;
         })
         .catch((err) => {
           this.$state.errors = handleApiErrors(err);
