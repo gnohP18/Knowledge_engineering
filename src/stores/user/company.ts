@@ -56,9 +56,7 @@ export const companyStore = defineStore("companyStore", {
       this.$state.isLoading = true;
 
       await getDetailApi(id).then((result) => {
-        console.log(result);
-
-        this.$state.company = result[0];
+        this.$state.company = result;
         // this.$state.recentlyPostedJobs = data.recently_posted_job;
       });
 

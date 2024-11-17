@@ -10,5 +10,9 @@ export const loginApi = (companyLogin: CompanyLoginEntity): Promise<any> => {
 };
 
 export const getMeApi = (): Promise<any> => {
-  return apiCompany.get("/user-service/companies/2");
+  return apiCompany.get("/user-service/companies/get-me");
+};
+
+export const updateMeApi = (form: FormData): Promise<any> => {
+  return apiCompany.put("/user-service/companies/update/", form);
 };

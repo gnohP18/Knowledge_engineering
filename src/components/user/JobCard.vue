@@ -12,7 +12,7 @@ const props = defineProps({
 onMounted(() => {});
 </script>
 <template>
-  <div class="primary-card flex gap-2 p-[10px]">
+  <div class="primary-card flex gap-2 p-[10px] h-full">
     <img
       :src="props.job?.company?.logo"
       alt=""

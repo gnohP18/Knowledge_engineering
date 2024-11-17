@@ -39,11 +39,11 @@ class ApiClient {
       async onResponseError({ response }) {
         if (response.status === StatusCode.INTERNAL_SERVER_ERROR) {
           console.log(`Log status code ${StatusCode.INTERNAL_SERVER_ERROR}`);
+          navigateTo("/500");
         } else if (response.status === StatusCode.NOT_FOUND) {
           navigateTo("/notfound");
         } else if (response.status === StatusCode.UNAUTHENTICATED) {
           console.log(`Log status code ${StatusCode.UNAUTHENTICATED}`);
-
           toastError("Error", response._data.message);
         } else if (
           [

@@ -9,6 +9,7 @@ import {
   getPositionNameListApi,
   getSuggestConnectorApi,
   getSuggestConnectorListApi,
+  updateProfileApi,
 } from "~/api/user/user";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
@@ -46,8 +47,6 @@ const defaultState: State = {
   isSucceed: false,
   meta: null,
   profile: {
-    connect_company: [],
-    connect_user: [],
     hashtag: [],
   },
   positions: [],
@@ -203,6 +202,10 @@ export const userStore = defineStore("userStore", {
         });
     },
 
+    /**
+     * Create post
+     * @param data data Post Create & update
+     */
     async createPost(data: DataPostEntity): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
@@ -262,6 +265,29 @@ export const userStore = defineStore("userStore", {
     async connect(id: number): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
+    },
+
+    /**
+     * Update profile - update me
+     *
+     * @param data User entity data update
+     */
+    async updateProfile(data: FormData): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await updateProfileApi(data)
+        .then(() => {
+          this.$state.isSucceed = true;
+          toastSuccess("Success", "Update profile successful");
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
   },
 });

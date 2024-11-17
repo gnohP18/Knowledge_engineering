@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IMAGE_ACCEPT_TYPE } from "~/constants/common";
 import KTALoadingAction from "../common/KTALoading.vue";
 interface Props {
   label?: string;
@@ -7,6 +8,7 @@ interface Props {
   defaultImgValue?: string;
   maxSize?: number; // Mb,
   hint?: string;
+  acceptType?: string;
 }
 
 const props = defineProps<Props>();
@@ -82,7 +84,7 @@ const removeUploadedFileCallback = () => {};
         :show-upload-button="false"
         :show-cancel-button="false"
         :file-limit="1"
-        :accept="imageAcceptTypes"
+        :accept="props.acceptType ?? IMAGE_ACCEPT_TYPE"
         @select="handleSelect"
       >
         <template #header="{ chooseCallback, files }">

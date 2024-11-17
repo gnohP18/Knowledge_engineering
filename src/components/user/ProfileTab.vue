@@ -12,6 +12,7 @@ import { useForm } from "vee-validate";
 import { userUpdateSchema } from "~/schemas/user/profile.schema";
 import type { OptionSelect } from "~/entities/common";
 import { userStore } from "~/stores/user/user";
+import { DEFAULT_AVATAR_URL } from "~/constants/common";
 
 const props = defineProps({
   user: {
@@ -20,6 +21,8 @@ const props = defineProps({
 });
 
 const userStageStore = userStore();
+const isLoading = computed(() => userStageStore.isLoading);
+const isSucceed = computed(() => userStageStore.isSucceed);
 const jobPositions = computed(() => userStageStore.positions);
 
 const genderOption = [
@@ -64,6 +67,7 @@ onMounted(() => {
   setFieldValue("avatar", get(props.user, "avatar", ""));
   setFieldValue("job_position", get(props.user, "job_position.id", 0));
   setFieldValue("gender", get(props.user, "gender", 0));
+  setFieldValue("avatar", get(props.user, "avatar", ""));
 
   selectedGender.value = genderOption.filter(
     (_) => props.user?.gender === _.id,
@@ -90,7 +94,38 @@ const changeDateOfBirth = () => {
   dateOfBirth.value = dateOfBirthSelected.value?.toDateString();
 };
 
-const onSubmit = handleSubmit(async () => {});
+const mediaFile = ref<File>();
+const handleGetFile = (data: File) => {
+  mediaFile.value = data;
+  avatar.value = data.objectURL;
+};
+
+const handleRemoveFile = () => {
+  avatar.value = DEFAULT_AVATAR_URL;
+};
+
+const onSubmit = handleSubmit(async () => {
+  const formData = new FormData();
+  formData.append("first_name", firstName.value ?? "");
+  formData.append("last_name", lastName.value ?? "");
+  formData.append("date_of_birth", dateOfBirth.value ?? "");
+  formData.append("email", email.value ?? "");
+  formData.append("address", address.value ?? "");
+  formData.append("detail_address", detailAddress.value ?? "");
+  formData.append("is_married", "true");
+  formData.append("gender", String(selectedGender.value.id ?? 1));
+  formData.append("self_introduce", selfIntroduce.value ?? "");
+  formData.append("life_goal", lifeGoal.value ?? "");
+  formData.append("job_position", String(jobPosition.value ?? 0));
+  if (avatar.value !== DEFAULT_AVATAR_URL) {
+    formData.append("avatar", mediaFile.value);
+  }
+
+  await userStageStore.updateProfile(formData);
+  if (!isLoading.value && isSucceed.value) {
+    await userStageStore.getIndexProfile({ limit: 100 });
+  }
+});
 </script>
 <template>
   <form
@@ -140,12 +175,14 @@ const onSubmit = handleSubmit(async () => {});
     </div>
     <div class="container-group-input w-full">
       <CImageUploadV1
-        :default-img-value="props.user.avatar"
+        :default-img-value="avatar ?? DEFAULT_AVATAR_URL"
         label="Avatar"
         name="logo"
         class="text-sm"
         :max-size="5"
         :error="errors.avatar ?? ''"
+        @handle-remove-file="handleRemoveFile"
+        @handle-transfer-file="handleGetFile"
       />
     </div>
     <div class="container-group-input w-full md:columns-2">
@@ -178,13 +215,13 @@ const onSubmit = handleSubmit(async () => {});
     <Validate label="Self introduction" :error="errors.self_introduce">
       <KTATextArea
         v-model="selfIntroduce"
-        class="w-full min-h-[150px] font-bold container-group-input"
+        class="w-full min-h-[150px] container-group-input"
       />
     </Validate>
     <Validate label="Life goal" :error="errors.self_introduce">
       <KTATextArea
         v-model="lifeGoal"
-        class="w-full min-h-[150px] font-bold container-group-input"
+        class="w-full min-h-[150px] container-group-input"
       />
     </Validate>
     <div class="w-full flex justify-end px-2 py-4">

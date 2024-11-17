@@ -14,9 +14,24 @@ export interface UserEntity {
   self_introduce?: string;
   life_goal?: string;
   job_position?: PositionEntity;
-  hashtag: number[];
-  connect_company: number[];
-  connect_user: number[];
+  hashtag?: number[];
+  total_connects?: number;
+}
+
+export interface DataUserEntity {
+  first_name?: string;
+  last_name?: string;
+  date_of_birth?: string;
+  avatar?: File;
+  email?: string;
+  address?: string;
+  detail_address?: string;
+  is_married?: boolean;
+  gender?: number;
+  self_introduce?: string;
+  life_goal?: string;
+  job_position?: number;
+  hashtag?: number[];
 }
 
 export interface ConnectorEntity {

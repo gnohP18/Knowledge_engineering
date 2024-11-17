@@ -159,7 +159,15 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
           </div>
         </template>
       </Column>
-      <Column field="close_date" header="Close at" />
+      <Column field="close_day" header="Close at">
+        <template #body="{ data }">
+          <div class="flex justify-start w-full">
+            <span class="text-sm">{{
+              convertDateTimeServer(data.close_date)
+            }}</span>
+          </div>
+        </template>
+      </Column>
     </KTADataTable>
   </LayoutsCompanyManageCompanyLayout>
 </template>

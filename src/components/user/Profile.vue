@@ -42,10 +42,7 @@ const props = defineProps({
       <div class="gap-2 columns-2">
         <div class="flex gap-2 justify-start items-center">
           <span class="pi pi-users"></span>
-          <span class="font-bold">{{
-            props.user.connect_company?.length +
-            props.user.connect_company?.length
-          }}</span>
+          <span class="font-bold">{{ props.user.total_connects }}</span>
           <span class="text-stone-500 span-primary-hover">Connection</span>
         </div>
         <div class="flex gap-2 justify-start items-center">
@@ -56,7 +53,11 @@ const props = defineProps({
       </div>
       <div class="flex gap-2 items-center">
         <span class="pi pi-calendar"></span>
-        <span>{{ props.user.date_of_birth }}</span>
+        <span>{{
+          convertDateTimeServer(
+            props.user.date_of_birth ?? new Date().toDateString(),
+          )
+        }}</span>
       </div>
       <div class="flex gap-2 items-center">
         <span class="pi pi-map-marker"></span>
@@ -83,17 +84,19 @@ const props = defineProps({
         <label class="font-bold span-primary-hover" for="self_introduce"
           >Introduction</label
         >
-        <blockquote class="text-sm p-1">
-          {{ props.user.self_introduce }}
-        </blockquote>
+        <div
+          class="text-sm p-1 whitespace-pre-line"
+          v-html="props.user.self_introduce"
+        />
       </div>
       <div class="flex flex-col gap-1">
         <label class="font-bold span-primary-hover" for="self_introduce"
           >Left goal</label
         >
-        <blockquote class="text-sm p-1">
-          {{ props.user.life_goal }}
-        </blockquote>
+        <div
+          class="text-sm p-1 whitespace-pre-line"
+          v-html="props.user.life_goal"
+        />
       </div>
     </div>
   </div>

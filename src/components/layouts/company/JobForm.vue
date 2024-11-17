@@ -228,15 +228,29 @@ const onSubmit = handleSubmit(async (value) => {
     description: description.value,
     type_of_employee: Number(typeOfEmployeeSelected.value.id) ?? 0,
     number_of_position: numberOfPosition.value,
-    salary_from: salaryFrom.value,
-    salary_up_to: salaryUpto.value,
-    working_time: workingTime.value,
-    expected_onboard_date: new Date(expectedOnBoardDate.value).toISOString(),
     close_date: new Date(closeDate.value).toISOString(),
     address: address.value,
     interview_type: Number(typeOfInterviewSelected.value.id) ?? 0,
     job_attributes: resultUnique,
   };
+
+  if (salaryFrom.value) {
+    entity.salary_from = salaryFrom.value;
+  }
+
+  if (salaryUpto.value) {
+    entity.salary_up_to = salaryUpto.value;
+  }
+
+  if (workingTime.value) {
+    entity.working_time = workingTime.value;
+  }
+
+  if (expectedOnBoardDate.value) {
+    entity.expected_onboard_date = new Date(
+      expectedOnBoardDate.value,
+    ).toISOString();
+  }
 
   emits("submit", entity);
 });
@@ -342,7 +356,7 @@ const onSubmit = handleSubmit(async (value) => {
           />
         </Validate>
         <span class="text-center text-xl pt-2">~</span>
-        <Validate class="w-1/3" :error="errors.salary_upto">
+        <Validate class="w-1/3" :error="errors.salary_up_to">
           <KTAInputNumber
             v-model="salaryUpto"
             class="w-full"
@@ -412,7 +426,11 @@ const onSubmit = handleSubmit(async (value) => {
       :error="errors.description"
       required
     >
-      <CommonKTATextArea v-model="description" class="w-full min-h-[250px]" />
+      <CommonKTATextArea
+        v-model="description"
+        name="description"
+        class="w-full min-h-[250px]"
+      />
     </Validate>
 
     <Validate

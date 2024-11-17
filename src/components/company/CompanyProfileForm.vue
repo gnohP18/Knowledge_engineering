@@ -27,6 +27,8 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(["submit"]);
+
 /**
  * Option static
  */
@@ -77,7 +79,7 @@ const initForm = () => {
     setFieldValue("logo", get(props.profile, "logo", ""));
     setFieldValue("size", get(props.profile, "size", 0));
     setFieldValue("address", get(props.profile, "address", ""));
-    setFieldValue("detail_address", get(props.profile, "detailAddress", ""));
+    setFieldValue("detail_address", get(props.profile, "detail_address", ""));
     setFieldValue("accessibility", get(props.profile, "accessibility", ""));
     setFieldValue("closed_day", get(props.profile, "closed_day", ""));
     setFieldValue("business_day", get(props.profile, "business_day", ""));
@@ -101,10 +103,61 @@ const changeWorkplace = () => {
   workplace.value = workplaceSelected.value.id;
 };
 
-const onSubmit = handleSubmit(async () => {});
+const handleRemoveFile = () => {
+  logo.value = DEFAULT_AVATAR_URL;
+};
+
+const mediaFile = ref<File>();
+const handleTransferFile = (file: File) => {
+  mediaFile.value = file;
+};
+
+const onSubmit = handleSubmit(async () => {
+  const form = new FormData();
+  if (name.value) {
+    form.append("name", name.value);
+  }
+  if (nameInCharge.value) {
+    form.append("name_in_charge", nameInCharge.value);
+  }
+  if (companyType.value) {
+    form.append("company_type", String(companyType.value));
+  }
+  if (size.value) {
+    form.append("size", String(size.value));
+  }
+  if (email.value) {
+    form.append("email", email.value);
+  }
+  if (phone.value) {
+    form.append("phone", phone.value);
+  }
+  if (address.value) {
+    form.append("address", address.value);
+  }
+  if (detailAddress.value) {
+    form.append("detail_address", detailAddress.value);
+  }
+  if (businessDay.value) {
+    form.append("business_day", businessDay.value);
+  }
+  if (workplace.value) {
+    form.append("workplace", String(workplace.value));
+  }
+  if (accessibility.value) {
+    form.append("accessibility", accessibility.value);
+  }
+  if (note.value) {
+    form.append("note", note.value);
+  }
+  if (mediaFile.value) {
+    form.append("logo", mediaFile.value);
+  }
+  emits("submit", form);
+});
 </script>
 <template>
-  <form @submit.prevent="onSubmit">
+  <form>
     <div class="flex flex-col">
       <div class="container-group-input flex flex-col md:flex-row gap-2">
         <Validate :error="errors.name" label="Name" required class="w-full">
@@ -133,7 +186,7 @@ const onSubmit = handleSubmit(async () => {});
             @change="changeCompanyType"
           />
         </Validate>
-        <Validate :error="errors.size" label="Phone" required class="w-full">
+        <Validate :error="errors.size" label="Size" required class="w-full">
           <KTAInputNumber v-model="size" class="w-full" />
         </Validate>
       </div>
@@ -217,6 +270,8 @@ const onSubmit = handleSubmit(async () => {});
           class="text-sm"
           :max-size="5"
           :error="errors.logo ?? ''"
+          @handle-remove-file="handleRemoveFile"
+          @handle-transfer-file="handleTransferFile"
         />
       </div>
       <Validate
@@ -229,7 +284,7 @@ const onSubmit = handleSubmit(async () => {});
       <div class="flex justify-end">
         <Button
           class="custom-button w-[80px] h-[40px]"
-          type="submit"
+          @click="onSubmit"
           label="Save"
         />
       </div>

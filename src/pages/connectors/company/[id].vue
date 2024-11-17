@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import CompanyProfile from "~/components/user/CompanyProfile.vue";
 import { companyStore } from "~/stores/user/company";
 
 definePageMeta({
@@ -20,7 +21,7 @@ onMounted(async () => {
   <CommonKTALoading v-if="isLoading" />
   <div v-else class="flex flex-col gap-y-2">
     <div class="primary-card">
-      <UserCompanyProfile :company="company" />
+      <CompanyProfile :company="company" />
     </div>
     <div class="flex flex-col gap-2" v-if="recentlyPostJobs.length > 0">
       <label

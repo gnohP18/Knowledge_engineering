@@ -1,13 +1,13 @@
 import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   ssr: false,
-  devServer: {
-    https: {
-      key: "./https/localhost_key.pem",
-      cert: "./https/localhost_cert.pem",
-    },
-    port: 3000,
-  },
+  // devServer: {
+  //   https: {
+  //     key: "./https/localhost_key.pem",
+  //     cert: "./https/localhost_cert.pem",
+  //   },
+  //   port: 3000,
+  // },
   $production: {
     routeRules: {
       "/**": { isr: true },
