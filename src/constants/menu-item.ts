@@ -22,10 +22,33 @@ import {
   USER_TROUBLESHOOTING,
 } from "./route";
 
+export const DEFAULT_MENU_USER: MenuItem[] = [
+  {
+    label: "Home",
+    route: "/profile",
+  },
+  {
+    label: "Find jobs",
+    route: "/jobs",
+  },
+  {
+    label: "Companies",
+    route: "/connectors",
+  },
+  {
+    label: "Community",
+    route: "/newsfeed",
+  },
+];
+
 export const MENU_USER: MenuItem[] = [
   {
     icon: "pi pi-home",
     route: "/",
+  },
+  {
+    icon: "pi pi-objects-column",
+    route: "/newsfeed",
   },
   {
     icon: "pi pi-users",
