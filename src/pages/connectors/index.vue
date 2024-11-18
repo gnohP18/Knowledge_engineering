@@ -4,7 +4,8 @@ import KTALoading from "~/components/common/KTALoading.vue";
 import { userStore } from "~/stores/user/user";
 
 definePageMeta({
-  layout: "empty",
+  layout: "user",
+  middleware: ["auth-user"],
 });
 const store = userStore();
 const connectors = computed(() => store.suggestConnectors);
@@ -18,7 +19,7 @@ onMounted(async () => {
 <template>
   <KTALoading v-if="isLoading" />
   <div v-else class="layout-main container">
-    <div class="grid grid-cols-2 md:grid-cols-8 gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-8 gap-3 h-full">
       <div v-for="connector in connectors">
         <ConnectorCard :connector="connector" />
       </div>

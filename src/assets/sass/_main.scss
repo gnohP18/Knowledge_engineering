@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 * {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -8,6 +9,43 @@
 :root {
   --primaryButtonBackgroundColor: $primaryButtonBackgroundColor;
   --primaryTextHoverColor: $primaryTextHoverColor;
+}
+
+.montserrat-font-500 {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.montserrat-font {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.zoom-effect {
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease; /* Thời gian và hiệu ứng mượt mà */
+}
+
+.zoom-effect:hover {
+  transform: scale(1.05); /* Tăng kích thước phần tử khi hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng mờ để làm nổi bật phần tử */
+}
+
+.animation-visible {
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Bắt đầu với độ mờ bằng 0 */
+  }
+  100% {
+    opacity: 1; /* Kết thúc với độ mờ bằng 1 */
+  }
 }
 
 a {
@@ -80,6 +118,47 @@ html {
 .primary-card {
   background-color: $primaryCardBackgroundColor;
   border-radius: $primaryRounded;
+}
+
+.background-default-135deg {
+  background: hsla(0, 0%, 100%, 1);
+  background: linear-gradient(
+    135deg,
+    hsla(0, 0%, 100%, 1) 0%,
+    hsla(179, 83%, 40%, 1) 100%
+  );
+  background: -moz-linear-gradient(
+    135deg,
+    hsla(0, 0%, 100%, 1) 0%,
+    hsla(179, 83%, 40%, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    135deg,
+    hsla(0, 0%, 100%, 1) 0%,
+    hsla(179, 83%, 40%, 1) 100%
+  );
+}
+
+.background-default-45deg {
+  background: hsla(179, 83%, 40%, 1);
+
+  background: linear-gradient(
+    45deg,
+    hsla(179, 83%, 40%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    45deg,
+    hsla(179, 83%, 40%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    45deg,
+    hsla(179, 83%, 40%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
 }
 
 .icon-movement {

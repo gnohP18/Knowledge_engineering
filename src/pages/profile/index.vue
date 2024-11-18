@@ -30,7 +30,7 @@ const signOut = () => {
 </script>
 <template>
   <KTALoading v-if="isLoading" />
-  <div v-else class="w-full flex flex-col md:flex-row gap-2">
+  <div v-else class="w-full h-full flex flex-col md:flex-row gap-2">
     <div class="container-card md:w-[75%] bg-white rounded-2xl p-2">
       <ProfileTab :user="me" />
     </div>

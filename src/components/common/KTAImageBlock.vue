@@ -56,19 +56,6 @@ const bgGroup = [
   </div>
 </template>
 <style lang="scss" scoped>
-.animation-visible {
-  animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0; /* Bắt đầu với độ mờ bằng 0 */
-  }
-  100% {
-    opacity: 1; /* Kết thúc với độ mờ bằng 1 */
-  }
-}
-
 @media (max-width: 767px) {
   .bg-item {
     width: 100%;
