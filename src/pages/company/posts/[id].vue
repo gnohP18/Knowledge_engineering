@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PostStore } from "~/stores/company/post";
-import CImageUploadV1 from "~/components/common/CImageUploadV1.vue";
+import { MODE_FORM_UPDATE } from "~/constants/common";
 
 useHead({ title: "List job" });
 
@@ -33,14 +33,6 @@ const handleRemoveFile = () => {
     :is-succeed="isSucceed"
     :screen-name="'Detail post'"
   >
-    <CommonKTAInput v-model="post.title" class="w-full" />
-    <CImageUploadV1
-      :default-img-value="post.media_file"
-      label="Thumbnail"
-      name="logo"
-      class="text-sm"
-      :max-size="5"
-      @handle-remove-file="handleRemoveFile"
-    />
+    <CompanyPostForm :mode="MODE_FORM_UPDATE" :post="post" />
   </LayoutsCompanyManageCompanyLayout>
 </template>

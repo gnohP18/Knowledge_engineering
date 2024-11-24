@@ -14,5 +14,5 @@ export const getMeApi = (): Promise<any> => {
 };
 
 export const updateMeApi = (form: FormData): Promise<any> => {
-  return apiCompany.put("/user-service/companies/update/", form);
+  return apiCompany.put("/user-service/companies/update", form);
 };

@@ -10,6 +10,7 @@ export const USER_POST = "/posts";
 export const USER_CONNECTOR = "/connectors";
 export const USER_TROUBLESHOOTING = "/troubleshooting";
 export const USER_RESUME = "/resumes";
+export const USER_NEWSFEED = "/newsfeed";
 
 /**
  * Company route

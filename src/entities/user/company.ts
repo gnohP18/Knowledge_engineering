@@ -1,5 +1,5 @@
 export interface CompanyEntity {
-  id?: string;
+  id?: number;
   name?: string;
   name_in_charge?: string;
   phone?: string;
@@ -15,6 +15,8 @@ export interface CompanyEntity {
   connect_company?: number[];
   connect_user?: number[];
   status?: string;
+  relationship_type?: number;
+  relationship_id?: number;
   company?: BasicCompanyEntity[];
 }
 

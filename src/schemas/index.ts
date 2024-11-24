@@ -6,5 +6,7 @@ export * from "./user/job.schema";
 export * from "./company/auth.schema";
 export * from "./company/interview.schema";
 export * from "./company/profile.schema";
+export * from "./company/interview.schema";
+export * from "./company/post.schema";
 
 export * from "./admin/auth.schema";

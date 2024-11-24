@@ -17,7 +17,7 @@
         <span class="font-bold text-xl item-title span-primary-hover">
           Job Search Made Easy
         </span>
-        <span class="item-content"
+        <span class="item-content text-justify"
           >Effortlessly browse through a vast range of job Opportunities in
           various industries and locations.</span
         >
@@ -33,7 +33,7 @@
         <span class="font-bold text-xl item-title span-primary-hover">
           Employer Solutions
         </span>
-        <span class="item-content"
+        <span class="item-content text-justify"
           >Streamline your recruitment process with our tailored employer
           services.</span
         >
@@ -49,7 +49,7 @@
         <span class="font-bold text-xl item-title span-primary-hover">
           Personalized Job Alerts
         </span>
-        <span class="item-content"
+        <span class="item-content text-justify"
           >Stay ahead of the curve with personalized job alerts delivered
           straight to your inbox.</span
         >
@@ -58,14 +58,14 @@
         class="w-full h-full flex flex-col primary-card p-2 item-card gap-4 zoom-effect"
       >
         <div
-          class="border border-[#3e4a56] rounded-full block p-2 w-[40px] h-[40px] text-center justify-center items-center"
+          class="border border-[#3e4a56] hover:border-[#FFFFFF] rounded-full block p-2 w-[40px] h-[40px] text-center justify-center items-center"
         >
           <span class="pi pi-comments"></span>
         </div>
         <span class="font-bold text-xl item-title span-primary-hover">
           Career Guidance and Counseling
         </span>
-        <span class="item-content"
+        <span class="item-content text-justify"
           >Receive expert advice and counseling to navigate your career path
           successfully.</span
         >

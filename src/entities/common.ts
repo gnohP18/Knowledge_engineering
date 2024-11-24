@@ -4,12 +4,12 @@ export interface MenuItemEntity {
 }
 
 export interface OptionSelect {
-  id?: number,
-  name?: string
+  id: number;
+  name: string;
 }
 export interface PartialSelectedNode {
-  checked: boolean,
-  partialChecked: boolean
+  checked: boolean;
+  partialChecked: boolean;
 }
 
 export interface QueryParamsEntity {

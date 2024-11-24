@@ -1,13 +1,87 @@
 <script lang="ts" setup>
 import type { CompanyEntity } from "~/entities/user/company";
 import { COMPANY_TYPE } from "~/constants/company";
+import {
+  RELATIONSHIP_TYPE_BLOCKED,
+  RELATIONSHIP_TYPE_TOOLTIP,
+  RELATIONSHIP_TYPE_CONNECTED,
+  RELATIONSHIP_TYPE,
+  CONNECTOR_ACTION_DISCONNECT,
+  CONNECTOR_ACTION_BLOCK,
+  CONNECTOR_TYPE_COMPANY,
+} from "~/constants/common";
+import { userStageConnectorStore } from "~/stores/user/connector";
 
 const props = defineProps({
   company: {
     type: Object as PropType<CompanyEntity>,
   },
+  isConnector: {
+    type: Boolean,
+    default: false,
+  },
 });
 
+const emits = defineEmits(["reload"]);
+
+const connectorStore = userStageConnectorStore();
+const isLoading = computed(() => connectorStore.isLoadingConnect);
+const isSucceed = computed(() => connectorStore.isSucceedConnect);
+// const relationshipType =  computed(() => connectorStore.connectorCompany);
+const mappingAction = {
+  [RELATIONSHIP_TYPE_BLOCKED]: "UNBLOCK",
+  [RELATIONSHIP_TYPE_CONNECTED]: "DISCONNECT",
+  2: "BLOCK",
+};
+
+const action = async (actionType: string) => {
+  if (!props.isConnector) {
+    return;
+  }
+
+  switch (actionType) {
+    case mappingAction[RELATIONSHIP_TYPE_CONNECTED]:
+      await connectorStore.connect(
+        props.company?.id,
+        CONNECTOR_TYPE_COMPANY,
+        CONNECTOR_ACTION_DISCONNECT,
+      );
+      if (!isLoading.value && isSucceed.value) {
+        toastInfo("Tips", "You can follow in the next time!!");
+        emits("reload", CONNECTOR_ACTION_DISCONNECT);
+      }
+      break;
+
+    case mappingAction[RELATIONSHIP_TYPE_BLOCKED]:
+      // Unblock = disconnect to remove record relationship
+      await connectorStore.connect(
+        props.company?.id,
+        CONNECTOR_TYPE_COMPANY,
+        CONNECTOR_ACTION_DISCONNECT,
+      );
+      if (!isLoading.value && isSucceed.value) {
+        toastInfo("Success", "Let's connect with them again!!🥰");
+        emits("reload", CONNECTOR_ACTION_DISCONNECT);
+      }
+      break;
+
+    case mappingAction[2]:
+      await connectorStore.connect(
+        props.company?.id,
+        CONNECTOR_TYPE_COMPANY,
+        CONNECTOR_ACTION_BLOCK,
+      );
+
+      if (!isLoading.value && isSucceed.value) {
+        toastInfo("Success", "They can't find your info... Reloading....");
+        emits("reload", CONNECTOR_ACTION_BLOCK);
+      }
+      break;
+
+    default:
+      break;
+  }
+};
 onMounted(() => {});
 </script>
 <template>
@@ -39,6 +113,42 @@ onMounted(() => {});
         </div>
       </div>
     </div>
+    <div v-if="props.isConnector" class="flex gap-1 w-[200px] h-[25px]">
+      <Button
+        class="rounded-md flex-1"
+        v-tooltip="
+          RELATIONSHIP_TYPE_TOOLTIP[
+            props.company
+              ?.relationship_type as keyof typeof RELATIONSHIP_TYPE_TOOLTIP
+          ]
+        "
+        :class="{
+          'blocked-button w-full':
+            props.company?.relationship_type === RELATIONSHIP_TYPE_BLOCKED,
+          'connect-button':
+            props.company?.relationship_type === RELATIONSHIP_TYPE_CONNECTED,
+        }"
+        :label="
+          RELATIONSHIP_TYPE[
+            props.company?.relationship_type as keyof typeof RELATIONSHIP_TYPE
+          ]
+        "
+        @click="
+          action(
+            mappingAction[
+              props.company?.relationship_type as keyof typeof mappingAction
+            ],
+          )
+        "
+      />
+      <span
+        v-if="props.company?.relationship_type === RELATIONSHIP_TYPE_CONNECTED"
+        v-tooltip="'Block this user'"
+        class="pi pi-ban text-center p-3 flex items-center justify-center rounded-md blocked-button w-[25px] h-[25px] text-md"
+        @click="action(mappingAction[2])"
+      >
+      </span>
+    </div>
     <div class="border w-full rounded-md grid grid-cols-4 p-2 gap-y-2">
       <span class="font-bold span-primary-hover text-md">Company name</span>
       <span class="col-span-3 text-xl text-center">{{
@@ -65,16 +175,38 @@ onMounted(() => {});
         class="font-bold span-primary-hover text-md"
         >Accessibility</span
       >
-      <div
-        class="col-span-3 frame-map"
-        v-html="convertHTMLtoString(props.company?.accessibility ?? '')"
-      />
+      <div class="col-span-3 frame-map" v-html="props.company?.accessibility" />
     </div>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .frame-map iframe {
   height: 200px !important;
   width: 100% !important;
+}
+
+.blocked-button {
+  background-color: rgb(255, 35, 35);
+  border-width: 1px;
+  border-color: rgb(255, 35, 35);
+  color: white;
+
+  &:hover {
+    border-color: rgb(255, 35, 35);
+    background-color: white;
+    color: rgb(255, 35, 35);
+  }
+}
+
+.connect-button {
+  background-color: white;
+  border-width: 1px;
+  border-color: #11b9b5;
+  color: #666666;
+
+  &:hover {
+    background-color: #11b9b5;
+    color: white;
+  }
 }
 </style>

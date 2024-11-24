@@ -6,6 +6,7 @@ import * as Pagination from "~/constants/pagination";
 import { userResumeStore } from "~/stores/user/resume";
 import KTAUploadFile from "~/components/common/KTAUploadFile.vue";
 import { MEDIA_FILE_TYPE_RESUME } from "~/constants/common";
+import { USER_RESUME } from "~/constants/route";
 
 useHead({
   title: "List resume",
@@ -136,17 +137,20 @@ const uploadFile = async (files: File[]) => {
 const visibleRemoveResume = ref<boolean>(false);
 const currentSelectResume = ref<number>(0);
 const removeFile = async () => {
-  await store.removeResume(currentSelectResume.value);
+  if (currentSelectResume.value !== 0) {
+    await store.removeResume(currentSelectResume.value);
+  }
 
   if (!isLoading.value && isSucceed.value) {
-    toastSuccess("Success", "Remove resume successfully");
     visibleRemoveResume.value = false;
-    await store.getResumeList(queryParams);
+    toastSuccess("Success", "Remove resume successfully");
+    currentSelectResume.value = 0;
+    router.push(USER_RESUME);
   }
 };
 </script>
 <template>
-  <div class="flex flex-col gap-y-2">
+  <div class="flex min-h-full flex-col gap-y-2">
     <div class="flex justify-between items-center">
       <label for="resume" class="text-xl font-bold">Your Resume</label>
       <Button

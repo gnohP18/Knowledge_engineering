@@ -1,4 +1,5 @@
-import { getPositionNameListApi, searchJobApi } from "~/api/user/user";
+import { searchJobApi } from "~/api/user/job";
+import { getPositionNameListApi } from "~/api/user/user";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
 import type { PositionEntity, SearchingJobEntity } from "~/entities/user/job";

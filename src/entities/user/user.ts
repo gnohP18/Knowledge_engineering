@@ -37,7 +37,16 @@ export interface DataUserEntity {
 export interface ConnectorEntity {
   type?: number;
   id?: number;
+  user_id?: number;
   name?: string;
   avatar?: string;
   job_position?: PositionEntity;
+  relationship_type?: number;
+  relationship_id?: number;
+}
+
+export interface DataConnector {
+  user_id?: number;
+  user_type?: number;
+  status?: number;
 }

@@ -4,6 +4,7 @@ import type { QueryParamsEntity } from "~/entities/common";
 import * as Pagination from "~/constants/pagination";
 import { userStore } from "~/stores/user/user";
 import { AuthStore } from "~/stores/user/auth";
+import CreatePost from "~/components/user/CreatePost.vue";
 
 useHead({ title: "Job finding" });
 
@@ -58,7 +59,7 @@ const handleScroll = async () => {
       class="overflow-scroll w-full post-list flex flex-col gap-2"
       @scroll="handleScroll"
     >
-      <UserCreatePost v-if="checkAuth(USER_TOKEN)" :user="me" />
+      <CreatePost v-if="checkAuth(USER_TOKEN)" :user="me" />
       <PostList :posts="posts" />
     </div>
     <div v-if="isLoading" class="w-full relative flex justify-center">
@@ -70,10 +71,6 @@ const handleScroll = async () => {
         animationDuration=".5s"
       />
     </div>
-    <!-- <WelcomePopup
-      :visible="visibleWelcomePopup"
-      @close="visibleWelcomePopup = false"
-    /> -->
   </div>
 </template>
 <style lang="scss" scoped>
