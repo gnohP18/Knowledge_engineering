@@ -12,7 +12,7 @@ export const getListJobAttributeApi = (): Promise<any> => {
   return apiCompany.get("/job-service/jobs/job-attributes?limit=100", {});
 };
 
-export const getDetailJobApi = (id: string): Promise<any> => {
+export const getDetailJobApi = (id: number): Promise<any> => {
   return apiCompany.get(`/job-service/jobs/${id}`, {});
 };
 

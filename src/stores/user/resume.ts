@@ -1,8 +1,8 @@
 import {
   getResumeListApi,
-  removeResumeApi,
   uploadResumeApi,
-} from "~/api/user/user";
+  removeResumeApi,
+} from "~/api/user/resume";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
 import type { BasicResumeEntity } from "~/entities/user/resume";

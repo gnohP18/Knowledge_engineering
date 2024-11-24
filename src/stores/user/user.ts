@@ -1,16 +1,9 @@
+import { getDetailJobApi } from "~/api/company/job";
+import { getIndexPostApi, getDetailPostApi } from "~/api/company/post";
 import { getMeApi } from "~/api/user/auth";
-import {
-  applyJobApi,
-  createPostApi,
-  getDetailJobApi,
-  getDetailPostApi,
-  getHashtagListApi,
-  getIndexPostApi,
-  getPositionNameListApi,
-  getSuggestConnectorApi,
-  getSuggestConnectorListApi,
-  updateProfileApi,
-} from "~/api/user/user";
+import { applyJobApi } from "~/api/user/job";
+import { createPostApi, getListHashtagApi } from "~/api/user/post";
+import { getPositionNameListApi, updateProfileApi } from "~/api/user/user";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
 import type {
@@ -29,6 +22,8 @@ import type { ConnectorEntity, UserEntity } from "~/entities/user/user";
 interface State {
   isLoading: Boolean;
   isSucceed: Boolean;
+  isLoadingConnect: Boolean;
+  isSucceedConnect: Boolean;
   meta: MetaEntity | null;
   profile: UserEntity;
   positions: PositionEntity[];
@@ -68,30 +63,6 @@ export const userStore = defineStore("userStore", {
   actions: {
     resetState() {
       this.$state = defaultState;
-    },
-
-    /**
-     * Get suggest connector card right bar
-     */
-    async getSuggestConnector(): Promise<any> {
-      this.$state.isLoading = true;
-
-      this.$state.suggestConnectors = await getSuggestConnectorApi();
-
-      this.$state.isLoading = false;
-    },
-
-    /**
-     * get index
-     *
-     * @param param Param pagination
-     */
-    async getSuggestConnectorList(param: Object): Promise<any> {
-      this.$state.isLoading = true;
-
-      this.$state.suggestConnectors = await getSuggestConnectorListApi(param);
-
-      this.$state.isLoading = false;
     },
 
     /**
@@ -184,11 +155,11 @@ export const userStore = defineStore("userStore", {
     /**
      * get list hashtag
      */
-    async getHashtagList(): Promise<any> {
+    async getHashtagList(param: Object): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      await getHashtagListApi()
+      await getListHashtagApi(param)
         .then((result) => {
           this.$state.hashtags = result;
           this.$state.isSucceed = true;
@@ -228,7 +199,10 @@ export const userStore = defineStore("userStore", {
      *
      * @param paramPosition param pagination position
      */
-    async getIndexProfile(paramPosition: Object): Promise<any> {
+    async getIndexProfile(
+      paramPosition: Object,
+      paramHashtag: Object,
+    ): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
@@ -260,11 +234,21 @@ export const userStore = defineStore("userStore", {
         .finally(() => {
           this.$state.isLoading = false;
         });
-    },
 
-    async connect(id: number): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
+
+      await getListHashtagApi(paramHashtag)
+        .then((result) => {
+          this.$state.hashtags = result;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
 
     /**

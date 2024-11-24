@@ -1,27 +1,25 @@
 <script lang="ts" setup>
-import { USER_EXAMPLE } from "~/constants/sample";
-import { sleep } from "@whoj/utils-core";
-import type { UserEntity } from "~/entities/user/user";
 import Profile from "~/components/user/Profile.vue";
+import { CONNECTOR_TYPE_USER } from "~/constants/common";
+import { userStageConnectorStore } from "~/stores/user/connector";
 
 definePageMeta({
   layout: "user",
 });
-const user = ref<UserEntity>();
-const isLoading = ref<boolean>(false);
+const route = useRoute();
+const store = userStageConnectorStore();
+const connector = computed(() => store.connectorUser);
+const isLoading = computed(() => store.isLoading);
 
 onMounted(async () => {
-  isLoading.value = true;
-  sleep(2);
-  user.value = USER_EXAMPLE;
-  isLoading.value = false;
+  await store.getDetailConnector(route.params.id, CONNECTOR_TYPE_USER);
 });
 </script>
 
 <template>
   <CommonKTALoading v-if="isLoading" />
   <div v-else class="primary-card">
-    <Profile :user="user" :is-preview="true" :is-blocked="true" />
+    <Profile :user="connector" :is-preview="true" :is-blocked="true" />
   </div>
 </template>
 <style lang="scss" scoped></style>

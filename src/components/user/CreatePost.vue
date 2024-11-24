@@ -29,7 +29,7 @@ const [description] = defineField("description");
 const postUpdate = ref();
 const mediaFile = ref<File>();
 onMounted(async () => {
-  await store.getHashtagList();
+  await store.getHashtagList({});
 });
 
 const handleRemoveFile = () => {

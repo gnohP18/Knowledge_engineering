@@ -20,7 +20,7 @@ const maybeKnowConnectors = computed(() => userStoreStage.suggestConnectors);
 const isLoading = computed(() => userStoreStage.isLoading);
 
 onMounted(async () => {
-  await userStoreStage.getIndexProfile({ Limit: 100 });
+  await userStoreStage.getIndexProfile({ Limit: 100 }, { Limit: 100 });
 });
 
 const signOut = () => {

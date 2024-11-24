@@ -31,9 +31,32 @@ export const CONNECTOR_TYPE = {
 };
 
 export const CONNECTOR_ACTION_CONNECT = 0;
-export const CONNECTOR_ACTION_DISCONNECT = 2;
-export const CONNECTOR_ACTION_BLOCK = 1;
+export const CONNECTOR_ACTION_DISCONNECT = 1;
+export const CONNECTOR_ACTION_UNBLOCK = 1;
+export const CONNECTOR_ACTION_BLOCK = 2;
 
+export const QUERY_OPTION_CONNECTOR_ALL: number = 0;
+export const QUERY_OPTION_CONNECTOR_FOLLOWED: number = 1;
+export const QUERY_OPTION_CONNECTOR_BLOCK: number = 2;
+
+export const QUERY_OPTIONS: OptionSelect[] = [
+  { id: QUERY_OPTION_CONNECTOR_ALL, name: "All" },
+  { id: QUERY_OPTION_CONNECTOR_FOLLOWED, name: "Follow" },
+  { id: QUERY_OPTION_CONNECTOR_BLOCK, name: "Block" },
+];
+
+export const RELATIONSHIP_TYPE_CONNECTED: number = 0;
+export const RELATIONSHIP_TYPE_BLOCKED: number = 1;
+
+export const RELATIONSHIP_TYPE = {
+  [RELATIONSHIP_TYPE_CONNECTED]: "Disconnect",
+  [RELATIONSHIP_TYPE_BLOCKED]: "Unblock",
+};
+
+export const RELATIONSHIP_TYPE_TOOLTIP = {
+  [RELATIONSHIP_TYPE_CONNECTED]: "Disconnect this user",
+  [RELATIONSHIP_TYPE_BLOCKED]: "Unblocked this user",
+};
 // export const CONNECTOR_ACTION_TYPE
 
 /**
@@ -87,7 +110,6 @@ export const OPTION_ALL: OptionSelect = { id: -1, name: "All" };
 /**
  * For gender
  */
-
 export const GENDER_MALE = 1;
 export const GENDER_FEMALE = 0;
 
@@ -95,3 +117,8 @@ export const GENDER = {
   [GENDER_MALE]: "Male",
   [GENDER_FEMALE]: "Female",
 };
+
+/**
+ * For hashtag
+ */
+export const MAXIMUM_HASHTAG: number = 10;

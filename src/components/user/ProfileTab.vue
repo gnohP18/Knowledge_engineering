@@ -7,12 +7,11 @@ import CImageUploadV1 from "../common/CImageUploadV1.vue";
 import KTACalendar from "../common/KTACalendar.vue";
 import KTADropdown from "../common/KTADropdown.vue";
 import KTATextArea from "../common/KTATextArea.vue";
-import { HASHTAG_EXAMPLE } from "~/constants/sample";
 import { useForm } from "vee-validate";
 import { userUpdateSchema } from "~/schemas/user/profile.schema";
 import type { OptionSelect } from "~/entities/common";
 import { userStore } from "~/stores/user/user";
-import { DEFAULT_AVATAR_URL } from "~/constants/common";
+import { DEFAULT_AVATAR_URL, MAXIMUM_HASHTAG } from "~/constants/common";
 
 const props = defineProps({
   user: {
@@ -24,6 +23,14 @@ const userStageStore = userStore();
 const isLoading = computed(() => userStageStore.isLoading);
 const isSucceed = computed(() => userStageStore.isSucceed);
 const jobPositions = computed(() => userStageStore.positions);
+const hashtagOptions = computed(() => {
+  return userStageStore.hashtags?.map((hashtag) => {
+    return {
+      id: String(hashtag),
+      name: `#${hashtag}`,
+    };
+  });
+});
 
 const genderOption = [
   { name: "Male", id: 0 },
@@ -49,9 +56,6 @@ const [lifeGoal] = defineField("life_goal");
 const [gender] = defineField("gender");
 const [avatar] = defineField("avatar");
 
-// const handleRemoveFile = () => {
-//  user.value.avatar = "";
-// };
 const selectedGender = ref<OptionSelect>({ name: "Male", id: 0 });
 
 onMounted(() => {
@@ -187,7 +191,7 @@ const onSubmit = handleSubmit(async () => {
     </div>
     <div class="container-group-input w-full md:columns-2">
       <Validate label="Email" :error="errors.email" required>
-        <KTAInput v-model="email" :class="'w-full'" />
+        <KTAInput v-model="email" disabled :class="'w-full'" />
       </Validate>
       <Validate label="Job Position" :error="errors.job_position">
         <KTADropdown
@@ -204,11 +208,11 @@ const onSubmit = handleSubmit(async () => {
       <label class="text-sm font-bold"> #Hashtag Skill</label>
       <MultiSelect
         v-model="selectedHashtag"
-        :options="HASHTAG_EXAMPLE"
+        :options="hashtagOptions"
         filter
         optionLabel="name"
         placeholder="Select Hashtag"
-        :maxSelectedLabels="10"
+        :maxSelectedLabels="MAXIMUM_HASHTAG"
         class="w-full border"
       />
     </div>

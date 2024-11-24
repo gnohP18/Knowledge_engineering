@@ -51,7 +51,7 @@ const contributors = [
     >
       <div class="flex items-center justify-center">
         <span
-          class="text-[30px] md:text-[40px] xl:text-[50px] font-bold montserrat-font hover:text-white transition-all duration-300"
+          class="text-[30px] md:text-[40px] xl:text-[50px] 2xl:text-[70px] font-bold montserrat-font text-color-gradient"
           >OUR CONTRIBUTORS</span
         >
       </div>
@@ -69,7 +69,7 @@ const contributors = [
           <img
             :src="contributor.avatar"
             :alt="contributor.name"
-            class="max-w-[50px] xl:max-w-[120px] max-h-[50px] xl:max-h-[120px] rounded-full object-cover"
+            class="max-w-[50px] lg:max-w-[100px] xl:max-w-[120px] max-h-[50px] lg:max-h-[100px] xl:max-h-[120px] rounded-full object-cover"
           />
           <div class="flex flex-col gap-y-4">
             <span class="montserrat-font xl:text-xl font-bold">{{
@@ -88,7 +88,7 @@ const contributors = [
             </div>
           </div>
           <div
-            class="w-full h-full absolute hidden hover:flex justify-center items-center md:caption p-2 common-rounded"
+            class="w-full h-full absolute hidden hover:flex justify-center items-center caption p-2 common-rounded"
             :class="{
               'hover:flex-row-reverse': index % 2 === 1,
               'hover:flex-row': index % 2 !== 1,
@@ -97,7 +97,7 @@ const contributors = [
             <img
               :src="contributor.avatar"
               :alt="contributor.name"
-              class="max-w-[120px] max-h-[120px] rounded-full object-cover"
+              class="max-w-[50px] lg:max-w-[100px] xl:max-w-[120px] max-h-[50px] lg:max-h-[100px] xl:max-h-[120px] rounded-full object-cover"
             />
             <span class="text-white h-full text-md xl:text-xl text-center">{{
               contributor.introduce
@@ -137,8 +137,21 @@ const contributors = [
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  transition:
+    background 0.5s ease,
+    color 0.5s ease; /* Thêm transition cho background và color */
 }
-//
+
+.text-color-gradient:hover {
+  background: linear-gradient(
+    135deg,
+    rgb(228, 228, 228) 100%,
+    rgb(10, 107, 105) 0%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .profile-card {
   &::before {
