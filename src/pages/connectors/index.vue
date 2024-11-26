@@ -6,6 +6,9 @@ import * as Pagination from "~/constants/pagination";
 import { userStageConnectorStore } from "~/stores/user/connector";
 import { QUERY_OPTIONS } from "~/constants/common";
 import type { OptionSelect } from "~/entities/common";
+import KTASearchInput from "~/components/common/KTASearchInput.vue";
+
+useHead({ title: "Your network" });
 
 definePageMeta({
   layout: "user",
@@ -66,6 +69,7 @@ onMounted(async () => {
   await store.getSuggestConnectorList(
     queryOptionSelected.value.id,
     queryParams,
+    isGlobalSearch.value,
   );
 });
 
@@ -81,6 +85,7 @@ const onChangePaginator = async (event: any) => {
   await store.getSuggestConnectorList(
     queryOptionSelected.value.id,
     queryParams,
+    isGlobalSearch.value,
   );
 };
 
@@ -91,6 +96,7 @@ const changeQueryOption = async () => {
   await store.getSuggestConnectorList(
     queryOptionSelected.value.id,
     queryParams,
+    isGlobalSearch.value,
   );
 };
 
@@ -98,21 +104,53 @@ const reloadPage = async () => {
   await store.getSuggestConnectorList(
     queryOptionSelected.value.id,
     queryParams,
+    isGlobalSearch.value,
   );
 };
+
+const resetSearch = () => {};
+
+const search = async () => {
+  await store.getSuggestConnectorList(
+    queryOptionSelected.value.id,
+    queryParams,
+    isGlobalSearch.value,
+  );
+};
+
+const isGlobalSearch = ref<boolean>(false);
 </script>
 
 <template>
   <KTALoading v-if="isLoading" />
   <div v-else class="layout-main container flex flex-col gap-2">
-    <SelectButton
-      v-model="queryOptionSelected"
-      :options="QUERY_OPTIONS"
-      optionLabel="name"
-      @change="changeQueryOption"
-    />
+    <div class="grid md:grid-cols-2 grid-cols-1">
+      <div class="flex gap-2">
+        <SelectButton
+          v-if="!isGlobalSearch"
+          v-model="queryOptionSelected"
+          :options="QUERY_OPTIONS"
+          optionLabel="name"
+          @change="changeQueryOption"
+        />
+        <ToggleButton
+          v-model="isGlobalSearch"
+          onLabel="Global On"
+          onIcon="pi pi-globe"
+          offIcon="pi pi-ban"
+          offLabel="Global Off"
+          v-tooltip="'We will search out of your network connection'"
+          @change="resetSearch"
+        />
+      </div>
+      <KTASearchInput
+        v-model="queryParams.keyword"
+        placeholder="search your connector"
+        @keydown.enter.prevent="search"
+      />
+    </div>
     <div
-      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 h-full"
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 h-full flex-1"
     >
       <div v-for="connector in connectors">
         <ConnectorCard
@@ -134,7 +172,29 @@ const reloadPage = async () => {
   </div>
 </template>
 <style lang="scss" scoped>
-:deep(.p-highlight) {
+:deep(.p-selectbutton.p-button-group .p-component.p-highlight) {
+  &::before {
+    background-color: #11b9b5;
+  }
+
+  .p-button-label {
+    color: white;
+  }
+}
+
+:deep(.p-button-group) {
+  .p-button {
+    height: 100%;
+  }
+}
+
+:deep(.p-checkbox.p-component:not(.p-highlight)) {
+  .p-checkbox-box {
+    background-color: #c3d3eb;
+  }
+}
+
+:deep(.p-togglebutton-input) {
   &::before {
     background-color: #11b9b5;
   }

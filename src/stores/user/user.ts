@@ -206,6 +206,9 @@ export const userStore = defineStore("userStore", {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
+      /**
+       * Get profile
+       */
       await getMeApi()
         .then((result) => {
           this.$state.profile = result.user_profile;
@@ -223,6 +226,9 @@ export const userStore = defineStore("userStore", {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
+      /**
+       * Get position name
+       */
       await getPositionNameListApi(paramPosition)
         .then((result) => {
           this.$state.positions = result.data;
@@ -238,6 +244,9 @@ export const userStore = defineStore("userStore", {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
+      /**
+       * Get hashtag
+       */
       await getListHashtagApi(paramHashtag)
         .then((result) => {
           this.$state.hashtags = result;

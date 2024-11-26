@@ -18,7 +18,7 @@ onMounted(async () => {
 <template>
   <CommonKTALoading v-if="isLoading" />
   <div v-else class="primary-card">
-    <Profile :user="me" />
+    <Profile :user="me" is-preview />
   </div>
 </template>
 <style lang="scss" scoped></style>

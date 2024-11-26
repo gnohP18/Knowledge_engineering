@@ -16,6 +16,7 @@ const basicProfileSchema = zod.object({
   email: zod
     .string(requireMess("Email"))
     .email({ message: "Must be a valid email" }),
+  is_married: zod.boolean().default(false),
   job_position: zod.number(requireMess("Job position")),
   self_introduce: zod.string().nullable().optional(),
   life_goal: zod.string().nullable().optional(),

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {
   CONNECTOR_ACTION_BLOCK,
+  CONNECTOR_ACTION_CONNECT,
   CONNECTOR_ACTION_DISCONNECT,
   CONNECTOR_TYPE,
   CONNECTOR_TYPE_USER,
@@ -28,6 +29,7 @@ const mappingAction = {
   [RELATIONSHIP_TYPE_BLOCKED]: "UNBLOCK",
   [RELATIONSHIP_TYPE_CONNECTED]: "DISCONNECT",
   2: "BLOCK",
+  3: "CONNECT",
 };
 
 const action = async (actionType: string) => {
@@ -68,7 +70,18 @@ const action = async (actionType: string) => {
         emits("reload");
       }
       break;
+    case mappingAction[3]:
+      await store.connect(
+        props.connector?.id,
+        props.connector?.type,
+        CONNECTOR_ACTION_CONNECT,
+      );
+      if (!isLoading.value && isSucceed.value) {
+        toastInfo("Success", "Your network have been improved!!🥰");
+        emits("reload");
+      }
 
+      break;
     default:
       break;
   }
@@ -85,11 +98,17 @@ const action = async (actionType: string) => {
       class="w-[100px] h-[100px] rounded-full border-[2px]"
     />
     <a
+      v-if="props.connector?.relationship_id"
       :href="`/connectors/${props.connector?.type === CONNECTOR_TYPE_USER ? 'user' : 'company'}/${props.connector?.relationship_id}?is_connector=1`"
       class="span-primary-hover w-full text-md text-center min-h-[48px]"
     >
       {{ props.connector?.name }}
     </a>
+    <a
+      v-else
+      :href="`/connectors/${props.connector?.type === CONNECTOR_TYPE_USER ? 'user' : 'company'}/${props.connector?.id}?is_connector=0`"
+      >{{ props.connector?.name }}</a
+    >
     <div class="flex gap-2 items-center">
       <span
         v-if="props.connector?.type !== CONNECTOR_TYPE_USER"
@@ -109,7 +128,7 @@ const action = async (actionType: string) => {
             ]
       }}
     </span>
-    <div class="flex gap-1 w-full">
+    <div class="flex gap-1 w-full" v-if="props.connector?.relationship_id">
       <Button
         class="rounded-md flex-1"
         v-tooltip="
@@ -147,7 +166,12 @@ const action = async (actionType: string) => {
       >
       </span>
     </div>
-    <!-- <Button v-else class="common-rounded primary-button" label="Connect" /> -->
+    <Button
+      v-else
+      class="rounded-md primary-button"
+      label="Connect"
+      @click="action(mappingAction[3])"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

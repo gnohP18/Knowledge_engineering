@@ -4,6 +4,10 @@ export const getSuggestConnectorListApi = (params: Object): Promise<any> => {
   return apiClient.get("/user-service/relationships", params);
 };
 
+export const getUserSearchGlobalApi = (params: Object): Promise<any> => {
+  return apiClient.get("/user-service/relationships/search", params);
+};
+
 export const getConnectorFollowedApi = (params: Object): Promise<any> => {
   return apiClient.get("/user-service/relationships/list-is-followed", params);
 };

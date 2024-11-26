@@ -3,7 +3,7 @@ export const getPositionNameListApi = (param: Object): Promise<any> => {
 };
 
 export const updateProfileApi = (data: FormData): Promise<any> => {
-  return apiClient.put(`/user-service/users/update/`, data);
+  return apiClient.put(`/user-service/users/update`, data);
 };
 
 export const getListHashtagApi = (param: Object): Promise<any> => {

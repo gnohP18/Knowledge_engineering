@@ -13,7 +13,7 @@ export const getDetailPostApi = (id: number): Promise<any> => {
 };
 
 export const getListHashtagApi = (param: Object): Promise<any> => {
-  return apiCompany.get("/other-service/hash-tag", param);
+  return apiClient.get("/other-service/hash-tag", param);
 };
 
 export const createPostApi = (data: DataPostEntity): Promise<any> => {

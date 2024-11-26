@@ -192,7 +192,7 @@ const onSubmit = handleSubmit(async () => {
       </div>
       <div class="container-group-input flex flex-col md:flex-row gap-2">
         <Validate :error="errors.email" label="Email" required class="w-full">
-          <KTAInput v-model="email" class="w-full" />
+          <KTAInput v-model="email" disabled class="w-full" />
         </Validate>
         <Validate :error="errors.phone" label="Phone" required class="w-full">
           <KTAInput v-model="phone" class="w-full" />

@@ -55,6 +55,7 @@ const [selfIntroduce] = defineField("self_introduce");
 const [lifeGoal] = defineField("life_goal");
 const [gender] = defineField("gender");
 const [avatar] = defineField("avatar");
+const [isMarried] = defineField("is_married");
 
 const selectedGender = ref<OptionSelect>({ name: "Male", id: 0 });
 
@@ -72,23 +73,23 @@ onMounted(() => {
   setFieldValue("job_position", get(props.user, "job_position.id", 0));
   setFieldValue("gender", get(props.user, "gender", 0));
   setFieldValue("avatar", get(props.user, "avatar", ""));
+  setFieldValue("is_married", get(props.user, "is_married", false));
 
   selectedGender.value = genderOption.filter(
     (_) => props.user?.gender === _.id,
   )[0];
+
+  selectedHashtag.value =
+    hashtagOptions.value.filter((hashtagOption) =>
+      get(props.user, "hashtag", []).includes(hashtagOption.id),
+    ) ?? [];
 
   jobPositionSelected.value =
     jobPositions.value.filter((_) => _.id === jobPosition.value)[0] ??
     jobPositions.value[0];
 });
 
-const selectedHashtag = ref([
-  { code: "1", name: "Back End" },
-  { code: "2", name: "Front End" },
-  { code: "3", name: "DevOps" },
-  { code: "4", name: "Project Management" },
-  { code: "5", name: "Data Analysis" },
-]);
+const selectedHashtag = ref<{ id: string; name: string }[]>([]);
 
 const changeGender = () => {
   gender.value = selectedGender.value.id;
@@ -112,11 +113,11 @@ const onSubmit = handleSubmit(async () => {
   const formData = new FormData();
   formData.append("first_name", firstName.value ?? "");
   formData.append("last_name", lastName.value ?? "");
-  formData.append("date_of_birth", dateOfBirth.value ?? "");
+  formData.append("date_of_birth", new Date(dateOfBirth.value).toISOString());
   formData.append("email", email.value ?? "");
   formData.append("address", address.value ?? "");
   formData.append("detail_address", detailAddress.value ?? "");
-  formData.append("is_married", "true");
+  formData.append("is_married", isMarried.value);
   formData.append("gender", String(selectedGender.value.id ?? 1));
   formData.append("self_introduce", selfIntroduce.value ?? "");
   formData.append("life_goal", lifeGoal.value ?? "");
@@ -125,9 +126,14 @@ const onSubmit = handleSubmit(async () => {
     formData.append("avatar", mediaFile.value);
   }
 
+  if (selectedHashtag.value.length > 0) {
+    const arrHashtag: string[] = selectedHashtag.value.map((_) => _.id);
+    formData.append("hashtag", JSON.stringify(arrHashtag));
+  }
+
   await userStageStore.updateProfile(formData);
   if (!isLoading.value && isSucceed.value) {
-    await userStageStore.getIndexProfile({ limit: 100 });
+    await userStageStore.getIndexProfile({ limit: 100 }, { limit: 100 });
   }
 });
 </script>
@@ -173,7 +179,7 @@ const onSubmit = handleSubmit(async () => {
     </div>
     <div class="container-group-input w-full md:columns-2">
       <div class="flex items-center">
-        <Checkbox v-model="props.user.is_married" :binary="true" />
+        <Checkbox v-model="isMarried" :binary="true" />
         <label for="is_married" class="ml-2"> Is married </label>
       </div>
     </div>
