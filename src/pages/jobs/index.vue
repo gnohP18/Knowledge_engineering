@@ -224,6 +224,7 @@ const changePaginator = async (value: any) => {
             v-model="param.SearchText"
             name="search_text"
             autocomplete="on"
+            placeholder="Search whatever you want..."
             @keydown.enter.prevent="search"
             @input="checkEmptySearchText"
           />

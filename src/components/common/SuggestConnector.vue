@@ -31,8 +31,6 @@ onMounted(() => {
   connectors.value.forEach((connector) => {
     visibleButtonArr.value[connector.id] = true;
   });
-
-  console.log(visibleButtonArr.value);
 });
 const connect = async (idConnector: number, connectorType: number) => {
   console.log(idConnector, connectorType);

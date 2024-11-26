@@ -1,15 +1,13 @@
 import {
   connectApi,
-  getConnectorFollowedApi,
   getDetailConnectorAPi,
   getSuggestConnectorListApi,
+  getUserSearchGlobalApi,
 } from "~/api/user/connector";
 import {
   CONNECTOR_TYPE_COMPANY,
   CONNECTOR_TYPE_USER,
-  QUERY_OPTION_CONNECTOR_ALL,
-  QUERY_OPTION_CONNECTOR_BLOCK,
-  QUERY_OPTION_CONNECTOR_FOLLOWED,
+  MAPPING_QUERY_OPTIONS,
 } from "~/constants/common";
 import type { ErrorData } from "~/entities/api-error";
 import type { MetaEntity } from "~/entities/meta";
@@ -61,47 +59,39 @@ export const userStageConnectorStore = defineStore("userStageConnectorStore", {
     async getSuggestConnectorList(
       queryOption: number,
       params: Object,
+      isGlobalSearch: boolean = false,
     ): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = true;
-
-      switch (queryOption) {
-        case QUERY_OPTION_CONNECTOR_ALL:
-          await getSuggestConnectorListApi(params)
-            .then((result) => {
-              this.$state.connectors = result.data;
-              this.$state.meta = result.meta;
-            })
-            .catch((err) => {
-              this.$state.isSucceed = false;
-              this.$state.errors = handleApiErrors(err);
-            })
-            .finally(() => {
-              this.$state.isLoading = false;
-            });
-          break;
-
-        case QUERY_OPTION_CONNECTOR_FOLLOWED:
-          await getConnectorFollowedApi(params)
-            .then((result) => {
-              this.$state.followers = result.data;
-              this.$state.meta = result.meta;
-              this.$state.isSucceed = true;
-            })
-            .catch((err) => {
-              this.$state.isSucceed = false;
-              this.$state.errors = handleApiErrors(err);
-            })
-            .finally(() => {
-              this.$state.isLoading = false;
-            });
-          break;
-        case QUERY_OPTION_CONNECTOR_BLOCK:
-          // TODO
-          // Handle call api list connector block
-          break;
-        default:
-          break;
+      params = Object.assign(params, {
+        type: MAPPING_QUERY_OPTIONS[queryOption],
+      });
+      if (!isGlobalSearch) {
+        await getSuggestConnectorListApi(params)
+          .then((result) => {
+            this.$state.connectors = result.data;
+            this.$state.meta = result.meta;
+          })
+          .catch((err) => {
+            this.$state.isSucceed = false;
+            this.$state.errors = handleApiErrors(err);
+          })
+          .finally(() => {
+            this.$state.isLoading = false;
+          });
+      } else {
+        await getUserSearchGlobalApi(params)
+          .then((result) => {
+            this.$state.connectors = result.data;
+            this.$state.meta = result.meta;
+          })
+          .catch((err) => {
+            this.$state.isSucceed = false;
+            this.$state.errors = handleApiErrors(err);
+          })
+          .finally(() => {
+            this.$state.isLoading = false;
+          });
       }
     },
 
@@ -153,14 +143,17 @@ export const userStageConnectorStore = defineStore("userStageConnectorStore", {
         .then((result) => {
           switch (type) {
             case CONNECTOR_TYPE_USER:
+              const dataUser: UserEntity = result.profile_connector;
+              dataUser.relationship_id = result.relationship_id;
+              dataUser.relationship_type = result.relationship_type;
               this.$state.connectorUser = result.profile_connector;
               break;
 
             case CONNECTOR_TYPE_COMPANY:
-              const data: CompanyEntity = result.profile_connector;
-              data.relationship_id = result.relationship_id;
-              data.relationship_type = result.relationship_type;
-              this.$state.connectorCompany = data;
+              const dataCompany: CompanyEntity = result.profile_connector;
+              dataCompany.relationship_id = result.relationship_id;
+              dataCompany.relationship_type = result.relationship_type;
+              this.$state.connectorCompany = dataCompany;
               break;
 
             default:

@@ -14,6 +14,8 @@ export interface UserEntity {
   self_introduce?: string;
   life_goal?: string;
   job_position?: PositionEntity;
+  relationship_type?: number;
+  relationship_id?: number;
   hashtag?: number[];
   total_connects?: number;
 }

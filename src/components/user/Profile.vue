@@ -7,6 +7,10 @@ const props = defineProps({
     type: Object as PropType<UserEntity>,
     default: {},
   },
+  isConnector: {
+    type: Boolean,
+    default: false,
+  },
   isBlocked: {
     type: Boolean,
     default: false,
@@ -27,7 +31,7 @@ const props = defineProps({
         class="rounded-full max-h-[300px] max-w-[300px]"
       />
       <Button
-        v-if="props.isPreview"
+        v-if="!props.isPreview && props.isConnector"
         :label="`Connect to ${props.user?.last_name}`"
         class="primary-button h-[50px]"
       />

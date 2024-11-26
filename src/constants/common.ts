@@ -45,6 +45,12 @@ export const QUERY_OPTIONS: OptionSelect[] = [
   { id: QUERY_OPTION_CONNECTOR_BLOCK, name: "Block" },
 ];
 
+export const MAPPING_QUERY_OPTIONS = {
+  [QUERY_OPTION_CONNECTOR_ALL]: "all",
+  [QUERY_OPTION_CONNECTOR_FOLLOWED]: "connect",
+  [QUERY_OPTION_CONNECTOR_BLOCK]: "block",
+};
+
 export const RELATIONSHIP_TYPE_CONNECTED: number = 0;
 export const RELATIONSHIP_TYPE_BLOCKED: number = 1;
 

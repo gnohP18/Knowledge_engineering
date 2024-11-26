@@ -10,6 +10,7 @@ useHead({ title: "Job finding" });
 
 definePageMeta({
   layout: "user-auth",
+  middleware: "auth-user",
 });
 
 const store = userStore();
