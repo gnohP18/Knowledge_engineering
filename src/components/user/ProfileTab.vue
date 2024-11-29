@@ -100,12 +100,15 @@ const changeDateOfBirth = () => {
 };
 
 const mediaFile = ref<File>();
+const isChangeAvatar = ref<boolean>(false);
 const handleGetFile = (data: File) => {
+  isChangeAvatar.value = true;
   mediaFile.value = data;
   avatar.value = data.objectURL;
 };
 
 const handleRemoveFile = () => {
+  isChangeAvatar.value = true;
   avatar.value = DEFAULT_AVATAR_URL;
 };
 
@@ -122,7 +125,7 @@ const onSubmit = handleSubmit(async () => {
   formData.append("self_introduce", selfIntroduce.value ?? "");
   formData.append("life_goal", lifeGoal.value ?? "");
   formData.append("job_position", String(jobPosition.value ?? 0));
-  if (avatar.value !== DEFAULT_AVATAR_URL) {
+  if (avatar.value !== DEFAULT_AVATAR_URL && isChangeAvatar.value) {
     formData.append("avatar", mediaFile.value);
   }
 
