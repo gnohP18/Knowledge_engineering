@@ -22,8 +22,6 @@ import type { ConnectorEntity, UserEntity } from "~/entities/user/user";
 interface State {
   isLoading: Boolean;
   isSucceed: Boolean;
-  isLoadingConnect: Boolean;
-  isSucceedConnect: Boolean;
   meta: MetaEntity | null;
   profile: UserEntity;
   positions: PositionEntity[];
@@ -135,11 +133,11 @@ export const userStore = defineStore("userStore", {
      *
      * @param jobId jobId apply job
      */
-    async applyJob(jobId: number): Promise<any> {
+    async applyJob(jobId: number, resumeId: number): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
-      await applyJobApi(jobId)
+      await applyJobApi(jobId, resumeId)
         .then(() => {
           this.$state.isSucceed = true;
         })

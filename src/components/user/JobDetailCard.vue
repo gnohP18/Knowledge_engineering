@@ -4,14 +4,18 @@ import { USER_CONNECTOR } from "~/constants/route";
 import type { JobEntity } from "~/entities/user/job";
 import { DEFAULT_AVATAR_URL } from "~/constants/common";
 import { COMPANY_TYPE } from "~/constants/company";
+import JobResumeListModal from "./job/JobResumeListModal.vue";
+import { userResumeStore } from "~/stores/user/resume";
+import { PAGE_LIMIT_DEFAULT } from "~/constants/pagination";
 
 const props = defineProps({
   job: {
     type: Object as PropType<JobEntity>,
   },
 });
-
 const emits = defineEmits(["applyJob"]);
+const resumeStore = userResumeStore();
+const isLoading = computed(() => resumeStore.isLoading);
 
 const goToElement = (elementId: string) => {
   document.getElementById(elementId)?.scrollIntoView({
@@ -19,8 +23,14 @@ const goToElement = (elementId: string) => {
   });
 };
 
-const applyJob = () => {
-  emits("applyJob");
+const applyJob = (resumeId: number) => {
+  emits("applyJob", resumeId);
+};
+
+const visibleResumeList = ref<boolean>(false);
+const handleVisibleResumeModal = async () => {
+  await resumeStore.getResumeList({ page: "1", limit: PAGE_LIMIT_DEFAULT });
+  visibleResumeList.value = true;
 };
 </script>
 <template>
@@ -107,7 +117,8 @@ const applyJob = () => {
         class="custom-button min-w-[150px] min-h-[50px] text-xl"
         :class="{ '!bg-white !text-black': props.job?.is_applied }"
         :label="props.job?.is_applied ? 'Applied' : 'Apply'"
-        @click="applyJob"
+        :loading="isLoading"
+        @click="handleVisibleResumeModal"
       />
     </div>
     <div class="flex">
@@ -183,6 +194,11 @@ const applyJob = () => {
         :label="requirement"
       />
     </div>
+    <JobResumeListModal
+      :visible="visibleResumeList"
+      @close="visibleResumeList = false"
+      @choose="applyJob"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

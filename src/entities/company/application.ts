@@ -33,3 +33,16 @@ export interface ApplicationEntity {
   resume_name?: string;
   resume?: string;
 }
+
+export interface BasicApplicationEntity {
+  avatar: string;
+  email: string;
+  firstName: string;
+  interviewDateTime: string;
+  interviewStatus: number;
+  jobId: number;
+  jobPositionName: string;
+  lastName: string;
+  updatedAt: string;
+  userId: number;
+}
