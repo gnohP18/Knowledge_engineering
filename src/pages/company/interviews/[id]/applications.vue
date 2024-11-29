@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { get, isEmpty } from "lodash-es";
 import KTADataTable from "~/components/common/KTADataTable.vue";
-import { INTERVIEW_STATUS_NAME, INTERVIEW_TYPE } from "~/constants/application";
+import { INTERVIEW_STATUS_NAME } from "~/constants/application";
 import * as Pagination from "~/constants/pagination";
 import { COMPANY_INTERVIEW, APPLICATION_INTERVIEW } from "~/constants/route";
 
@@ -115,32 +115,24 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
       <Column header="Full name">
         <template #body="{ data }">
           <div class="flex justify-start w-full">
-            {{ `${data.first_name} ${data.last_name}` }}
+            {{ `${data.firstName} ${data.lastName}` }}
           </div>
         </template>
       </Column>
-      <Column field="position_name" header="Position name" />
-      <Column field="interview_type" header="Status">
-        <template #body="{ data }">
-          <div class="flex justify-start w-full">
-            {{
-              INTERVIEW_TYPE[data.interview_type as keyof typeof INTERVIEW_TYPE]
-            }}
-          </div>
-        </template>
-      </Column>
+      <Column field="jobPositionName" header="Position name" />
+      <Column field="email" header="Email" />
       <Column field="status" header="Status">
         <template #body="{ data }">
           <div class="flex justify-start w-full">
             {{
               INTERVIEW_STATUS_NAME[
-                data.status as keyof typeof INTERVIEW_STATUS_NAME
+                data.interviewStatus as keyof typeof INTERVIEW_STATUS_NAME
               ]
             }}
           </div>
         </template>
       </Column>
-      <Column field="interview_date_time" header="Interview date time at" />
+      <Column field="interviewDateTime" header="Interview date time at" />
     </KTADataTable>
   </LayoutsCompanyManageCompanyLayout>
 </template>

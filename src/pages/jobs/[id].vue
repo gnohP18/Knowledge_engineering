@@ -2,6 +2,7 @@
 import { USER_TOKEN } from "~/constants/authentication";
 import { userStore } from "~/stores/user/user";
 import KTALoading from "~/components/common/KTALoading.vue";
+import JobDetailCard from "~/components/user/JobDetailCard.vue";
 
 definePageMeta({
   layout: "user",
@@ -20,9 +21,9 @@ onMounted(async () => {
   await store.getDetailJob(Number(route.params.id));
 });
 
-const applyJob = async () => {
+const applyJob = async (resumeId: number) => {
   if (checkAuth(USER_TOKEN)) {
-    await store.applyJob(Number(route.params.id));
+    await store.applyJob(Number(route.params.id), resumeId);
 
     if (!isLoading.value && isSucceed.value) {
       toastSuccess("Success", "Apply job successfully");
@@ -34,7 +35,7 @@ const applyJob = async () => {
 <template>
   <KTALoading v-if="isLoading" />
   <div v-else class="w-full flex flex-col">
-    <UserJobDetailCard :job="job" @apply-job="applyJob" />
+    <JobDetailCard :job="job" @apply-job="applyJob" />
   </div>
 </template>
 <style lang="scss" scoped></style>
