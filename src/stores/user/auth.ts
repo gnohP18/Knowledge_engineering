@@ -1,8 +1,9 @@
-import { getMeApi, loginApi } from "~/api/user/auth";
+import { getMeApi, loginApi, signupApi } from "~/api/user/auth";
 import { getListHashtagApi, getPositionNameListApi } from "~/api/user/user";
 import { USER_LAST_WORKSPACE, USER_TOKEN } from "~/constants/authentication";
+import { USER_PROFILE } from "~/constants/route";
 import type { ErrorData } from "~/entities/api-error";
-import type { UserLoginEntity } from "~/entities/user/auth";
+import type { UserLoginEntity, UserSignupEntity } from "~/entities/user/auth";
 import type { PositionEntity } from "~/entities/user/job";
 import type { ConnectorEntity, UserEntity } from "~/entities/user/user";
 
@@ -51,6 +52,26 @@ export const AuthStore = defineStore("AuthStore", {
           setToken(USER_TOKEN, result.token);
           toastSuccess("Welcome", "Login Successfully");
           navigateTo(redirectUrl, { external: true });
+        })
+        .catch((err) => {
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+    },
+    async signup(userSignup: UserSignupEntity): Promise<any> {
+      this.$state.isLoading = true;
+
+      await signupApi(userSignup)
+        .then(() => {
+          setLastWorkspace(USER_LAST_WORKSPACE, USER_PROFILE);
+
+          const userLoginEntity: UserLoginEntity = {
+            email: userSignup.email,
+            password: userSignup.password,
+          };
+          this.login(userLoginEntity);
         })
         .catch((err) => {
           this.$state.errors = handleApiErrors(err);

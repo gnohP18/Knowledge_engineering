@@ -7,6 +7,7 @@ import { useForm } from "vee-validate";
 import { userSignUpSchema } from "~/schemas";
 import { AuthStore } from "~/stores/user/auth";
 import type { OptionSelect } from "~/entities/common";
+import type { UserSignupEntity } from "~/entities/user/auth";
 definePageMeta({
   layout: "login",
   middleware: "auth-guest-user",
@@ -33,16 +34,25 @@ onMounted(async () => {
   jobPositionSelected.value = jobPositions.value[0];
 });
 
-const signup = handleSubmit(async () => {});
+const signup = handleSubmit(async (values) => {
+  const userSignup: UserSignupEntity = {
+    email: values.email,
+    password: values.password,
+    first_name: values.first_name,
+    last_name: values.last_name,
+    address: values.address,
+    detail_address: values.detail_address,
+    password_confirmation: values.passwordConfirmation,
+    job_position: jobPositionSelected.value?.id,
+  }
+  await store.signup(userSignup);
+});
 </script>
+
 <template>
   <div class="flex w-full h-full background-login justify-center items-center">
-    <div
-      class="w-1/2 min-h-[200px] flex flex-col justify-center items-center gap-4 bg-white/[0.3] common-rounded p-5"
-    >
-      <label class="text-2xl text-primary font-bold span-primary-hover"
-        >Sign up</label
-      >
+    <div class="w-1/2 min-h-[200px] flex flex-col justify-center items-center gap-4 bg-white/[0.3] common-rounded p-5">
+      <label class="text-2xl text-primary font-bold span-primary-hover">Sign up</label>
 
       <form @action.prevent="signup"></form>
       <div class="grid grid-cols-2 w-full gap-2">
@@ -50,14 +60,8 @@ const signup = handleSubmit(async () => {});
           <KTAInput v-model="email" class="w-full" />
         </Validate>
         <Validate label="Job Title">
-          <KTADropdown
-            v-if="jobPositions"
-            v-model="jobPositionSelected"
-            :options="jobPositions"
-            filter
-            option-label="name"
-            class="w-full"
-          />
+          <KTADropdown v-if="jobPositions" v-model="jobPositionSelected" :options="jobPositions" filter
+            option-label="name" class="w-full" />
         </Validate>
       </div>
       <div class="grid grid-cols-2 w-full gap-2">
@@ -72,11 +76,7 @@ const signup = handleSubmit(async () => {});
         <Validate label="Address" :error="errors.address" class="w-full">
           <KTAInput v-model="address" class="w-full" />
         </Validate>
-        <Validate
-          label="Detail Address"
-          :error="errors.detail_address"
-          class="w-full"
-        >
+        <Validate label="Detail Address" :error="errors.detail_address" class="w-full">
           <KTAInput v-model="detailAddress" class="w-full" />
         </Validate>
       </div>
@@ -84,20 +84,12 @@ const signup = handleSubmit(async () => {});
         <Validate label="Password" :error="errors.password" class="w-full">
           <KTAPassword v-model="password" class="w-full" />
         </Validate>
-        <Validate
-          label="Password Confirmation"
-          :error="errors.passwordConfirmation"
-          class="w-full"
-        >
+        <Validate label="Password Confirmation" :error="errors.passwordConfirmation" class="w-full">
           <KTAPassword v-model="passwordConfirmation" class="w-full" />
         </Validate>
       </div>
       <div class="w-full flex items-center justify-center">
-        <Button
-          label="Submit"
-          @click="signup"
-          class="my-5 p-2 !w-1/3 primary-button"
-        />
+        <Button label="Submit" @click="signup" class="my-5 p-2 !w-1/3 primary-button" />
       </div>
       <a href="/" class="text-primary font-bold">Back to home</a>
     </div>
