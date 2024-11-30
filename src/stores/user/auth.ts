@@ -1,6 +1,7 @@
 import { getMeApi, loginApi, signupApi } from "~/api/user/auth";
 import { getListHashtagApi, getPositionNameListApi } from "~/api/user/user";
 import { USER_LAST_WORKSPACE, USER_TOKEN } from "~/constants/authentication";
+import { USER_PROFILE } from "~/constants/route";
 import type { ErrorData } from "~/entities/api-error";
 import type { UserLoginEntity, UserSignupEntity } from "~/entities/user/auth";
 import type { PositionEntity } from "~/entities/user/job";
@@ -62,15 +63,15 @@ export const AuthStore = defineStore("AuthStore", {
     async signup(userSignup: UserSignupEntity): Promise<any> {
       this.$state.isLoading = true;
 
-      const lastWorkspace = getLastWorkspace(USER_LAST_WORKSPACE);
-
       await signupApi(userSignup)
-        .then((result) => {
-          const redirectUrl = lastWorkspace ?? "/profile/index";
+        .then(() => {
+          setLastWorkspace(USER_LAST_WORKSPACE, USER_PROFILE);
 
-          setToken(USER_TOKEN, result.token);
-          toastSuccess("Welcome", "Signup Successfully");
-          navigateTo(redirectUrl, { external: true });
+          const userLoginEntity: UserLoginEntity = {
+            email: userSignup.email,
+            password: userSignup.password,
+          };
+          this.login(userLoginEntity);
         })
         .catch((err) => {
           this.$state.errors = handleApiErrors(err);

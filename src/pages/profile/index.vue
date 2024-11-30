@@ -35,7 +35,7 @@ const signOut = () => {
       <ProfileTab :user="me" />
     </div>
     <div class="flex flex-1 flex-col gap-2 items-start justify-start">
-      <CompleteProfile v-if="me" :user="me" />
+      <!-- <CompleteProfile v-if="me" :user="me" /> -->
       <div class="flex w-full justify-center">
         <a
           href="/profile/preview"
