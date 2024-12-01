@@ -3,9 +3,9 @@ export const getResumeListApi = (params: Object): Promise<any> => {
 };
 
 export const uploadResumeApi = (data: FormData): Promise<any> => {
-  return apiClient.post("/user-service/users/resumes/", data);
+  return apiClient.post("/user-service/users/resumes", data);
 };
 
 export const removeResumeApi = (id: number): Promise<any> => {
-  return apiClient.delete(`/user-service/users/resumes/${id}/`);
+  return apiClient.delete(`/user-service/users/resumes/${id}`);
 };
