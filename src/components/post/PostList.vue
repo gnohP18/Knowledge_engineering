@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { BasicPostEntity } from "~/entities/user/post";
+import Post from "~/components/post/Post.vue";
 
 const props = defineProps({
   posts: {

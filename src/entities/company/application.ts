@@ -10,28 +10,31 @@ export interface BasicApplicationEntity {
 
 export interface ApplicationEntity {
   id?: number;
-  job_id?: number;
-  job_position?: string;
-  first_name?: string;
-  last_name?: string;
-  date_of_birth?: string;
+  jobId?: number;
+  jobPositionName?: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
   avatar?: string;
   email?: string;
   phone?: string;
   address?: string;
-  detail_address?: string;
-  is_married?: false;
+  detailAddress?: string;
+  isMarried?: false;
   gender?: number;
-  self_introduce?: string;
-  life_goal?: string;
-  job_title?: string;
-  interview_status?: number;
-  interview_type?: number;
+  selfIntroduce?: string;
+  lifeGoal?: string;
+  jobTitle?: string;
+  interviewStatus?: number;
+  interviewType?: number;
   note?: string;
-  interview_date_time?: string;
-  onboard_date?: string;
-  resume_name?: string;
-  resume?: string;
+  interviewDateTime?: string;
+  onboardDate?: string;
+  resume?: {
+    id?: string;
+    url?: string;
+    name?: string;
+  };
 }
 
 export interface BasicApplicationEntity {

@@ -27,6 +27,8 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(["submit"]);
+
 const { defineField, setFieldValue, handleSubmit, errors } = useForm({
   validationSchema: companyPostSchema,
 });
@@ -58,7 +60,6 @@ const initFromData = () => {
     setFieldValue("title", get(props.post, "title", ""));
     setFieldValue("status", get(props.post, "status", 0));
     setFieldValue("description", get(props.post, "description", ""));
-    setFieldValue("hashtags", get(props.post, "hashtags", []));
 
     statusOptionSelected.value =
       POST_STATUS_OPTIONS.filter((_) => _.id === status.value)[0] ??
@@ -66,7 +67,7 @@ const initFromData = () => {
 
     hashtagOptionSelected.value =
       hashtagOptions.value?.filter((hashtag) =>
-        hashtags.value?.includes(hashtag.id),
+        get(props.post, "hashtags", []).value?.includes(hashtag.id),
       ) ?? [];
 
     mediaFileUrl.value = get(props.post, "media_file", "");
@@ -85,7 +86,21 @@ const mediaFile = ref<File>();
 const handleTransferFile = (file: File) => {
   mediaFile.value = file;
 };
-const onSubmit = handleSubmit(async () => {});
+const onSubmit = handleSubmit(async () => {
+  const formData = new FormData();
+  formData.append("title", title.value);
+  formData.append("description", description.value);
+  if (mediaFileUrl.value !== DEFAULT_FILE_URL) {
+    formData.append("file", mediaFile.value);
+  }
+
+  if (hashtagOptionSelected.value.length > 0) {
+    const arrHashtag: string[] = hashtagOptionSelected.value.map((_) => _.id);
+    formData.append("hashtag", JSON.stringify(arrHashtag));
+  }
+
+  emits("submit", formData);
+});
 </script>
 <template>
   <form class="flex flex-col gap-2">
@@ -128,6 +143,11 @@ const onSubmit = handleSubmit(async () => {});
         class="w-full"
       />
     </Validate>
+    <Button
+      class="max-w-[80px] h-[40px] primary-button"
+      label="Submit"
+      @click="onSubmit"
+    />
   </form>
 </template>
 <style lang="scss" scoped>

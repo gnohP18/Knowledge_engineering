@@ -2,7 +2,7 @@
 import { MODE_FORM_UPDATE } from "~/constants/common";
 import type { JobEntity } from "~/entities/company/job";
 import { JobStore } from "~/stores/company/job";
-
+import CompanyJobForm from "~/components/layouts/company/JobForm.vue";
 useHead({ title: "Update job" });
 
 definePageMeta({
@@ -39,7 +39,7 @@ const update = async (entity: JobEntity) => {
     :is-succeed="isSucceed"
     :screen-name="'Detail job'"
   >
-    <LayoutsCompanyJobForm
+    <CompanyJobForm
       v-if="job"
       :job="job"
       :mode="MODE_FORM_UPDATE"

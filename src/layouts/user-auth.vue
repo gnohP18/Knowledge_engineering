@@ -25,13 +25,13 @@ onBeforeMount(async () => {
     </div>
     <div class="w-full h-screen overflow-scroll flex justify-center">
       <div class="layout-container flex">
-        <div class="hidden md:block flex-grow-0 h-full py-4 pr-2">
+        <div class="hidden max-w-[300px] md:block flex-grow-0 h-full py-4 pr-2">
           <Leftbar v-if="!isLoading" :user="me" />
         </div>
         <div class="py-4 px-2 flex-grow-0">
           <slot />
         </div>
-        <div class="hidden md:block flex-grow-0 h-full py-4 pl-2">
+        <div class="hidden max-w-[300px] md:block flex-grow-0 h-full py-4 pl-2">
           <Rightbar v-if="!isLoading" />
         </div>
       </div>

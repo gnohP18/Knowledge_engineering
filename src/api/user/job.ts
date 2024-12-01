@@ -3,7 +3,7 @@ export const getDetailJobApi = (id: number): Promise<any> => {
 };
 
 export const applyJobApi = (id: number, resumeId: number): Promise<any> => {
-  return apiClient.post("/interview-service/interview", {
+  return apiClient.post("/interview-service/user-interview", {
     jobId: id,
     resumeId,
   });

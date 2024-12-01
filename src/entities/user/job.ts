@@ -14,7 +14,7 @@ export interface JobEntity {
   close_date?: string;
   address?: string;
   interview_type?: number;
-  is_applied?: boolean;
+  is_apply?: boolean;
   number_of_applicants?: number;
   job_attribute?: string[];
   job_attribute_names?: string[];

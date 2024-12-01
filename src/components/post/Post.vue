@@ -24,8 +24,8 @@ const copyLink = () => {
     <div class="flex gap-x-2">
       <img
         :src="
-          props.post?.company_avatar
-            ? props.post.company_avatar
+          props.post?.company.logo
+            ? props.post.company.logo
             : DEFAULT_AVATAR_URL
         "
         alt=""
@@ -33,13 +33,13 @@ const copyLink = () => {
       />
       <div class="flex flex-col">
         <label
-          v-tooltip="props.post?.company_name"
+          v-tooltip="props.post?.company.name"
           class="span-primary-hover"
-          >{{ props.post?.company_name }}</label
+          >{{ props.post?.company.name }}</label
         >
-        <span class="text-sm span-primary-hover"
+        <!-- <span class="text-sm span-primary-hover"
           >Posted at: {{ props.post?.updated_at }}</span
-        >
+        > -->
       </div>
     </div>
     <CommonLimitSpan
@@ -51,7 +51,7 @@ const copyLink = () => {
     <a class="font-bold" :href="`${USER_POST}/${props.post?.id}`">See more</a>
     <div class="w-full max-h-[300px] bg-slate-100 rounded-md">
       <img
-        :src="props.post?.thumbnail"
+        :src="props.post?.media_file_url"
         class="rounded-md w-full max-h-[300px] object-contain"
       />
     </div>

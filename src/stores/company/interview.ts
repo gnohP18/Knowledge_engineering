@@ -1,8 +1,10 @@
 import {
+  changeStatusApplicationApi,
   getDetailApplicationApi,
   getIndexInterviewApi,
   getListApplicationApi,
 } from "~/api/company/interview";
+import { JOB_STATUS_PUBLISH } from "~/constants/job";
 import type { ErrorData } from "~/entities/api-error";
 import type {
   ApplicationEntity,
@@ -41,7 +43,10 @@ export const InterviewStore = defineStore("InterviewStore", {
     async getList(params: Object = {}): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
-
+      params = Object.assign(params, {
+        JobStatus: JOB_STATUS_PUBLISH,
+        Direction: "asc",
+      });
       const { data, meta } = await getIndexInterviewApi(params);
 
       this.$state.interviews = data;
@@ -90,6 +95,24 @@ export const InterviewStore = defineStore("InterviewStore", {
         .finally(() => {
           this.$state.isLoading = false;
         });
+    },
+
+    async changeStatusApplication(entity: Object): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await changeStatusApplicationApi(entity)
+        .then(() => {})
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
+
+      this.$state.isLoading = false;
+      this.$state.isSucceed = true;
     },
   },
 });

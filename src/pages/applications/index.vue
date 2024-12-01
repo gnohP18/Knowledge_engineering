@@ -16,7 +16,6 @@ const applications = computed(() => store.applications);
 
 onMounted(async () => {
   await store.getList();
-  console.log(applications.value);
 });
 </script>
 <template>

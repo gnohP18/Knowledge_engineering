@@ -1,4 +1,5 @@
 import {
+  createPostApi,
   getDetailPostApi,
   getIndexPostApi,
   getListHashtagApi,
@@ -74,7 +75,7 @@ export const PostStore = defineStore("PostStore", {
      * Get info post
      * @param id post id
      */
-    async getDetail(id: string): Promise<any> {
+    async getDetail(id: number): Promise<any> {
       this.$state.isLoading = true;
       this.$state.isSucceed = false;
 
@@ -83,6 +84,23 @@ export const PostStore = defineStore("PostStore", {
 
       this.$state.isSucceed = true;
       this.$state.isLoading = false;
+    },
+
+    async createPost(data: FormData): Promise<any> {
+      this.$state.isLoading = true;
+      this.$state.isSucceed = false;
+
+      await createPostApi(data)
+        .then(() => {
+          this.$state.isSucceed = true;
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
   },
 });

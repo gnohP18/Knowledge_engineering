@@ -21,9 +21,9 @@ definePageMeta({
     <div class="h-screen w-full">
       <Section3 class="h-full w-full" />
     </div>
-    <div class="h-screen w-full">
+    <!-- <div class="h-screen w-full">
       <Section4 class="h-full w-full" />
-    </div>
+    </div> -->
   </div>
 </template>
 <style lang="scss" scoped></style>

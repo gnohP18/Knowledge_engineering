@@ -115,8 +115,8 @@ const handleVisibleResumeModal = async () => {
       <label class="font-bold text-2xl" for="description">About this job</label>
       <Button
         class="custom-button min-w-[150px] min-h-[50px] text-xl"
-        :class="{ '!bg-white !text-black': props.job?.is_applied }"
-        :label="props.job?.is_applied ? 'Applied' : 'Apply'"
+        :class="{ '!bg-white !text-black': props.job?.is_apply }"
+        :label="props.job?.is_apply ? 'Applied' : 'Apply'"
         :loading="isLoading"
         @click="handleVisibleResumeModal"
       />

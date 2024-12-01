@@ -45,7 +45,7 @@ const onSubmit = handleSubmit(async () => {
   const postEntity: DataPostEntity = {
     title: title.value,
     description: description.value,
-    hashtag_id: hashtagOptionSelected.value.map((_) => _.id) ?? [],
+    hashtag: hashtagOptionSelected.value.map((_) => _.name) ?? [],
     media_file: mediaFile.value,
   };
 
