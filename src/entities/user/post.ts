@@ -1,11 +1,11 @@
+import type { BasicCompanyEntity } from "./company";
+
 export interface BasicPostEntity {
   id?: number;
   title?: string;
-  content?: string;
-  company_avatar?: string;
-  thumbnail?: string;
-  company_name?: string;
-  updated_at?: string;
+  description?: string;
+  media_file_url?: string;
+  company: BasicCompanyEntity;
 }
 
 export interface HashtagEntity {
@@ -16,6 +16,6 @@ export interface HashtagEntity {
 export interface DataPostEntity {
   title?: string;
   description?: string;
-  hashtag_id?: number[];
+  hashtag?: string[];
   media_file?: File;
 }

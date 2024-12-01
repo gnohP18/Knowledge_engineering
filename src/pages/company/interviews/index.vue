@@ -107,11 +107,11 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
       @row-click="onRowClick"
     >
       <Column field="id" header="ID" />
-      <Column field="name" header="Name" />
+      <Column field="title" header="Name" />
       <Column field="position_name" header="Position name" />
       <Column field="number_of_position" header="Number of position" />
-      <Column field="vacancy" header="Vacancy" />
-      <Column field="number_of_application" header="Number of application" />
+      <!-- <Column field="vacancy" header="Vacancy" /> -->
+      <!-- <Column field="number_of_application" header="Number of application" /> -->
       <Column field="status" header="Status">
         <template #body="{ data }">
           <div class="flex justify-start w-full">
@@ -119,7 +119,13 @@ const onSort = (event: { sortField: string; sortOrder: number }) => {
           </div>
         </template>
       </Column>
-      <Column field="updated_at" header="Updated at" />
+      <Column header="Updated at">
+        <template #body="{ data }">
+          <div class="flex justify-start w-full">
+            {{ convertDateTimeServer(data.close_date) }}
+          </div>
+        </template>
+      </Column>
     </KTADataTable>
   </LayoutsCompanyManageCompanyLayout>
 </template>

@@ -26,8 +26,8 @@ export const INTERVIEW_STATUS_NAME = {
   [COMPLETED]: "Completed",
 };
 
-export const INTERVIEW_ONLINE = 1;
-export const INTERVIEW_OFFLINE = 2;
+export const INTERVIEW_ONLINE = 0;
+export const INTERVIEW_OFFLINE = 1;
 
 export const INTERVIEW_TYPE = {
   [INTERVIEW_ONLINE]: "Online",

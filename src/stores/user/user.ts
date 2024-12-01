@@ -71,15 +71,18 @@ export const userStore = defineStore("userStore", {
     async getIndexPost(param: Object): Promise<any> {
       this.$state.isLoading = true;
 
-      this.$state.posts = [
-        ...this.$state.posts,
-        ...(await getIndexPostApi(param)),
-      ];
-
-      // test loading
-      setTimeout(() => {
-        this.$state.isLoading = false;
-      }, 5000); // 5 giây
+      await getIndexPostApi(param)
+        .then((result) => {
+          const newData = result.data;
+          this.$state.posts = [...this.$state.posts, ...newData];
+        })
+        .catch((err) => {
+          this.$state.isSucceed = false;
+          this.$state.errors = handleApiErrors(err);
+        })
+        .finally(() => {
+          this.$state.isLoading = false;
+        });
     },
 
     /**

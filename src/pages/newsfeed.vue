@@ -5,6 +5,7 @@ import * as Pagination from "~/constants/pagination";
 import { userStore } from "~/stores/user/user";
 import { AuthStore } from "~/stores/user/auth";
 import CreatePost from "~/components/user/CreatePost.vue";
+import PostList from "~/components/post/PostList.vue";
 
 useHead({ title: "Job finding" });
 

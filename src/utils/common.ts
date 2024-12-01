@@ -231,3 +231,5 @@ export const convertDateTimeServer = (dateStr: string) => {
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   return new Intl.DateTimeFormat("en-CA", options).format(date);
 };
+
+export const convertDateTimeHours = (dateStr: string) => {};

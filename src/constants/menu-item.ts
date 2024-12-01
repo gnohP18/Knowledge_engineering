@@ -7,8 +7,6 @@ import {
   ADMIN_USER,
   ADMIN_USER_CREATE,
   COMPANY_INTERVIEW,
-  COMPANY_INTERVIEW_SET_DATE,
-  COMPANY_INTERVIEW_UPDATE_STATUS,
   COMPANY_JOB,
   COMPANY_JOB_CREATE,
   COMPANY_POST,
@@ -143,18 +141,6 @@ export const MENU_COMPANY: MenuItem[] = [
     label: "Interview",
     icon: "pi pi-file",
     route: COMPANY_INTERVIEW,
-    items: [
-      {
-        label: "Set date",
-        icon: "pi pi-plus",
-        route: COMPANY_INTERVIEW_SET_DATE,
-      },
-      {
-        label: "Update status",
-        icon: "pi pi-file-edit",
-        route: COMPANY_INTERVIEW_UPDATE_STATUS,
-      },
-    ],
   },
   {
     key: "profile",
